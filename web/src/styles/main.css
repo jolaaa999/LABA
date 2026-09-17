@@ -1,0 +1,80 @@
+@import './tokens.css';
+@import './reset.css';
+
+html {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  scroll-padding-top: var(--scroll-padding-top);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  background-color: var(--color-snow);
+  background-image: linear-gradient(
+    180deg,
+    var(--color-snow) 0%,
+    var(--color-morning) 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+#app,
+.app-root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--color-glacier);
+  color: var(--color-text);
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: var(--border-focus);
+  outline-offset: 3px;
+}
+
+/* Router page transition (Phase 3) */
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity var(--duration-page) var(--ease-out-soft),
+    transform var(--duration-page) var(--ease-out-soft);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .page-enter-active,
+  .page-leave-active,
+  .page-enter-from,
+  .page-leave-to {
+    transition: none;
+    transform: none;
+  }
+}
