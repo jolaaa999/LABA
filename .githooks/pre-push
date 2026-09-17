@@ -33,6 +33,15 @@ ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
 # 必须先清掉，后续一律用 -C 显式指定目录。
 unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_OBJECT_DIRECTORY GIT_COMMON_DIR GIT_PREFIX
 
+# 本地必须领先或等于远端 main，否则说明本地代码落后（还没 pull），
+# 此时部署会把旧版本推上线 —— 直接跳过。
+git fetch --no-tags --quiet "$REMOTE_URL" main 2>/dev/null
+REMOTE_MAIN="$(git rev-parse --verify FETCH_HEAD 2>/dev/null)"
+if [ -n "$REMOTE_MAIN" ] && ! git merge-base --is-ancestor "$REMOTE_MAIN" HEAD 2>/dev/null; then
+  echo "[deploy] 本地分支落后于远端 main（请先 git pull），已跳过部署。"
+  exit 0
+fi
+
 # 若仓库已存在 GitHub Actions 工作流，交给 Actions 处理，避免重复部署
 if [ -f "$ROOT/.github/workflows/deploy-pages.yml" ]; then
   echo "[deploy] 已启用 GitHub Actions 工作流，跳过本地部署。"
