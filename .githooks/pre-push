@@ -96,7 +96,18 @@ git -C "$WORK" remote add origin "$REMOTE_URL" || { echo "[deploy] 配置远端�
 if git -C "$WORK" fetch --no-tags --quiet origin gh-pages 2>/dev/null; then
   git -C "$WORK" checkout --quiet -B gh-pages FETCH_HEAD || { echo "[deploy] 检出 gh-pages 失败，跳过部署。"; exit 0; }
 else
-  git -C "$WORK" checkout --quiet -B gh-pages || { echo "[deploy] 创建 gh-pages 失败，跳过部署。"; exit 0; }
+  # 拉取失败有两种可能：网络/凭据问题，或远端真的还没有 gh-pages 分支。
+  # 必须区分 —— 若把网络故障当成"分支不存在"，就会基于空分支重建，
+  # 产出一个无父提交（网络若随后恢复，push 会被拒；严重时会丢掉分支历史）。
+  # ls-remote 的退出码：0 = 找到该分支，2 = 没有匹配的引用，其他 = 连不上。
+  git -C "$WORK" ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1
+  rc=$?
+  if [ "$rc" = "2" ]; then
+    git -C "$WORK" checkout --quiet -B gh-pages || { echo "[deploy] 创建 gh-pages 失败，跳过部署。"; exit 0; }
+  else
+    echo "[deploy] 无法获取远端 gh-pages（网络或凭据问题），已跳过部署，线上保持原版本。"
+    exit 0
+  fi
 fi
 
 # 用本次构建产物整体替换分支内容（保留 .git），产物位于分支根目录
