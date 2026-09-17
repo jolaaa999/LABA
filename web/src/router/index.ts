@@ -4,7 +4,7 @@ import {
   type RouteLocationNormalized,
 } from 'vue-router'
 
-import { SITE_NAME } from '../content/site'
+import { SITE_DOCUMENT_TITLE } from '../content/site'
 import { getProjectBySlug } from '../content/projects'
 import AboutView from '../views/AboutView.vue'
 import ExploreAiView from '../views/ExploreAiView.vue'
@@ -160,16 +160,20 @@ export const router = createRouter({
 })
 
 function resolveDocumentTitle(route: RouteLocationNormalized): string {
+  // Home tab title is the brand line itself.
+  if (route.name === 'home') {
+    return SITE_DOCUMENT_TITLE
+  }
   const pageTitle = typeof route.meta.title === 'string' ? route.meta.title : undefined
-  return pageTitle ? `${pageTitle} — ${SITE_NAME}` : SITE_NAME
+  return pageTitle ? `${pageTitle} — ${SITE_DOCUMENT_TITLE}` : SITE_DOCUMENT_TITLE
 }
 
 router.afterEach((to) => {
   if (to.name === 'project-detail') {
     const project = getProjectBySlug(String(to.params.slug ?? ''))
     document.title = project
-      ? `${project.title} — ${SITE_NAME}`
-      : `Project — ${SITE_NAME}`
+      ? `${project.title} — ${SITE_DOCUMENT_TITLE}`
+      : `Project — ${SITE_DOCUMENT_TITLE}`
     return
   }
   document.title = resolveDocumentTitle(to)

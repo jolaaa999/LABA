@@ -1,6 +1,9 @@
 /** Shared brand site labels — not a formal legal entity name. */
 export const SITE_NAME = 'AI Community'
 
+/** Browser tab / document title brand line. */
+export const SITE_DOCUMENT_TITLE = 'Learn AI, Build AI'
+
 export const SITE_TAGLINE = 'A university AI × Deep Learning tech community.'
 
 export type NavItem = {
