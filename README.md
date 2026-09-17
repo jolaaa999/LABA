@@ -4,6 +4,8 @@
 
 **在线预览（GitHub Pages）：** https://jolaaa999.github.io/LABA/
 
+LABA-----Learn AI, Build AI. 武汉科技大学百度飞桨社团，跟同学们一起学习深度学习，一起学习如何更好的使用 AI，让想要保研的同学能够更好的准备科研，让想要工作就业的同学能够更好的使用 AI 增加做事效率、提高竞争力。
+
 ## 本地开发
 
 ```bash
@@ -29,4 +31,4 @@ npm run build
 
 ## License
 
-见仓库根目录 `LICENSE`（与 GitHub 远程保持一致）。
+见仓库根目录 `LICENSE`。
