@@ -51,7 +51,8 @@ const featuredProjects = getFeaturedProjects().slice(0, 3)
 
 .selected-works__header {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  /* 右列给足宽度，保证 lede 单行不断句 */
+  grid-template-columns: minmax(0, 0.95fr) minmax(30rem, 1.05fr);
   gap: var(--space-6) var(--space-10);
   align-items: end;
 }
@@ -80,7 +81,7 @@ const featuredProjects = getFeaturedProjects().slice(0, 3)
 }
 
 .selected-works__lede {
-  max-width: 28rem;
+  max-width: 30rem;
   font-size: var(--text-lg);
   line-height: var(--leading-relaxed);
   color: var(--color-text-secondary);

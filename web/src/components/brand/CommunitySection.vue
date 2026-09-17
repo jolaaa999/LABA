@@ -84,7 +84,8 @@ function selectMember(id: string) {
 
 .community__header {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(12rem, 0.85fr);
+  /* 右列给足宽度，保证 lede 单行不断句 */
+  grid-template-columns: minmax(0, 0.95fr) minmax(30rem, 1.05fr);
   gap: var(--space-6) var(--space-10);
   align-items: end;
 }

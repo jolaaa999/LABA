@@ -169,7 +169,8 @@ onBeforeUnmount(() => {
 
 .what-happens__layout {
   display: grid;
-  grid-template-columns: minmax(14rem, 0.9fr) minmax(0, 1.35fr);
+  /* 左栏给足宽度，保证 lede 单行不断句 */
+  grid-template-columns: minmax(26rem, 0.9fr) minmax(0, 1.35fr);
   gap: var(--space-10) var(--space-12);
   align-items: start;
 }
@@ -293,7 +294,7 @@ onBeforeUnmount(() => {
 
 @media (max-width: 1024px) {
   .what-happens__layout {
-    grid-template-columns: minmax(12rem, 0.85fr) minmax(0, 1.2fr);
+    grid-template-columns: minmax(26rem, 0.85fr) minmax(0, 1.2fr);
     gap: var(--space-8);
   }
 }

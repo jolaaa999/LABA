@@ -46,6 +46,7 @@ Snow + Aurora + Sky + Glass + Minimalism
 - **Display / Sans**：Segoe UI Variable + PingFang / Hiragino / Noto Sans SC / YaHei 语义栈（无 Arial 核心）。  
 - **Mono**：JetBrains Mono / Cascadia Code / SF Mono / Consolas。  
 - **站点主体语言为中文**（策略见 `PRODUCT.md` → 文案语言策略）：CJK 字体族是主渲染路径，中文正文使用全角标点，中文与英文技术词之间不加空格。品牌锚点句仍以英文呈现，因此 Display 栈需同时保证拉丁字形质量，避免中英混排时字号与行高失衡。  
+- **Lede 单行**：区块头部（header）中的导语（`__lede`）在桌面端必须保持单行，不得出现末行只剩一两字的断行。需同时满足两个条件：导语自身 `max-width` 不小于「一行所需宽度」，且其所在网格列的 `min` 也不小于该宽度（如 `minmax(30rem, 1.05fr)`）—— 只放宽 `max-width` 而列宽不足时仍会断行。改写导语文案后应按断点实测行数。
 - 本地品牌字体文件可后续替换，不改变 Token 名称。
 
 ### 空间与圆角
