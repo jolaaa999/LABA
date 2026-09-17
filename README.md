@@ -21,7 +21,17 @@ cd web
 npm run build
 ```
 
-静态站点在推送到 `main` 分支时自动构建，产物发布到 `gh-pages` 分支并由 GitHub Pages 提供（推送后约 1 分钟生效）。
+## 部署
+
+站点由 `gh-pages` 分支提供，`main` 是源码分支。
+
+推送到 `main` 时，本地 `pre-push` hook（`.git/hooks/pre-push`）会自动构建前端并把产物发布到 `gh-pages` 分支，推送后约 1 分钟生效。日常只需：
+
+```bash
+git push
+```
+
+手动兜底：`cd web && npm run build`，把 `dist/` 的内容推送到 `gh-pages` 分支根目录，并将 `index.html` 复制为 `404.html`（SPA 深链回退）。
 
 ## 仓库结构
 
