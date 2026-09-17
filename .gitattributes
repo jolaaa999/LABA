@@ -1,0 +1,3 @@
+# Git hooks must keep LF endings so they run correctly under sh,
+# regardless of the core.autocrlf setting on Windows.
+.githooks/pre-push text eol=lf

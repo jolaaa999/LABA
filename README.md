@@ -31,6 +31,12 @@ npm run build
 git push
 ```
 
+新克隆的仓库需要先启用 hook（Git 不把 hook 纳入版本控制）：
+
+```bash
+cp .githooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+```
+
 手动兜底：`cd web && npm run build`，把 `dist/` 的内容推送到 `gh-pages` 分支根目录，并将 `index.html` 复制为 `404.html`（SPA 深链回退）。
 
 ## 仓库结构
