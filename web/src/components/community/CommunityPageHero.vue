@@ -15,8 +15,7 @@ defineProps<{
       <h1 class="community-hero__title">{{ communityHero.title }}</h1>
       <p class="community-hero__lede">{{ communityHero.lede }}</p>
       <p class="community-hero__map-text">
-        People, work, sessions, and questions form a relational field —
-        not a staff directory.
+        成员、作品、场次与提问构成了一片关系场——而非一份通讯录。
       </p>
     </div>
     <CommunityFieldVisual

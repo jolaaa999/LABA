@@ -25,7 +25,7 @@ onMounted(() => {
     :class="{ 'ai-hero--drawn': drawn || prefersReducedMotion }"
   >
     <p class="ai-hero__crumb">
-      <RouterLink class="ai-hero__back" to="/explore">Explore</RouterLink>
+      <RouterLink class="ai-hero__back" to="/explore">探索</RouterLink>
       <span aria-hidden="true"> / </span>
       <span>Build with AI</span>
     </p>
@@ -50,10 +50,10 @@ onMounted(() => {
           <circle class="ai-hero__node" cx="280" cy="48" r="3.5" />
           <circle class="ai-hero__node" cx="360" cy="100" r="4" />
           <circle class="ai-hero__node ai-hero__node--end" cx="536" cy="100" r="5" />
-          <text class="ai-hero__label" x="120" y="128">IN</text>
-          <text class="ai-hero__label" x="200" y="46">TOOL</text>
-          <text class="ai-hero__label" x="280" y="32">SYSTEM</text>
-          <text class="ai-hero__label" x="536" y="128" text-anchor="end">SHIP</text>
+          <text class="ai-hero__label" x="120" y="128">输入</text>
+          <text class="ai-hero__label" x="200" y="46">工具</text>
+          <text class="ai-hero__label" x="280" y="32">系统</text>
+          <text class="ai-hero__label" x="536" y="128" text-anchor="end">交付</text>
         </svg>
       </div>
     </div>

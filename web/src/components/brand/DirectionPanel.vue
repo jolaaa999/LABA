@@ -46,7 +46,7 @@ const { prefersReducedMotion } = useMotionPreference()
       <p class="direction-panel__statement">{{ statement }}</p>
 
       <p class="direction-panel__audience">
-        <span class="direction-panel__audience-key">For</span>
+        <span class="direction-panel__audience-key">面向</span>
         {{ audience }}
       </p>
 

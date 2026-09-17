@@ -106,13 +106,13 @@ defineProps<{
           {{ study.experiment.setup }}
         </p>
         <div v-if="study.experiment.metrics?.length" class="case-study__chips">
-          <p class="case-study__chips-label">Metrics</p>
+          <p class="case-study__chips-label">指标</p>
           <ul>
             <li v-for="m in study.experiment.metrics" :key="m">{{ m }}</li>
           </ul>
         </div>
         <div v-if="study.experiment.controls?.length" class="case-study__chips">
-          <p class="case-study__chips-label">Controls</p>
+          <p class="case-study__chips-label">对照</p>
           <ul>
             <li v-for="c in study.experiment.controls" :key="c">{{ c }}</li>
           </ul>

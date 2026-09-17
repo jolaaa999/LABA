@@ -23,8 +23,8 @@ function kindLine(project: (typeof related.value)[number]) {
 <template>
   <section v-if="related.length" class="related-work" aria-labelledby="related-work-title">
     <header class="related-work__header">
-      <p class="related-work__eyebrow">Continue Exploring</p>
-      <h2 id="related-work-title" class="related-work__title">Related work</h2>
+      <p class="related-work__eyebrow">继续探索</p>
+      <h2 id="related-work-title" class="related-work__title">相关作品</h2>
     </header>
 
     <div class="related-work__list">

@@ -7,8 +7,8 @@ import { twoDirections } from '../../content/about'
     <header class="two-directions__header">
       <p class="two-directions__eyebrow">{{ twoDirections.eyebrow }}</p>
       <h2 id="two-directions-title" class="two-directions__title">
-        <span class="two-directions__title-line">Different goals.</span>
-        <span class="two-directions__title-line">Shared discipline.</span>
+        <span class="two-directions__title-line">不同的目标。</span>
+        <span class="two-directions__title-line">共同的纪律。</span>
       </h2>
     </header>
 
@@ -21,12 +21,12 @@ import { twoDirections } from '../../content/about'
         </ul>
         <p class="two-directions__outcome">{{ twoDirections.build.outcome }}</p>
         <p class="two-directions__audience">
-          Often for: {{ twoDirections.audiences.build.join(' · ') }}
+          常用于： {{ twoDirections.audiences.build.join(' · ') }}
         </p>
       </article>
 
       <div class="two-directions__spine" aria-hidden="true">
-        <span>Shared discipline</span>
+        <span>共同的纪律</span>
       </div>
 
       <article class="two-directions__side two-directions__side--understand">
@@ -39,7 +39,7 @@ import { twoDirections } from '../../content/about'
         </ul>
         <p class="two-directions__outcome">{{ twoDirections.understand.outcome }}</p>
         <p class="two-directions__audience">
-          Often for: {{ twoDirections.audiences.understand.join(' · ') }}
+          常用于： {{ twoDirections.audiences.understand.join(' · ') }}
         </p>
       </article>
     </div>

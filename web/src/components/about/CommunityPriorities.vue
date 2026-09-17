@@ -7,8 +7,8 @@ import { communityPriorities } from '../../content/about'
     <header class="priorities__header">
       <p class="priorities__eyebrow">{{ communityPriorities.eyebrow }}</p>
       <h2 id="priorities-title" class="priorities__title">
-        <span class="priorities__title-line">Not more AI.</span>
-        <span class="priorities__title-line">Better practice with AI.</span>
+        <span class="priorities__title-line">不是更多的 AI。</span>
+        <span class="priorities__title-line">用 AI 做更好的实践。</span>
       </h2>
     </header>
 

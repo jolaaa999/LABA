@@ -13,8 +13,8 @@ const hotspotCopy = ref<string | null>(null)
 
 const summary = computed(() =>
   mode.value === 'build'
-    ? 'BUILD shows how intent becomes a working system: task, plan, tools, observation, result.'
-    : 'UNDERSTAND shows the same intelligence from inside: tokens, attention, representation, experiment.',
+    ? '构建 展示了意图如何成为可运行的系统：任务、计划、工具、观察、结果。'
+    : '理解 从内部展示同一种智能：Token、Attention、表示、实验。',
 )
 
 const micro = computed(() => {
@@ -22,8 +22,8 @@ const micro = computed(() => {
     return { label: hotspotLabel.value, copy: hotspotCopy.value }
   }
   return mode.value === 'build'
-    ? { label: 'Flow', copy: 'From intent to something people can use.' }
-    : { label: 'Field', copy: 'Same intelligence. Different perspective.' }
+    ? { label: '流程', copy: '从意图到人们可用的东西。' }
+    : { label: '场域', copy: '同一种智能，不同的视角。' }
 })
 </script>
 
@@ -32,13 +32,13 @@ const micro = computed(() => {
     <PageContainer class="intelligence__inner">
       <header class="intelligence__header">
         <div class="intelligence__heading">
-          <p class="intelligence__eyebrow">Intelligence in Motion</p>
+          <p class="intelligence__eyebrow">流动的智能</p>
           <h2 id="intelligence-title" class="intelligence__title">
-            One intelligence.<br />
-            Two ways of seeing it.
+            一种智能。<br />
+            两种看待它的方式。
           </h2>
           <p class="intelligence__lede">
-            We build with AI — and we look beneath the models that make it work.
+            我们用 AI 构建——并深入那些让 AI 运转的模型之下。
           </p>
         </div>
 

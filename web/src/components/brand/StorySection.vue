@@ -87,10 +87,10 @@ onBeforeUnmount(() => {
   >
     <PageContainer class="story__inner">
       <header class="story__header">
-        <p class="story__eyebrow">Story</p>
-        <h2 id="story-title" class="story__title">From curiosity to practice.</h2>
+        <p class="story__eyebrow">故事</p>
+        <h2 id="story-title" class="story__title">从好奇到实践。</h2>
         <p class="story__lede">
-          How this community’s directions took shape — and what still waits ahead.
+          这个社区的方向是如何成形的——以及前方仍有什么在等待。
         </p>
       </header>
 
@@ -127,7 +127,7 @@ onBeforeUnmount(() => {
               <h3 class="story__item-title">{{ item.title }}</h3>
               <p class="story__statement">{{ item.statement }}</p>
               <p v-if="item.placeholder" class="story__dev">
-                Dev placeholder · not verified history
+                开发占位 · 历史未经核实
               </p>
             </div>
           </li>

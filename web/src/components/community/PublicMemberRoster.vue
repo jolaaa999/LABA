@@ -26,7 +26,7 @@ const isEmpty = computed(() => members.length === 0)
       <header class="public-roster__header">
         <p class="public-roster__eyebrow">{{ publicMembersState.eyebrow }}</p>
         <h2 id="public-roster-title" class="public-roster__title">
-          Public profiles
+          公开成员
         </h2>
         <p class="public-roster__opt-in">{{ publicMembersState.optIn }}</p>
       </header>

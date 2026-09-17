@@ -34,16 +34,15 @@ function selectMember(id: string) {
   >
     <PageContainer class="community__inner">
       <header class="community__header">
-        <div class="community__heading">
-          <p class="community__eyebrow">Community</p>
-          <h2 id="community-title" class="community__title">
-            People behind the work.
-          </h2>
-        </div>
-        <p class="community__lede">
-          Engineering, research, and hybrid practice — people who build the culture,
-          not just the pages.
-        </p>
+          <div class="community__heading">
+            <p class="community__eyebrow">社区</p>
+            <h2 id="community-title" class="community__title">
+              作品背后的人。
+            </h2>
+          </div>
+          <p class="community__lede">
+            工程、科研与混合实践——塑造文化的人，而不只是做页面的人。
+          </p>
       </header>
 
       <div class="community__stage">

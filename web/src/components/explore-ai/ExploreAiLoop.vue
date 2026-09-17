@@ -24,7 +24,7 @@ import { practiceLoop } from '../../content/explore-ai'
         <p class="ai-loop__statement">{{ step.statement }}</p>
       </li>
     </ol>
-    <p class="ai-loop__return" aria-hidden="true">↺ back to Understand</p>
+    <p class="ai-loop__return" aria-hidden="true">↺ 回到 Understand</p>
   </section>
 </template>
 

@@ -39,7 +39,7 @@ const sections = computed(() =>
       />
 
       <p v-else class="project-detail__empty">
-        Case study content is not available for this entry yet.
+        该条目的案例研究内容暂未提供。
       </p>
 
       <ProjectRelatedWork :current-slug="project.slug" />
@@ -47,11 +47,11 @@ const sections = computed(() =>
       <footer class="project-detail__footer">
         <RouterLink v-slot="{ navigate }" to="/projects" custom>
           <AuroraButton variant="secondary" @click="navigate">
-            Back to Work Archive
+            返回作品档案
           </AuroraButton>
         </RouterLink>
         <RouterLink class="project-detail__home" to="/">
-          Home
+          首页
         </RouterLink>
       </footer>
     </PageContainer>

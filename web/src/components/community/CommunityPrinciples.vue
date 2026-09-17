@@ -5,9 +5,9 @@ import { communityPrinciples } from '../../content/community'
 <template>
   <section class="community-principles" aria-labelledby="community-principles-title">
     <header class="community-principles__header">
-      <p class="community-principles__eyebrow">Community Principles</p>
+      <p class="community-principles__eyebrow">社区原则</p>
       <h2 id="community-principles-title" class="community-principles__title">
-        How we keep the practice honest.
+        我们如何让实践保持诚实。
       </h2>
     </header>
 

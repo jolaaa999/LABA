@@ -9,10 +9,10 @@ const directions = [
     label: 'AI × Productivity',
     title: 'Build with AI.',
     statement:
-      'Create things people can use — systems, workflows, and products shaped by modern AI tools.',
-    audience: 'Career · Internship · Graduation',
+      '创造人们可用的东西——由现代 AI 工具塑造的系统、工作流与产品。',
+    audience: '职业 · 实习 · 毕业',
     keywords: ['AI Coding', 'Agent', 'RAG', 'MCP', 'Workflow'] as const,
-    ctaLabel: 'Explore direction',
+    ctaLabel: '探索方向',
     to: '/explore/ai',
     tone: 'build' as const,
   },
@@ -21,10 +21,10 @@ const directions = [
     label: 'Deep Learning × Research',
     title: 'Understand AI deeply.',
     statement:
-      'Read carefully, reproduce results, design experiments — and know why a model works.',
-    audience: 'Research · Recommendation · Competition',
+      '仔细研读、复现结果、设计实验——并理解模型为何有效。',
+    audience: '科研 · 推荐 · 竞赛',
     keywords: ['PyTorch', 'Transformer', 'CV', 'NLP', 'Reproduction'] as const,
-    ctaLabel: 'Explore direction',
+    ctaLabel: '探索方向',
     to: '/explore/deep-learning',
     tone: 'research' as const,
   },
@@ -36,16 +36,15 @@ const directions = [
     <PageContainer class="direction-section__inner">
       <header class="direction-section__header">
         <div class="direction-section__heading">
-          <p class="direction-section__eyebrow">Directions</p>
-          <h2 class="direction-section__title">What We Explore</h2>
+          <p class="direction-section__eyebrow">方向</p>
+          <h2 class="direction-section__title">我们探索什么</h2>
         </div>
         <p class="direction-section__lede">
-          Two technical personalities in one community —
-          building with AI, and understanding it deeply.
+          一个社区，两种技术气质——用 AI 构建，并深入理解它。
         </p>
       </header>
 
-      <div class="direction-canvas" role="group" aria-label="Community directions">
+      <div class="direction-canvas" role="group" aria-label="社区方向">
         <DirectionPanel v-bind="directions[0]" />
         <div class="direction-canvas__divider" aria-hidden="true" />
         <DirectionPanel v-bind="directions[1]" />

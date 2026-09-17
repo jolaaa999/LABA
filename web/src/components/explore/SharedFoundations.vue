@@ -5,14 +5,13 @@ import { sharedFoundations } from '../../content/explore'
 <template>
   <section class="shared-foundations" aria-labelledby="shared-foundations-title">
     <header class="shared-foundations__header">
-      <p class="shared-foundations__eyebrow">Shared Foundations</p>
+      <p class="shared-foundations__eyebrow">共享基础</p>
       <h2 id="shared-foundations-title" class="shared-foundations__title">
-        Different paths.
-        <span class="shared-foundations__title-break">Shared fundamentals.</span>
+        不同的路径。
+        <span class="shared-foundations__title-break">共享的根基。</span>
       </h2>
       <p class="shared-foundations__lede">
-        Neither path asks you to finish a checklist first. These are the habits both
-        builders and researchers keep returning to.
+        两条路径都不要求你先完成一份清单。这些是构建者与研究者都会反复回到的基本功。
       </p>
     </header>
 

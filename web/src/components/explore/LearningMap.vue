@@ -25,12 +25,12 @@ const understand = explorePaths[1]
     aria-labelledby="learning-map-title"
   >
     <header class="learning-map__header">
-      <p class="learning-map__eyebrow">Learning Map Preview</p>
+      <p class="learning-map__eyebrow">学习地图预览</p>
       <h2 id="learning-map-title" class="learning-map__title">
-        A topology of growth — not a course list.
+        一张成长拓扑图——不是课程清单。
       </h2>
       <p class="learning-map__lede">
-        Two trajectories share a center. Stages are orientation, not mandatory unlocks.
+        两条轨迹共享一个中心。阶段是定向，而非强制解锁。
       </p>
     </header>
 
@@ -41,20 +41,20 @@ const understand = explorePaths[1]
         @mouseenter="setFocusedPath?.('build')"
         @mouseleave="setFocusedPath?.(null)"
       >
-        <p class="learning-map__track-label">Build</p>
+        <p class="learning-map__track-label">构建</p>
         <ol class="learning-map__stages">
           <li v-for="stage in build?.mapStages ?? []" :key="stage">{{ stage }}</li>
         </ol>
       </div>
 
-      <div class="learning-map__shared-label" aria-hidden="true">Shared center</div>
+      <div class="learning-map__shared-label" aria-hidden="true">共享中心</div>
 
       <div
         class="learning-map__track learning-map__track--understand"
         @mouseenter="setFocusedPath?.('understand')"
         @mouseleave="setFocusedPath?.(null)"
       >
-        <p class="learning-map__track-label">Understand</p>
+        <p class="learning-map__track-label">理解</p>
         <ol class="learning-map__stages">
           <li v-for="stage in understand?.mapStages ?? []" :key="stage">
             {{ stage }}
@@ -74,7 +74,7 @@ const understand = explorePaths[1]
         />
         <circle class="learning-map__hub" cx="450" cy="120" r="6" />
         <text class="learning-map__hub-label" x="450" y="148" text-anchor="middle">
-          FOUNDATIONS
+          基础
         </text>
 
         <path
@@ -96,7 +96,7 @@ const understand = explorePaths[1]
           <circle cx="150" cy="228" r="3.5" />
           <circle cx="110" cy="252" r="3.5" />
           <circle cx="90" cy="270" r="4" />
-          <text x="70" y="292" text-anchor="middle">SHIP</text>
+          <text x="70" y="292" text-anchor="middle">交付</text>
         </g>
         <g class="learning-map__nodes learning-map__nodes--understand">
           <circle cx="600" cy="168" r="3.5" />
@@ -104,7 +104,7 @@ const understand = explorePaths[1]
           <circle cx="750" cy="228" r="3.5" />
           <circle cx="790" cy="252" r="3.5" />
           <circle cx="810" cy="270" r="4" />
-          <text x="830" y="292" text-anchor="middle">RESEARCH</text>
+          <text x="830" y="292" text-anchor="middle">科研</text>
         </g>
       </svg>
     </div>

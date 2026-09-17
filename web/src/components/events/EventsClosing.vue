@@ -15,19 +15,19 @@ import AuroraButton from '../ui/AuroraButton.vue'
 
     <div class="events-closing__links">
       <RouterLink class="events-closing__primary" to="/explore">
-        <span class="events-closing__link-eyebrow">Learn a direction</span>
-        <span class="events-closing__link-title">Explore the learning map</span>
+        <span class="events-closing__link-eyebrow">学习一个方向</span>
+        <span class="events-closing__link-title">探索学习地图</span>
       </RouterLink>
       <RouterLink class="events-closing__secondary" to="/projects">
-        <span class="events-closing__link-eyebrow">See the work</span>
-        <span class="events-closing__link-title">Work Archive</span>
+        <span class="events-closing__link-eyebrow">看作品</span>
+        <span class="events-closing__link-title">作品档案</span>
       </RouterLink>
     </div>
 
     <div class="events-closing__join">
       <RouterLink v-slot="{ navigate }" to="/join" custom>
         <AuroraButton variant="secondary" size="sm" @click="navigate">
-          Join the Community
+          加入社区
         </AuroraButton>
       </RouterLink>
     </div>

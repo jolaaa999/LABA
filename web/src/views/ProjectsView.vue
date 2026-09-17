@@ -67,24 +67,23 @@ watch(
       <!-- 01 Archive Header -->
       <header class="projects-archive__header">
         <div class="projects-archive__heading">
-          <p class="projects-archive__eyebrow">Work Archive</p>
+          <p class="projects-archive__eyebrow">作品档案</p>
           <h1 class="projects-archive__title">
-            Things we build,
-            <span class="projects-archive__title-break">test, and share.</span>
+            我们构建、
+            <span class="projects-archive__title-break">测试并分享的作品。</span>
           </h1>
         </div>
         <div class="projects-archive__aside">
           <p class="projects-archive__lede">
-            AI engineering, deep learning research, and tools built inside the
-            community.
+            由社团内部构建的 AI 工程、Deep Learning 科研与工具。
           </p>
           <dl class="projects-archive__stats">
             <div class="projects-archive__stat">
-              <dt>Entries</dt>
+              <dt>条目</dt>
               <dd>{{ allProjects.length }}</dd>
             </div>
             <div class="projects-archive__stat">
-              <dt>Updated</dt>
+              <dt>更新</dt>
               <dd>{{ PROJECTS_ARCHIVE_UPDATED }}</dd>
             </div>
           </dl>
@@ -107,11 +106,11 @@ watch(
         <section
           v-if="featured"
           class="projects-archive__featured"
-          aria-label="Featured work"
+          aria-label="精选作品"
         >
           <ProjectArchiveFeatured
             :project="featured"
-            :index-label="filter === 'all' ? 'Featured' : 'Lead entry'"
+            :index-label="filter === 'all' ? '精选' : '主打条目'"
           />
         </section>
 
@@ -119,9 +118,9 @@ watch(
         <section
           v-if="indexProjects.length"
           class="projects-archive__index"
-          aria-label="Work index"
+          aria-label="作品索引"
         >
-          <p class="projects-archive__index-label">Index</p>
+          <p class="projects-archive__index-label">索引</p>
 
           <div class="projects-archive__index-layout">
             <div class="projects-archive__rows">
@@ -146,7 +145,7 @@ watch(
           class="projects-archive__empty"
           role="status"
         >
-          No entries in this view yet.
+          该视图下暂无条目。
         </p>
       </div>
 

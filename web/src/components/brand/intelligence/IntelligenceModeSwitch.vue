@@ -10,8 +10,8 @@ const emit = defineEmits<{
 }>()
 
 const modes: { id: IntelligenceMode; label: string }[] = [
-  { id: 'build', label: 'BUILD' },
-  { id: 'understand', label: 'UNDERSTAND' },
+  { id: 'build', label: '构建' },
+  { id: 'understand', label: '理解' },
 ]
 
 function select(id: IntelligenceMode) {
@@ -21,7 +21,7 @@ function select(id: IntelligenceMode) {
 </script>
 
 <template>
-  <div class="mode-switch" role="group" aria-label="Intelligence perspective">
+  <div class="mode-switch" role="group" aria-label="智能视角">
     <button
       v-for="item in modes"
       :key="item.id"

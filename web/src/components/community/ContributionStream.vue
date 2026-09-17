@@ -14,12 +14,12 @@ const emit = defineEmits<{
 <template>
   <section class="contribution-stream" aria-labelledby="contribution-title">
     <header class="contribution-stream__header">
-      <p class="contribution-stream__eyebrow">Ways We Contribute</p>
+      <p class="contribution-stream__eyebrow">我们的贡献方式</p>
       <h2 id="contribution-title" class="contribution-stream__title">
-        Ways we contribute.
+        我们如何贡献。
       </h2>
       <p class="contribution-stream__lede">
-        Not job titles — practices that keep the community moving.
+        不是职位头衔——而是让社区持续运转的实践。
       </p>
     </header>
 

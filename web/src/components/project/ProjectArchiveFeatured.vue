@@ -23,10 +23,10 @@ const detailTo = computed(() => `/projects/${props.project.slug}`)
   <RouterLink :to="detailTo" class="archive-featured">
     <header class="archive-featured__header">
       <p class="archive-featured__eyebrow">
-        {{ indexLabel ?? 'Featured' }}
+        {{ indexLabel ?? '精选' }}
       </p>
       <p v-if="project.placeholder" class="archive-featured__dev">
-        Dev placeholder · not a real deliverable
+        开发占位 · 非真实交付物
       </p>
     </header>
 
@@ -41,7 +41,7 @@ const detailTo = computed(() => `/projects/${props.project.slug}`)
         <p class="archive-featured__summary">{{ project.summary }}</p>
         <p class="archive-featured__tech">{{ techLine }}</p>
         <span class="archive-featured__cta">
-          Open entry
+          进入
           <span aria-hidden="true">→</span>
         </span>
       </div>

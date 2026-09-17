@@ -38,3 +38,6 @@ Thumbs.db
 # TypeScript / Vite caches
 *.tsbuildinfo
 .vite/
+
+# Agent workspace (local session data)
+.workbuddy/

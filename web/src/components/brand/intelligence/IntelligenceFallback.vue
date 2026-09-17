@@ -35,11 +35,11 @@ defineProps<{
         <circle cx="568" cy="148" r="7" opacity="0.8" />
       </g>
       <g fill="#8A9AAB" font-family="Segoe UI, sans-serif" font-size="11" letter-spacing="1.5">
-        <text x="52" y="198">TASK</text>
-        <text x="188" y="118">PLAN</text>
-        <text x="308" y="216">TOOL</text>
-        <text x="422" y="138">OBSERVE</text>
-        <text x="538" y="128">RESULT</text>
+        <text x="52" y="198">任务</text>
+        <text x="188" y="118">计划</text>
+        <text x="308" y="216">工具</text>
+        <text x="422" y="138">观察</text>
+        <text x="538" y="128">结果</text>
       </g>
     </svg>
 
@@ -76,11 +76,11 @@ defineProps<{
         <circle cx="360" cy="240" r="7" />
       </g>
       <g fill="#8A9AAB" font-family="Segoe UI, sans-serif" font-size="11" letter-spacing="1.5">
-        <text x="146" y="72">TOKENS</text>
-        <text x="286" y="58">ATTENTION</text>
-        <text x="228" y="188">REPRESENTATION</text>
-        <text x="404" y="136">EXPERIMENT</text>
-        <text x="336" y="268">OUTPUT</text>
+        <text x="146" y="72">Token</text>
+        <text x="286" y="58">Attention</text>
+        <text x="228" y="188">表示</text>
+        <text x="404" y="136">实验</text>
+        <text x="336" y="268">输出</text>
       </g>
     </svg>
   </div>

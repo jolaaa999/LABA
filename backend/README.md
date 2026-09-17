@@ -1,4 +1,4 @@
-# Backend — AI Community Public API
+# Backend — LABA Public API
 
 Go + Gin + GORM. Public content API (`/api/v1`). Frontend Phase 4–7 remains frozen and unwired.
 

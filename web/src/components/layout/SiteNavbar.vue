@@ -65,7 +65,7 @@ function closeMobile(): void {
         <span class="site-navbar__name">{{ SITE_NAME }}</span>
       </RouterLink>
 
-      <nav class="site-navbar__desktop" aria-label="Primary">
+      <nav class="site-navbar__desktop" aria-label="主导航">
         <RouterLink
           v-for="item in primaryNav"
           :key="item.to"
@@ -91,7 +91,7 @@ function closeMobile(): void {
             :aria-current="isJoinCurrent ? 'page' : undefined"
             @click="navigate"
           >
-            Join Us
+            加入
           </AuroraButton>
         </RouterLink>
 
@@ -100,7 +100,7 @@ function closeMobile(): void {
           type="button"
           :aria-expanded="isMobileOpen"
           aria-controls="mobile-nav-panel"
-          :aria-label="isMobileOpen ? 'Close menu' : 'Open menu'"
+          :aria-label="isMobileOpen ? '关闭菜单' : '打开菜单'"
           @click="toggleMobile"
         >
           <span class="site-navbar__menu-icon" aria-hidden="true" />
@@ -115,7 +115,7 @@ function closeMobile(): void {
       :aria-hidden="!isMobileOpen"
     >
       <PageContainer>
-        <nav class="site-navbar__mobile-nav" aria-label="Mobile">
+        <nav class="site-navbar__mobile-nav" aria-label="移动端导航">
           <RouterLink
             v-for="item in primaryNav"
             :key="item.to"
@@ -145,7 +145,7 @@ function closeMobile(): void {
                 }
               "
             >
-              Join Us
+              加入
             </AuroraButton>
           </RouterLink>
         </nav>

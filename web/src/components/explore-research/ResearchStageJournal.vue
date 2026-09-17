@@ -53,29 +53,29 @@ function isDim(id: ResearchStageId) {
 
       <div class="research-entry__body">
         <section class="research-entry__block">
-          <h4 class="research-entry__label">Question</h4>
+          <h4 class="research-entry__label">问题</h4>
           <p class="research-entry__text">{{ stage.question }}</p>
         </section>
 
         <section class="research-entry__block">
-          <h4 class="research-entry__label">Practice</h4>
+          <h4 class="research-entry__label">实践</h4>
           <p class="research-entry__text">{{ stage.practice }}</p>
         </section>
 
         <section v-if="stage.concepts?.length" class="research-entry__block">
-          <h4 class="research-entry__label">Concepts</h4>
+          <h4 class="research-entry__label">概念</h4>
           <ul class="research-entry__concepts">
             <li v-for="concept in stage.concepts" :key="concept">{{ concept }}</li>
           </ul>
         </section>
 
         <section class="research-entry__block">
-          <h4 class="research-entry__label">Evidence</h4>
+          <h4 class="research-entry__label">证据</h4>
           <p class="research-entry__text">{{ stage.evidence }}</p>
         </section>
 
         <section class="research-entry__block">
-          <h4 class="research-entry__label">Failure Signals</h4>
+          <h4 class="research-entry__label">失败信号</h4>
           <ul class="research-entry__failures">
             <li v-for="(signal, i) in stage.failureSignals" :key="i">
               {{ signal }}

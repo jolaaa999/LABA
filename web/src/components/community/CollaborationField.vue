@@ -50,11 +50,11 @@ import { collaborationField } from '../../content/community'
           stroke="currentColor"
         />
         <circle cx="520" cy="40" r="6" fill="currentColor" opacity="0.15" stroke="currentColor" />
-        <text x="96" y="44" class="collab-field__svg-label">QUESTION</text>
-        <text x="96" y="94" class="collab-field__svg-label">PERSON</text>
-        <text x="260" y="100" class="collab-field__svg-label">SESSION</text>
-        <text x="312" y="184" class="collab-field__svg-label">WORK</text>
-        <text x="536" y="44" class="collab-field__svg-label">PERSON</text>
+        <text x="96" y="44" class="collab-field__svg-label">提问</text>
+        <text x="96" y="94" class="collab-field__svg-label">成员</text>
+        <text x="260" y="100" class="collab-field__svg-label">场次</text>
+        <text x="312" y="184" class="collab-field__svg-label">作品</text>
+        <text x="536" y="44" class="collab-field__svg-label">成员</text>
       </svg>
     </div>
 
@@ -62,15 +62,15 @@ import { collaborationField } from '../../content/community'
 
     <p class="collab-field__links">
       <RouterLink class="collab-field__link" to="/events">
-        See community rhythm
+        看社区节奏
       </RouterLink>
       <span aria-hidden="true">·</span>
       <RouterLink class="collab-field__link" to="/projects">
-        See the work
+        看作品
       </RouterLink>
       <span aria-hidden="true">·</span>
       <RouterLink class="collab-field__link" to="/explore">
-        Find a direction
+        找方向
       </RouterLink>
     </p>
   </section>

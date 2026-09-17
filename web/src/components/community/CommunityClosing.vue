@@ -16,19 +16,19 @@ import AuroraButton from '../ui/AuroraButton.vue'
     <div class="community-closing__actions">
       <RouterLink v-slot="{ navigate }" to="/join" custom>
         <AuroraButton variant="primary" @click="navigate">
-          Join the Community
+          加入社区
         </AuroraButton>
       </RouterLink>
     </div>
 
     <div class="community-closing__links">
       <RouterLink class="community-closing__link" to="/explore">
-        <span class="community-closing__link-eyebrow">Learn</span>
-        <span class="community-closing__link-title">Find your direction</span>
+        <span class="community-closing__link-eyebrow">学习</span>
+        <span class="community-closing__link-title">找到你的方向</span>
       </RouterLink>
       <RouterLink class="community-closing__link" to="/events">
-        <span class="community-closing__link-eyebrow">Gather</span>
-        <span class="community-closing__link-title">See the community rhythm</span>
+        <span class="community-closing__link-eyebrow">相聚</span>
+        <span class="community-closing__link-title">看社区节奏</span>
       </RouterLink>
     </div>
   </section>

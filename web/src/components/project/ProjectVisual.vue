@@ -29,16 +29,16 @@ const { prefersReducedMotion } = useMotionPreference()
     >
       <g class="project-visual__flow">
         <rect class="node" x="18" y="78" width="58" height="36" rx="6" />
-        <text x="47" y="100" text-anchor="middle">TASK</text>
+        <text x="47" y="100" text-anchor="middle">任务</text>
         <path class="edge" d="M82 96 H112" />
         <rect class="node node--accent" x="112" y="78" width="58" height="36" rx="6" />
-        <text x="141" y="100" text-anchor="middle">PLAN</text>
+        <text x="141" y="100" text-anchor="middle">计划</text>
         <path class="edge" d="M176 96 H206" />
         <rect class="node" x="206" y="42" width="58" height="36" rx="6" />
-        <text x="235" y="64" text-anchor="middle">TOOL</text>
+        <text x="235" y="64" text-anchor="middle">工具</text>
         <path class="edge edge--branch" d="M235 78 V96 H264" />
         <rect class="node node--result" x="264" y="78" width="40" height="36" rx="6" />
-        <text x="284" y="100" text-anchor="middle">OK</text>
+        <text x="284" y="100" text-anchor="middle">通过</text>
         <path class="edge edge--soft" d="M141 114 V148 H235 V78" />
       </g>
     </svg>
@@ -85,11 +85,11 @@ const { prefersReducedMotion } = useMotionPreference()
         <text class="prompt" x="42" y="68">$ paper pipeline run --from notes</text>
         <path class="edge" d="M48 92 H140" />
         <rect class="chip" x="48" y="104" width="72" height="28" rx="5" />
-        <text class="chip-label" x="84" y="122" text-anchor="middle">PARSE</text>
+        <text class="chip-label" x="84" y="122" text-anchor="middle">解析</text>
         <rect class="chip chip--accent" x="136" y="104" width="72" height="28" rx="5" />
-        <text class="chip-label" x="172" y="122" text-anchor="middle">CHECK</text>
+        <text class="chip-label" x="172" y="122" text-anchor="middle">校验</text>
         <rect class="chip" x="224" y="104" width="56" height="28" rx="5" />
-        <text class="chip-label" x="252" y="122" text-anchor="middle">LOG</text>
+        <text class="chip-label" x="252" y="122" text-anchor="middle">日志</text>
         <path class="edge" d="M120 118 H136" />
         <path class="edge" d="M208 118 H224" />
       </g>

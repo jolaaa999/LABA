@@ -48,7 +48,7 @@ const target = '/projects'
       <p class="project-preview__summary">{{ project.summary }}</p>
       <p class="project-preview__tech">{{ techLine }}</p>
       <span class="project-preview__cta">
-        Explore project
+        探索作品
         <span aria-hidden="true">↗</span>
       </span>
     </div>

@@ -49,7 +49,7 @@ function onPreview() {
         <h3 class="work-row__title">{{ project.title }}</h3>
         <p class="work-row__summary">{{ project.summary }}</p>
         <p v-if="project.placeholder" class="work-row__dev">
-          Dev placeholder · not a real deliverable
+          开发占位 · 非真实交付物
         </p>
       </div>
     </div>

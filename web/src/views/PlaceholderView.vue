@@ -9,22 +9,22 @@ const route = useRoute()
 
 const title = computed(() => {
   const metaTitle = route.meta.title
-  return typeof metaTitle === 'string' ? metaTitle : 'Page'
+  return typeof metaTitle === 'string' ? metaTitle : '页面'
 })
 
 const description = computed(() => {
   const metaDescription = route.meta.description
   return typeof metaDescription === 'string'
     ? metaDescription
-    : 'This route is wired for Global Shell. Content arrives in later phases.'
+    : '该路由已接入全局外壳，内容将在后续阶段上线。'
 })
 
 const isExploreChild = computed(() => route.path.startsWith('/explore/'))
 
 const note = computed(() =>
   isExploreChild.value
-    ? 'Coming in the next Explore phase.'
-    : 'Layout, routing, and brand shell are active. Content arrives later.',
+    ? '将在下一探索阶段上线。'
+    : '布局、路由与品牌外壳已就绪，内容稍后上线。',
 )
 </script>
 
@@ -32,7 +32,7 @@ const note = computed(() =>
   <main class="placeholder-page">
     <PageContainer narrow>
       <SectionHeader
-        eyebrow="Coming soon"
+        eyebrow="敬请期待"
         :title="title"
         :description="description"
       />

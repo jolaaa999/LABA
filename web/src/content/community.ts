@@ -6,9 +6,9 @@ import type { ContributionModeId } from '../types/member'
 import { getPublishedCommunityMembers } from './members'
 
 export const communityHero = {
-  eyebrow: 'Community',
-  title: 'People behind the practice.',
-  lede: 'A community is more than a roster. People learn, build, question, document, and leave work others can continue — across engineering, research, and hybrid practice.',
+  eyebrow: '社区',
+  title: '实践背后的人。',
+  lede: '社区不止是一份名单。人们学习、构建、质疑、记录，并留下别人能继续推进的成果——跨越工程、科研与混合实践。',
 }
 
 export interface ContributionMode {
@@ -24,62 +24,62 @@ export const contributionModes: ContributionMode[] = [
   {
     id: 'build',
     index: '01',
-    label: 'Build',
+    label: '构建',
     statement:
-      'Turn an idea into something others can use or test — tools, workflows, prototypes.',
-    related: ['AI Engineering', 'Projects', 'Workshops'],
+      '把想法变成别人能用或能测的东西——工具、工作流、原型。',
+    related: ['AI 工程', '作品', '工作坊'],
     fieldHint: 'build',
   },
   {
     id: 'research',
     index: '02',
-    label: 'Research',
+    label: '科研',
     statement:
-      'Ask a question, reproduce, experiment, and keep evidence with its limits.',
-    related: ['Deep Learning', 'Paper Reading', 'Research Sharing'],
+      '提出问题、做复现、做实验，并保留证据及其局限。',
+    related: ['Deep Learning', '论文精读', '科研分享'],
     fieldHint: 'research',
   },
   {
     id: 'explain',
     index: '03',
-    label: 'Explain',
+    label: '解释',
     statement:
-      'Make a model, tool, experiment, or failure clear enough for another person to follow.',
-    related: ['Workshops', 'Reading', 'Sharing'],
+      '把一个模型、工具、实验或失败，讲清楚到另一个人能跟上的程度。',
+    related: ['工作坊', '阅读', '分享'],
     fieldHint: 'explain',
   },
   {
     id: 'document',
     index: '04',
-    label: 'Document',
+    label: '记录',
     statement:
-      'Leave README notes, configs, experiment logs, failure cases, and decisions others can continue.',
-    related: ['Evidence', 'Repos', 'Configs'],
+      '留下 README 笔记、配置、实验日志、失败案例与决策，供他人继续。',
+    related: ['证据', '代码仓库', '配置'],
     fieldHint: 'document',
   },
   {
     id: 'connect',
     index: '05',
-    label: 'Connect',
+    label: '连接',
     statement:
-      'Help a session happen, find a collaborator, and keep engineering and research in conversation.',
-    related: ['Sessions', 'Collaboration', 'Rhythm'],
+      '促成一次活动、找到协作者，并让工程与科研保持对话。',
+    related: ['场次', '协作', '节奏'],
     fieldHint: 'connect',
   },
 ]
 
 export const collaborationField = {
-  eyebrow: 'Collaboration',
-  title: 'Work connects people.',
-  lede: 'The community is not organized by job titles. People meet through questions, projects, sessions, evidence, and shared tools.',
-  statement: 'People meet through work, not through profile cards.',
+  eyebrow: '协作',
+  title: '工作把人连接起来。',
+  lede: '社区不是按头衔组织的。人们通过问题、作品、场次、证据与共享工具相遇。',
+  statement: '人们因工作而相遇，而非因名片而相遇。',
 }
 
 export const publicMembersState = {
-  eyebrow: 'People',
-  title: 'Public profiles are not published yet.',
-  body: 'Member profiles will appear here when people choose to make their work and contribution information public.',
-  optIn: 'Public profiles are opt-in.',
+  eyebrow: '成员',
+  title: '公开成员档案暂未发布。',
+  body: '当成员选择公开自己的作品与贡献信息时，档案会显示在这里。',
+  optIn: '公开档案为自愿加入。',
 }
 
 export interface CommunityPrinciple {
@@ -93,34 +93,34 @@ export const communityPrinciples: CommunityPrinciple[] = [
   {
     id: 'inspectable',
     index: '01',
-    label: 'Make it inspectable',
-    statement: 'Others should be able to run, read, question, and continue the work.',
+    label: '让成果可被检视',
+    statement: '别人应该能运行、阅读、质疑并继续这份工作。',
   },
   {
     id: 'failed',
     index: '02',
-    label: 'Share what failed',
-    statement: 'Failure cases are evidence for engineering and research — not something to hide.',
+    label: '分享失败',
+    statement: '失败案例是工程与科研的证据——而不是需要藏起来的东西。',
   },
   {
     id: 'teach',
     index: '03',
-    label: 'Teach what you learn',
-    statement: 'Being able to explain usually matters more than only being able to use.',
+    label: '教你所学的',
+    statement: '能把事情讲清楚，往往比只会用更重要。',
   },
   {
     id: 'leave',
     index: '04',
-    label: 'Leave something behind',
+    label: '留下点什么',
     statement:
-      'A session or a piece of work should leave code, notes, config, a question, or evidence — at least one trail.',
+      '一次活动或一件作品，至少该留下一条痕迹：代码、笔记、配置、一个问题，或一份证据。',
   },
 ]
 
 export const communityClosing = {
-  eyebrow: 'Where next',
-  title: 'Where do I go next?',
-  lede: 'Find a direction, feel the community rhythm, or join when you are ready.',
+  eyebrow: '下一步',
+  title: '我接下来去哪里？',
+  lede: '找一个方向、感受社区的节奏，或在准备好时加入。',
 }
 
 export function getCommunityPublicMembers() {

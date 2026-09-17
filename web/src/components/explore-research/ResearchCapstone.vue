@@ -15,12 +15,12 @@ import { researchCapstone } from '../../content/explore-research'
 
     <div class="research-capstone__links">
       <RouterLink class="research-capstone__link" to="/projects">
-        <span class="research-capstone__link-eyebrow">See the work</span>
-        <span class="research-capstone__link-title">Work Archive</span>
+        <span class="research-capstone__link-eyebrow">查看作品</span>
+        <span class="research-capstone__link-title">作品档案</span>
       </RouterLink>
       <RouterLink class="research-capstone__link" to="/explore">
-        <span class="research-capstone__link-eyebrow">Or choose again</span>
-        <span class="research-capstone__link-title">Back to Learning Map</span>
+        <span class="research-capstone__link-eyebrow">或者重新选择</span>
+        <span class="research-capstone__link-title">返回学习地图</span>
       </RouterLink>
     </div>
   </section>

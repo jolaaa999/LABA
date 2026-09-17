@@ -43,7 +43,7 @@ import AuroraButton from '../ui/AuroraButton.vue'
       </svg>
       <RouterLink v-slot="{ navigate }" to="/join" custom>
         <AuroraButton variant="primary" size="sm" @click="navigate">
-          Join the Community
+          加入社区
         </AuroraButton>
       </RouterLink>
     </div>

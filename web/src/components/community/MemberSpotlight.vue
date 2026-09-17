@@ -24,7 +24,7 @@ defineProps<{
       <Transition :name="reducedMotion ? '' : 'spotlight-copy'" mode="out-in">
         <div :key="member.id" class="member-spotlight__panel">
           <p v-if="member.placeholder" class="member-spotlight__dev">
-            Dev placeholder · not a real person
+            开发占位 · 非真实成员
           </p>
 
           <p class="member-spotlight__index">{{ member.index }}</p>
@@ -45,7 +45,7 @@ defineProps<{
           </p>
 
           <div v-if="member.featuredProject" class="member-spotlight__work">
-            <p class="member-spotlight__work-label">Selected Work</p>
+            <p class="member-spotlight__work-label">精选作品</p>
             <p class="member-spotlight__work-title">{{ member.featuredProject }}</p>
           </div>
 

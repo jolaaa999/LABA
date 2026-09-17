@@ -15,7 +15,7 @@ const year = new Date().getFullYear()
         <p class="site-footer__tagline">{{ SITE_TAGLINE }}</p>
       </div>
 
-      <nav class="site-footer__nav" aria-label="Footer">
+      <nav class="site-footer__nav" aria-label="页脚">
         <RouterLink
           v-for="item in footerNav"
           :key="item.to"

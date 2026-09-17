@@ -12,8 +12,8 @@ const focusId = ref<string | null>(null)
     <header class="system__header">
       <p class="system__eyebrow">{{ communitySystem.eyebrow }}</p>
       <h2 id="system-title" class="system__title">
-        <span class="system__title-line">The website is a map</span>
-        <span class="system__title-line">of the practice.</span>
+        <span class="system__title-line">这个网站是一张</span>
+        <span class="system__title-line">实践的地图。</span>
       </h2>
       <p class="system__lede">{{ communitySystem.lede }}</p>
     </header>

@@ -11,10 +11,10 @@ const emit = defineEmits<{
 }>()
 
 const filters: { id: ProjectFilterId; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'ai-engineering', label: 'AI Engineering' },
-  { id: 'research', label: 'Research' },
-  { id: 'tools', label: 'Tools' },
+  { id: 'all', label: '全部' },
+  { id: 'ai-engineering', label: 'AI 工程' },
+  { id: 'research', label: '科研' },
+  { id: 'tools', label: '工具' },
 ]
 
 function select(id: ProjectFilterId) {
@@ -23,7 +23,7 @@ function select(id: ProjectFilterId) {
 </script>
 
 <template>
-  <div class="project-filter" role="tablist" aria-label="Filter work archive">
+  <div class="project-filter" role="tablist" aria-label="筛选作品档案">
     <button
       v-for="item in filters"
       :key="item.id"

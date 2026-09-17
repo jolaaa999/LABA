@@ -22,12 +22,12 @@ function onLeave() {
     aria-labelledby="ai-path-title"
   >
     <header class="ai-path__header">
-      <p class="ai-path__eyebrow">The Path</p>
+      <p class="ai-path__eyebrow">路径</p>
       <h2 id="ai-path-title" class="ai-path__title">
-        Input → tool → system → delivery.
+        输入 → 工具 → 系统 → 交付。
       </h2>
       <p class="ai-path__lede">
-        Six stages of orientation. Not unlocks. Not a syllabus you must finish in order.
+        六个定向阶段。不是解锁，也不是必须按顺序完成的课纲。
       </p>
     </header>
 

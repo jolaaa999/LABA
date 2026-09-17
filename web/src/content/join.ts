@@ -6,13 +6,13 @@ import type { JoinInfo } from '../types/join'
 
 export const joinInfo: JoinInfo = {
   open: true,
-  headline: 'The next chapter isn’t written yet.',
+  headline: '下一章还没有写定。',
   description:
-    'What comes next depends on who joins us — builders, readers, and people who care about the work.',
-  ctaLabel: 'Join the Community',
+    '接下来会怎样，取决于谁加入我们——构建者、阅读者，以及真正在意这份工作的人。',
+  ctaLabel: '加入社区',
   ctaTo: '/join',
   contactNote:
-    'Public recruiting details are not published yet — no public QQ / QR available.',
+    '公开招新信息暂未发布——暂无公开 QQ / 二维码。',
   brandEcho: ['Learn AI.', 'Build Intelligence.', 'Create with AI.'],
 }
 

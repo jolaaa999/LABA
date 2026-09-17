@@ -4,48 +4,48 @@
  */
 
 export const aboutHero = {
-  eyebrow: 'About',
-  title: 'Learn to build with AI.\nLearn to question AI.',
-  lede: 'Modern AI asks for two kinds of literacy: the ability to build useful systems with models, and the ability to understand, test, reproduce, and question them. This community keeps both in the same room.',
+  eyebrow: '关于',
+  title: '学会用 AI 构建。\n学会追问 AI。',
+  lede: '现代 AI 要求两种素养：用模型构建有用系统的能力，以及理解、测试、复现并追问它们的能力。这个社区让两者处在同一个房间里。',
 }
 
 export const twoDirections = {
-  eyebrow: 'Two Directions',
-  title: 'Different goals.\nShared discipline.',
+  eyebrow: '两个方向',
+  title: '不同的目标。\n共同的准则。',
   bridge:
-    'Building benefits from understanding. Understanding becomes sharper through practice.',
+    '构建受益于理解。理解在实践之中变得更加锐利。',
   hybridNote:
-    'Hybrid is not a third path. It means someone moves between engineering practice and research thinking across stages of work.',
+    'Hybrid 不是第三条路。它指有人在工程的实践与科研的思辨之间，于不同阶段来回移动。',
   build: {
     label: 'Build with AI',
-    question: 'How do I turn models into something useful?',
+    question: '我如何把模型变成有用的东西？',
     topics: [
       'AI Coding',
       'Agent Systems',
       'RAG / MCP',
-      'Workflow',
-      'Evaluation',
-      'Delivery',
+      '工作流',
+      '评估',
+      '交付',
     ],
-    outcome: 'Usable systems, tools, workflows, and prototypes.',
+    outcome: '可用的系统、工具、工作流与原型。',
   },
   understand: {
     label: 'Understand AI',
-    question: 'How do I know what the model is actually doing?',
+    question: '我如何知道模型实际在做什么？',
     topics: [
       'Deep Learning',
       'PyTorch',
       'Transformer',
-      'Paper Reading',
-      'Reproduction',
-      'Experiment',
-      'Evidence',
+      '论文精读',
+      '复现',
+      '实验',
+      '证据',
     ],
-    outcome: 'Questions, experiments, reproducible notes, and evidence.',
+    outcome: '问题、实验、可复现的笔记与证据。',
   },
   audiences: {
-    build: ['Career', 'Internships', 'Graduation projects'],
-    understand: ['Research', 'Recommendation', 'Competitions'],
+    build: ['职业', '实习', '毕业设计'],
+    understand: ['科研', '推荐', '竞赛'],
   },
 }
 
@@ -57,44 +57,44 @@ export interface SharedPracticeStep {
 }
 
 export const sharedPractice = {
-  eyebrow: 'Shared Practice',
-  title: 'The method matters more\nthan the label.',
-  lede: 'Whether the work looks like engineering or research, the same discipline keeps it honest.',
+  eyebrow: '共同实践',
+  title: '方法比标签\n更重要。',
+  lede: '无论工作看起来像工程还是科研，同一种准则让它保持诚实。',
   steps: [
     {
       id: 'question',
       index: '01',
-      label: 'Question',
+      label: '提问',
       statement:
-        'Name the problem, goal, assumption, and constraint — before asking a model to invent the answer.',
+        '在让模型替你编造答案之前，先点明问题、目标、假设与约束。',
     },
     {
       id: 'make',
       index: '02',
-      label: 'Make',
+      label: '动手',
       statement:
-        'Engineering builds a system; research builds an experiment. Both make something inspectable.',
+        '工程构建系统；科研构建实验。两者都产出可被检视的东西。',
     },
     {
       id: 'test',
       index: '03',
-      label: 'Test',
+      label: '验证',
       statement:
-        'Does it work? Does the evidence support the claim? Do not trust the first output.',
+        '它真的有效吗？证据支持这个结论吗？不要相信第一次的输出。',
     },
     {
       id: 'explain',
       index: '04',
-      label: 'Explain',
+      label: '解释',
       statement:
-        'Say what happened, why, what failed, and what remains unknown.',
+        '说清发生了什么、为什么、什么失败了，以及还有什么未知。',
     },
     {
       id: 'share',
       index: '05',
-      label: 'Share',
+      label: '分享',
       statement:
-        'Leave code, README, config, notes, evidence, failure cases, or questions others can continue.',
+        '留下代码、README、配置、笔记、证据、失败案例，或别人能继续追问的问题。',
     },
   ] satisfies SharedPracticeStep[],
 }
@@ -107,34 +107,34 @@ export interface CommunityPriority {
 }
 
 export const communityPriorities = {
-  eyebrow: 'What Matters',
-  title: 'Not more AI.\nBetter practice with AI.',
+  eyebrow: '我们看重什么',
+  title: '不要更多 AI。\n要更好的 AI 实践。',
   items: [
     {
       id: 'usefulness',
       index: '01',
-      label: 'Usefulness',
-      statement: 'Not only a cool demo — someone else can use or test it.',
+      label: '有用性',
+      statement: '不只是一个酷炫的演示——别人能用它或测它。',
     },
     {
       id: 'understanding',
       index: '02',
-      label: 'Understanding',
+      label: '可理解性',
       statement:
-        'Not only vocabulary — assumptions, limits, failure modes, and why something works.',
+        '不只是术语——还有假设、边界、失败模式，以及它为何有效。',
     },
     {
       id: 'reproducibility',
       index: '03',
-      label: 'Reproducibility',
-      statement: 'Others can know what changed, how it ran, and what was measured.',
+      label: '可复现',
+      statement: '别人能知道改了什么、怎么跑的、测了什么。',
     },
     {
       id: 'continuity',
       index: '04',
-      label: 'Continuity',
+      label: '延续性',
       statement:
-        'Work does not vanish after a session — it leaves notes, tools, questions, or evidence.',
+        '工作不会在一次活动后消失——它会留下笔记、工具、问题或证据。',
     },
   ] satisfies CommunityPriority[],
 }
@@ -148,48 +148,48 @@ export interface SystemNode {
 }
 
 export const communitySystem = {
-  eyebrow: 'The System',
-  title: 'The website is a map of the practice.',
-  lede: 'Learning, gathering, work, people, and continuity form a loop — not a brochure sitemap.',
+  eyebrow: '运作方式',
+  title: '这个网站是实践的一张地图。',
+  lede: '学习、相聚、工作、人与延续，构成一个循环——不是一张宣传册式的站点地图。',
   nodes: [
     {
       id: 'learn',
-      label: 'Learn',
-      routeLabel: 'Explore',
+      label: '学习',
+      routeLabel: '探索',
       to: '/explore',
-      statement: 'Find a direction — Build with AI or Understand AI.',
+      statement: '找一个方向——Build with AI 或 Understand AI。',
     },
     {
       id: 'gather',
-      label: 'Gather',
-      routeLabel: 'Events',
+      label: '相聚',
+      routeLabel: '活动',
       to: '/events',
-      statement: 'Practice together as shared time.',
+      statement: '以共享时光的方式一起实践。',
     },
     {
       id: 'make',
-      label: 'Make',
-      routeLabel: 'Projects',
+      label: '动手',
+      routeLabel: '作品',
       to: '/projects',
-      statement: 'Leave inspectable work others can continue.',
+      statement: '留下可被检视、别人能继续的工作。',
     },
     {
       id: 'share',
-      label: 'Share',
-      routeLabel: 'Projects',
+      label: '分享',
+      routeLabel: '作品',
       to: '/projects',
-      statement: 'Document evidence, limits, and next questions.',
+      statement: '记录证据、边界与下一步问题。',
     },
     {
       id: 'connect',
-      label: 'Connect',
-      routeLabel: 'Community',
+      label: '连接',
+      routeLabel: '社区',
       to: '/community',
-      statement: 'People meet through practice, not profile walls.',
+      statement: '人们通过实践相遇，而不是通过名片墙。',
     },
   ] satisfies SystemNode[],
-  aboutRole: 'About explains why this operating model exists.',
-  joinRole: 'Join is how someone enters when ready.',
+  aboutRole: '关于页解释这套运作方式为何存在。',
+  joinRole: '加入页是准备好的人进入的方式。',
 }
 
 export interface CommunityBoundary {
@@ -199,35 +199,35 @@ export interface CommunityBoundary {
 }
 
 export const communityBoundaries = {
-  eyebrow: 'Boundaries',
-  title: 'Some things we deliberately do not optimize for.',
+  eyebrow: '边界',
+  title: '有些事我们刻意不去优化。',
   items: [
     {
       id: 'prompt',
-      label: 'Not a prompt gallery',
-      statement: 'AI use is more than collecting clever prompts.',
+      label: '不是提示词画廊',
+      statement: '用 AI 远不止收集聪明的提示词。',
     },
     {
       id: 'marketplace',
-      label: 'Not a course marketplace',
-      statement: 'Learning here is organized around practice, not course consumption.',
+      label: '不是课程集市',
+      statement: '这里的学习围绕实践组织，而不是围绕课程消费。',
     },
     {
       id: 'leaderboard',
-      label: 'Not a leaderboard',
-      statement: 'Contribution is not reduced to points or rankings.',
+      label: '不是排行榜',
+      statement: '贡献不会被简化成分数或排名。',
     },
     {
       id: 'claims',
-      label: 'Not a claim factory',
+      label: '不是结论工厂',
       statement:
-        'Experiments, limitations, and failures matter as much as impressive results.',
+        '实验、局限与失败，和亮眼的结果同样重要。',
     },
   ] satisfies CommunityBoundary[],
 }
 
 export const aboutClosing = {
-  eyebrow: 'Next',
-  title: 'Choose what you want to practice next.',
-  lede: 'Understand the model of the community — then pick a direction, feel the rhythm, or join.',
+  eyebrow: '下一步',
+  title: '选择你接下来想实践的内容。',
+  lede: '理解社区的运作模型——然后选一个方向、感受节奏，或加入。',
 }

@@ -16,8 +16,8 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="member-roster" role="listbox" aria-label="Community members">
-    <p class="member-roster__label">Roster</p>
+  <div class="member-roster" role="listbox" aria-label="社区成员">
+    <p class="member-roster__label">成员名册</p>
     <button
       v-for="member in members"
       :key="member.id"

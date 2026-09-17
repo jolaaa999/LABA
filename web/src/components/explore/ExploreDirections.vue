@@ -31,9 +31,9 @@ function onLeave() {
     aria-labelledby="explore-directions-title"
   >
     <header class="explore-directions__header">
-      <p class="explore-directions__eyebrow">Choose your direction</p>
+      <p class="explore-directions__eyebrow">选择你的方向</p>
       <h2 id="explore-directions-title" class="explore-directions__title">
-        Two technical personalities.
+        两种技术气质。
       </h2>
     </header>
 
@@ -50,20 +50,20 @@ function onLeave() {
         <p class="explore-directions__path-eyebrow">{{ build.eyebrow }}</p>
         <h3 class="explore-directions__path-title">{{ build.title }}</h3>
         <p class="explore-directions__audience">
-          For: {{ build.audience.join(' · ') }}
+          面向：{{ build.audience.join(' · ') }}
         </p>
         <ul class="explore-directions__topics">
           <li v-for="topic in build.topics" :key="topic.id">{{ topic.label }}</li>
         </ul>
         <p class="explore-directions__statement">{{ build.statement }}</p>
         <span class="explore-directions__cta">
-          Enter path
+          进入路径
           <span aria-hidden="true">→</span>
         </span>
       </RouterLink>
 
       <div class="explore-directions__spine" aria-hidden="true">
-        <span>Foundations</span>
+        <span>基础</span>
       </div>
 
       <RouterLink
@@ -78,7 +78,7 @@ function onLeave() {
         <p class="explore-directions__path-eyebrow">{{ understand.eyebrow }}</p>
         <h3 class="explore-directions__path-title">{{ understand.title }}</h3>
         <p class="explore-directions__audience">
-          For: {{ understand.audience.join(' · ') }}
+          面向：{{ understand.audience.join(' · ') }}
         </p>
         <ul class="explore-directions__topics">
           <li v-for="topic in understand.topics" :key="topic.id">
@@ -87,7 +87,7 @@ function onLeave() {
         </ul>
         <p class="explore-directions__statement">{{ understand.statement }}</p>
         <span class="explore-directions__cta">
-          Enter path
+          进入路径
           <span aria-hidden="true">→</span>
         </span>
       </RouterLink>

@@ -15,12 +15,12 @@ import { aiCapstone } from '../../content/explore-ai'
 
     <div class="ai-capstone__links">
       <RouterLink class="ai-capstone__link" to="/projects">
-        <span class="ai-capstone__link-eyebrow">See the work</span>
-        <span class="ai-capstone__link-title">Work Archive</span>
+        <span class="ai-capstone__link-eyebrow">查看作品</span>
+        <span class="ai-capstone__link-title">作品档案</span>
       </RouterLink>
       <RouterLink class="ai-capstone__link" to="/explore">
-        <span class="ai-capstone__link-eyebrow">Or choose again</span>
-        <span class="ai-capstone__link-title">Back to Learning Map</span>
+        <span class="ai-capstone__link-eyebrow">或者重新选择</span>
+        <span class="ai-capstone__link-title">返回学习地图</span>
       </RouterLink>
     </div>
   </section>

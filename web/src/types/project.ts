@@ -98,11 +98,11 @@ export interface Project {
 }
 
 export const PROJECT_CATEGORY_LABELS: Record<ProjectCategory, string> = {
-  'ai-engineering': 'AI Engineering',
-  research: 'Research',
-  'developer-tool': 'Developer Tool',
-  'open-source': 'Open Source',
-  competition: 'Competition',
+  'ai-engineering': 'AI 工程',
+  research: '科研',
+  'developer-tool': '工具',
+  'open-source': '开源',
+  competition: '竞赛',
 }
 
 export function getProjectCategoryLabel(category: ProjectCategory): string {
@@ -113,15 +113,15 @@ export function getProjectCategoryLabel(category: ProjectCategory): string {
 export function getProjectArchiveKindLabel(category: ProjectCategory): string {
   switch (category) {
     case 'ai-engineering':
-      return 'AI Engineering'
+      return 'AI 工程'
     case 'research':
-      return 'Research'
+      return '科研'
     case 'developer-tool':
-      return 'Tool'
+      return '工具'
     case 'open-source':
-      return 'Open Source'
+      return '开源'
     case 'competition':
-      return 'Competition'
+      return '竞赛'
   }
 }
 

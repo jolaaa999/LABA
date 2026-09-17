@@ -63,7 +63,7 @@ onMounted(() => {
         <p class="shared-practice__statement">{{ step.statement }}</p>
       </li>
     </ol>
-    <p class="shared-practice__return" aria-hidden="true">↺ Share feeds the next question</p>
+    <p class="shared-practice__return" aria-hidden="true">↺ 分享滋养下一个问题</p>
   </section>
 </template>
 

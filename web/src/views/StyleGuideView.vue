@@ -10,32 +10,32 @@ import { useMotionPreference } from '../composables/useMotionPreference'
 const { prefersReducedMotion, motionEnabled } = useMotionPreference()
 
 const colorTokens = [
-  { name: 'Snow', token: '--color-snow', value: '#FCFDFE' },
-  { name: 'Morning', token: '--color-morning', value: '#F7FAFC' },
-  { name: 'Ivory', token: '--color-ivory', value: '#FAFAF7' },
-  { name: 'Frost', token: '--color-frost', value: '#EDF4F8' },
-  { name: 'Glacier', token: '--color-glacier', value: '#DDEEFF' },
-  { name: 'Stream', token: '--color-stream', value: '#B8DEFF' },
-  { name: 'Aurora', token: '--color-aurora', value: '#79BEFF' },
-  { name: 'Sky', token: '--color-sky', value: '#4EA5F5' },
-  { name: 'Mountain', token: '--color-mountain', value: '#276FAE' },
+  { name: '雪', token: '--color-snow', value: '#FCFDFE' },
+  { name: '晨', token: '--color-morning', value: '#F7FAFC' },
+  { name: '象牙', token: '--color-ivory', value: '#FAFAF7' },
+  { name: '霜', token: '--color-frost', value: '#EDF4F8' },
+  { name: '冰川', token: '--color-glacier', value: '#DDEEFF' },
+  { name: '溪', token: '--color-stream', value: '#B8DEFF' },
+  { name: '极光', token: '--color-aurora', value: '#79BEFF' },
+  { name: '天', token: '--color-sky', value: '#4EA5F5' },
+  { name: '山', token: '--color-mountain', value: '#276FAE' },
 ] as const
 
 const textTokens = [
-  { name: 'Text', token: '--color-text', value: '#10243A' },
-  { name: 'Secondary', token: '--color-text-secondary', value: '#64778A' },
-  { name: 'Muted', token: '--color-text-muted', value: '#8A9AAB' },
+  { name: '文字', token: '--color-text', value: '#10243A' },
+  { name: '次级', token: '--color-text-secondary', value: '#64778A' },
+  { name: '弱化', token: '--color-text-muted', value: '#8A9AAB' },
 ] as const
 </script>
 
 <template>
   <main class="style-guide">
     <header class="style-guide__intro">
-      <p class="style-guide__label">Aurora Design System</p>
+      <p class="style-guide__label">极光设计系统</p>
       <h1 class="style-guide__title">
-        Snow × Aurora ×
-        <GradientText>Sky</GradientText>
-        × Glass
+        雪 × 极光 ×
+        <GradientText>天</GradientText>
+        × 玻璃
       </h1>
       <p class="style-guide__lead">
         Phase 2 视觉契约预览页。后续 Homepage / Projects / Community 必须消费这些
@@ -46,8 +46,8 @@ const textTokens = [
     <section class="style-guide__section" aria-labelledby="colors-heading">
       <SectionHeader
         id="colors-heading"
-        eyebrow="Tokens"
-        title="Colors"
+        eyebrow="令牌"
+        title="色彩"
         description="约 85% 白/中性，约 10% 浅蓝氛围，约 5% Aurora / Sky 强调。"
       />
       <div class="swatch-grid">
@@ -89,8 +89,8 @@ const textTokens = [
     <section class="style-guide__section" aria-labelledby="type-heading">
       <SectionHeader
         id="type-heading"
-        eyebrow="Tokens"
-        title="Typography"
+        eyebrow="令牌"
+        title="排版"
         description="Display 有品牌感，Body 保证中文可读。避免超大标题滥用于正文。"
       />
       <GlassCard variant="plain" class="type-panel">
@@ -107,8 +107,8 @@ const textTokens = [
     <section class="style-guide__section" aria-labelledby="buttons-heading">
       <SectionHeader
         id="buttons-heading"
-        eyebrow="Primitives"
-        title="Buttons"
+        eyebrow="基础元素"
+        title="按钮"
         description="Primary / Secondary / Ghost，以及 sm / md / lg。Hover 克制，Press scale(0.98)。"
       />
       <div class="stack">
@@ -130,8 +130,8 @@ const textTokens = [
     <section class="style-guide__section" aria-labelledby="surfaces-heading">
       <SectionHeader
         id="surfaces-heading"
-        eyebrow="Primitives"
-        title="Surfaces"
+        eyebrow="基础元素"
+        title="表面"
         description="Plain / Elevated / Glass / Glow。Glass 仅限少量表面，不作满屏毛玻璃。"
       />
       <div class="surface-grid">
@@ -159,14 +159,14 @@ const textTokens = [
     <section class="style-guide__section" aria-labelledby="headers-heading">
       <SectionHeader
         id="headers-heading"
-        eyebrow="Primitives"
-        title="Section Header"
+        eyebrow="基础元素"
+        title="区块标题"
         description="统一 Eyebrow / Title / Description，避免每页重写标题样式。"
       />
       <div class="stack">
         <GlassCard variant="plain">
           <SectionHeader
-            eyebrow="Explore"
+            eyebrow="探索"
             title="AI × Productivity"
             description="用 AI 创造东西：Coding、Agent、RAG、MCP 与工作流。"
             align="left"
@@ -174,8 +174,8 @@ const textTokens = [
         </GlassCard>
         <GlassCard variant="plain">
           <SectionHeader
-            eyebrow="Community"
-            title="People who build here"
+            eyebrow="社区"
+            title="在这里构建的人"
             description="重点不是人数，而是这个社区里有什么样的人。"
             align="center"
           />
@@ -186,8 +186,8 @@ const textTokens = [
     <section class="style-guide__section" aria-labelledby="motion-heading">
       <SectionHeader
         id="motion-heading"
-        eyebrow="Motion"
-        title="Motion Section"
+        eyebrow="动效"
+        title="动效区块"
         description="进入视口一次后保持最终态；Reduced Motion 下直接显示。"
       />
       <p class="hint">

@@ -11,9 +11,9 @@ const { prefersReducedMotion } = useMotionPreference()
 
 const keywords = [
   'AI CODING',
-  'AGENT SYSTEMS',
+  'AGENT 系统',
   'DEEP LEARNING',
-  'RESEARCH',
+  '科研',
 ] as const
 </script>
 
@@ -28,7 +28,7 @@ const keywords = [
     <PageContainer class="hero__grid">
       <div class="hero__copy">
         <p class="hero__eyebrow hero__reveal" style="--reveal-delay: 0ms">
-          University AI × Deep Learning Community
+          大学 AI × Deep Learning 社区
         </p>
 
         <h1 id="hero-title" class="hero__title hero__reveal" style="--reveal-delay: 80ms">
@@ -60,7 +60,7 @@ const keywords = [
         <p
           class="hero__keywords hero__reveal"
           style="--reveal-delay: 280ms"
-          aria-label="Focus areas"
+          aria-label="关注方向"
         >
           <template v-for="(keyword, index) in keywords" :key="keyword">
             <span v-if="index > 0" class="hero__keywords-sep" aria-hidden="true">·</span>

@@ -13,9 +13,9 @@ const emit = defineEmits<{
 <template>
   <section class="format-stream" aria-labelledby="format-stream-title">
     <header class="format-stream__header">
-      <p class="format-stream__eyebrow">Event Formats</p>
+      <p class="format-stream__eyebrow">活动形式</p>
       <h2 id="format-stream-title" class="format-stream__title">
-        Four ways practice becomes shared.
+        实践走向共享的四种方式。
       </h2>
     </header>
 
@@ -45,7 +45,7 @@ const emit = defineEmits<{
             <li v-for="(item, i) in format.whatHappens" :key="i">{{ item }}</li>
           </ul>
           <p class="format-entry__takeaway">
-            <span class="format-entry__takeaway-label">Takeaway</span>
+            <span class="format-entry__takeaway-label">收获</span>
             {{ format.takeaway }}
           </p>
         </div>

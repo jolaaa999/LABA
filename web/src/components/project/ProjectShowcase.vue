@@ -15,7 +15,7 @@ const secondary = computed(() => props.projects.slice(1, 3))
 <template>
   <div v-if="featured" class="project-showcase">
     <div class="project-showcase__featured">
-      <p class="project-showcase__index">Project 01 / Featured</p>
+      <p class="project-showcase__index">作品 01 / 精选</p>
       <ProjectPreview :project="featured" variant="featured" />
     </div>
 
@@ -26,7 +26,7 @@ const secondary = computed(() => props.projects.slice(1, 3))
         class="project-showcase__secondary-item"
       >
         <p class="project-showcase__index">
-          Project {{ String(index + 2).padStart(2, '0') }}
+          作品 {{ String(index + 2).padStart(2, '0') }}
         </p>
         <ProjectPreview :project="project" variant="secondary" />
       </article>

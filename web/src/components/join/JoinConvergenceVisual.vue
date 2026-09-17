@@ -65,13 +65,13 @@ onMounted(() => {
       <circle class="convergence__node convergence__node--entry-dot" cx="210" cy="140" r="4" />
       <circle class="convergence__node convergence__node--practice" cx="400" cy="140" r="6" />
 
-      <text class="convergence__label" x="40" y="124">YOU</text>
+      <text class="convergence__label" x="40" y="124">你</text>
       <text class="convergence__label convergence__label--entry" x="210" y="126" text-anchor="middle">
-        ENTRY
+        入口
       </text>
-      <text class="convergence__label" x="400" y="124" text-anchor="middle">PRACTICE</text>
+      <text class="convergence__label" x="400" y="124" text-anchor="middle">实践</text>
       <text class="convergence__label convergence__label--build" x="200" y="36" text-anchor="middle">
-        BUILD
+        构建
       </text>
       <text
         class="convergence__label convergence__label--research"
@@ -79,9 +79,9 @@ onMounted(() => {
         y="256"
         text-anchor="middle"
       >
-        RESEARCH
+        科研
       </text>
-      <text class="convergence__label convergence__label--hybrid" x="268" y="148">HYBRID ↺</text>
+      <text class="convergence__label convergence__label--hybrid" x="268" y="148">混合 ↺</text>
     </svg>
   </div>
 </template>

@@ -46,15 +46,15 @@ const titleLines = computed(() =>
       </h2>
       <dl class="personalized__meta">
         <div>
-          <dt>Build side</dt>
+          <dt>构建侧</dt>
           <dd>{{ content.buildSide }}</dd>
         </div>
         <div>
-          <dt>Research side</dt>
+          <dt>科研侧</dt>
           <dd>{{ content.researchSide }}</dd>
         </div>
         <div>
-          <dt>The practice</dt>
+          <dt>实践</dt>
           <dd>{{ content.practice }}</dd>
         </div>
       </dl>
@@ -84,19 +84,19 @@ const titleLines = computed(() =>
       </h2>
       <dl class="personalized__meta">
         <div>
-          <dt>Start with</dt>
+          <dt>从…开始</dt>
           <dd>{{ content.startWith }}</dd>
         </div>
         <div>
-          <dt>Try</dt>
+          <dt>尝试</dt>
           <dd>{{ content.tryText }}</dd>
         </div>
         <div>
-          <dt>Learn</dt>
+          <dt>学习</dt>
           <dd>{{ content.learn?.join(' · ') }}</dd>
         </div>
         <div>
-          <dt>Good first move</dt>
+          <dt>好的第一步</dt>
           <dd>{{ content.goodFirstMove }}</dd>
         </div>
       </dl>

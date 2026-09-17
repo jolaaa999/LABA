@@ -40,7 +40,7 @@ useIntersectionObserver(
     <div class="join__rail" aria-hidden="true" />
 
     <PageContainer class="join__inner">
-      <p class="join__eyebrow join__reveal" style="--d: 0ms">Next</p>
+      <p class="join__eyebrow join__reveal" style="--d: 0ms">下一步</p>
 
       <h2 id="join-title" class="join__title join__reveal" style="--d: 60ms">
         {{ info.headline }}
@@ -81,7 +81,7 @@ useIntersectionObserver(
           v-if="info.qrCode"
           class="join__qr"
           :src="info.qrCode"
-          alt="Join community QR code"
+          alt="加入社区二维码"
           width="120"
           height="120"
         />
@@ -91,7 +91,7 @@ useIntersectionObserver(
         v-if="info.brandEcho?.length"
         class="join__echo join__reveal"
         style="--d: 340ms"
-        aria-label="Brand echo"
+        aria-label="品牌回响"
       >
         <template v-for="(line, index) in info.brandEcho" :key="line">
           <span v-if="index > 0" class="join__echo-sep" aria-hidden="true">·</span>

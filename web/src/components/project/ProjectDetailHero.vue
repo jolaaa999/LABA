@@ -68,7 +68,7 @@ onBeforeUnmount(() => {
   <header class="detail-hero">
     <div class="detail-hero__nav">
       <RouterLink class="detail-hero__back" to="/projects">
-        ← Work Archive
+        ← 作品档案
       </RouterLink>
       <p class="detail-hero__persona">{{ personaLabel }}</p>
     </div>
@@ -80,7 +80,7 @@ onBeforeUnmount(() => {
         <p class="detail-hero__summary">{{ project.summary }}</p>
         <p class="detail-hero__tech">{{ techLine }}</p>
         <p v-if="project.placeholder" class="detail-hero__dev">
-          Dev placeholder · not a real deliverable
+          开发占位 · 非真实交付物
         </p>
 
         <div class="detail-hero__links">
@@ -91,7 +91,7 @@ onBeforeUnmount(() => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Repository ↗
+            仓库 ↗
           </a>
           <a
             v-if="project.demoUrl"
@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
     <nav
       v-if="sections.length"
       class="detail-hero__toc"
-      aria-label="Case study sections"
+      aria-label="案例研究章节"
     >
       <a
         v-for="section in sections"

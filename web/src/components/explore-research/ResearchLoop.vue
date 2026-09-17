@@ -65,7 +65,7 @@ onMounted(() => {
         <p class="research-loop__statement">{{ step.statement }}</p>
       </li>
     </ol>
-    <p class="research-loop__return" aria-hidden="true">↺ New Question</p>
+    <p class="research-loop__return" aria-hidden="true">↺ 新的问题</p>
   </section>
 </template>
 

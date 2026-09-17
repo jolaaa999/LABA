@@ -114,12 +114,12 @@ onBeforeUnmount(() => {
       <div class="what-happens__layout">
         <aside class="what-happens__context">
           <div class="what-happens__sticky">
-            <p class="what-happens__eyebrow">What Happens Here</p>
+            <p class="what-happens__eyebrow">这里发生的事</p>
             <h2 id="what-happens-title" class="what-happens__title">
-              This is where ideas become practice.
+              这里是想法成为实践的地方。
             </h2>
             <p class="what-happens__lede">
-              Workshops, reading, building, and sharing — the weekly culture behind the work.
+              工作坊、研读、构建与分享——作品背后的每周文化。
             </p>
 
             <div

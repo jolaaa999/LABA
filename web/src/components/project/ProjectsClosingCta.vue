@@ -6,22 +6,21 @@ import AuroraButton from '../ui/AuroraButton.vue'
 
 <template>
   <section class="archive-cta" aria-labelledby="archive-cta-title">
-    <p class="archive-cta__eyebrow">Next</p>
+    <p class="archive-cta__eyebrow">下一步</p>
     <h2 id="archive-cta-title" class="archive-cta__title">
-      Have something worth building?
+      有值得动手去做的作品吗？
     </h2>
     <p class="archive-cta__copy">
-      The archive grows with people who ship, read, and share —
-      not with empty cards.
+      档案随着真正交付、阅读与分享的人一同生长——而不是靠空卡片。
     </p>
     <div class="archive-cta__actions">
       <RouterLink v-slot="{ navigate }" to="/join" custom>
         <AuroraButton variant="primary" size="md" @click="navigate">
-          Join the Community
+          加入社区
         </AuroraButton>
       </RouterLink>
       <RouterLink class="archive-cta__secondary" to="/community">
-        Meet the people
+        认识成员
         <span aria-hidden="true">→</span>
       </RouterLink>
     </div>

@@ -5,13 +5,12 @@ import { learningPrinciples } from '../../content/explore'
 <template>
   <section class="learning-principles" aria-labelledby="learning-principles-title">
     <header class="learning-principles__header">
-      <p class="learning-principles__eyebrow">How We Learn</p>
+      <p class="learning-principles__eyebrow">我们如何学习</p>
       <h2 id="learning-principles-title" class="learning-principles__title">
-        A university tech community — not a course platform.
+        一个大学生技术社区——不是课程平台。
       </h2>
       <p class="learning-principles__lede">
-        Workshops, peer discussion, project practice, paper reading, reproduction,
-        and sharing shape the culture.
+        工作坊、同伴讨论、项目实践、论文精读、复现与分享，共同塑造了这里的文化。
       </p>
     </header>
 

@@ -1,6 +1,6 @@
 # LABA — Learn AI. Build AI.
 
-武汉科技大学 AI Community 品牌官网（Frontend）。
+武汉科技大学 LABA 品牌官网（Frontend）。
 
 **在线预览（GitHub Pages）：** https://jolaaa999.github.io/LABA/
 

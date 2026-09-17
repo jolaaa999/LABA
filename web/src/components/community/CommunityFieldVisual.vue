@@ -79,17 +79,17 @@ const modeClass = computed(() =>
 
       <!-- QUESTION -->
       <circle class="community-field__node community-field__node--question" cx="260" cy="36" r="4.5" />
-      <text class="community-field__label" x="260" y="22" text-anchor="middle">QUESTION</text>
+      <text class="community-field__label" x="260" y="22" text-anchor="middle">提问</text>
 
       <!-- PERSON -->
       <circle class="community-field__node community-field__node--person" cx="180" cy="110" r="7" />
       <circle class="community-field__node community-field__node--person" cx="340" cy="110" r="7" />
-      <text class="community-field__label" x="140" y="114" text-anchor="end">PERSON</text>
-      <text class="community-field__label" x="380" y="114">PERSON</text>
+      <text class="community-field__label" x="140" y="114" text-anchor="end">成员</text>
+      <text class="community-field__label" x="380" y="114">成员</text>
 
       <!-- SESSION -->
       <circle class="community-field__node community-field__node--session" cx="260" cy="160" r="3.5" />
-      <text class="community-field__label" x="288" y="164">SESSION</text>
+      <text class="community-field__label" x="288" y="164">场次</text>
 
       <!-- WORK -->
       <rect
@@ -108,8 +108,8 @@ const modeClass = computed(() =>
         height="24"
         transform="rotate(45 340 230)"
       />
-      <text class="community-field__label" x="180" y="268" text-anchor="middle">WORK</text>
-      <text class="community-field__label" x="340" y="268" text-anchor="middle">WORK</text>
+      <text class="community-field__label" x="180" y="268" text-anchor="middle">作品</text>
+      <text class="community-field__label" x="340" y="268" text-anchor="middle">作品</text>
     </svg>
   </div>
 </template>

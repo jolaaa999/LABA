@@ -35,22 +35,21 @@ export const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      meta: { title: 'Home' },
+      meta: { title: '首页' },
     },
     {
       path: '/style-guide',
       name: 'style-guide',
       component: StyleGuideView,
-      meta: { title: 'Style Guide', shell: false },
+      meta: { title: '样式指南', shell: false },
     },
     {
       path: '/explore',
       name: 'explore',
       component: ExploreView,
       meta: {
-        title: 'Explore',
-        description:
-          'A learning map with two paths: Build with AI, and Understand AI.',
+        title: '探索',
+        description: '一张学习地图，两条路径：Build with AI 与 Understand AI。',
       },
     },
     {
@@ -58,9 +57,8 @@ export const router = createRouter({
       name: 'explore-ai',
       component: ExploreAiView,
       meta: {
-        title: 'AI Engineering',
-        description:
-          'Learn to build with AI — a linear path from foundations to shipping.',
+        title: 'AI 工程',
+        description: '学习如何用 AI 构建——从基础到交付的一条线性路径。',
       },
     },
     {
@@ -68,9 +66,8 @@ export const router = createRouter({
       name: 'explore-deep-learning',
       component: ExploreDeepLearningView,
       meta: {
-        title: 'Deep Learning & Research',
-        description:
-          'A field guide for understanding models — question, reproduce, experiment, evidence.',
+        title: 'Deep Learning 与科研',
+        description: '理解模型的一份现场指南——提问、复现、实验、证据。',
       },
     },
     {
@@ -78,9 +75,8 @@ export const router = createRouter({
       name: 'projects',
       component: ProjectsView,
       meta: {
-        title: 'Work Archive',
-        description:
-          'AI engineering, deep learning research, and tools built inside the community.',
+        title: '作品档案',
+        description: '社团内部构建的 AI 工程、深度学习科研与工具。',
       },
     },
     {
@@ -97,8 +93,8 @@ export const router = createRouter({
         }
       },
       meta: {
-        title: 'Project',
-        description: 'Technical project case study.',
+        title: '作品',
+        description: '技术作品案例研究。',
       },
     },
     {
@@ -106,9 +102,8 @@ export const router = createRouter({
       name: 'events',
       component: EventsView,
       meta: {
-        title: 'Events',
-        description:
-          'Community Pulse — workshops, paper reading, building, and research sharing.',
+        title: '活动',
+        description: '社区节奏——工作坊、论文精读、动手构建与科研分享。',
       },
     },
     {
@@ -116,9 +111,8 @@ export const router = createRouter({
       name: 'community',
       component: CommunityView,
       meta: {
-        title: 'Community',
-        description:
-          'People & Work — how people contribute, collaborate, and leave inspectable practice.',
+        title: '社区',
+        description: '人与实践——大家如何贡献、协作，并留下可检视的实践成果。',
       },
     },
     {
@@ -126,9 +120,8 @@ export const router = createRouter({
       name: 'about',
       component: AboutView,
       meta: {
-        title: 'About',
-        description:
-          'Why this community exists — Build with AI and Understand AI in the same practice.',
+        title: '关于',
+        description: '这个社区为何存在——把 Build with AI 与 Understand AI 放进同一套实践。',
       },
     },
     {
@@ -136,16 +129,15 @@ export const router = createRouter({
       name: 'join',
       component: JoinView,
       meta: {
-        title: 'Join',
-        description:
-          'Entry Field — choose Build, Research, or Hybrid, and begin the practice.',
+        title: '加入',
+        description: '入口——选择构建、科研或混合，然后开始实践。',
       },
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: NotFoundView,
-      meta: { title: 'Not Found' },
+      meta: { title: '页面不存在' },
     },
   ],
   scrollBehavior(to, _from, savedPosition) {
@@ -173,7 +165,7 @@ router.afterEach((to) => {
     const project = getProjectBySlug(String(to.params.slug ?? ''))
     document.title = project
       ? `${project.title} — ${SITE_DOCUMENT_TITLE}`
-      : `Project — ${SITE_DOCUMENT_TITLE}`
+      : `作品 — ${SITE_DOCUMENT_TITLE}`
     return
   }
   document.title = resolveDocumentTitle(to)

@@ -7,14 +7,14 @@ import { communityBoundaries } from '../../content/about'
     <header class="boundaries__header">
       <p class="boundaries__eyebrow">{{ communityBoundaries.eyebrow }}</p>
       <h2 id="boundaries-title" class="boundaries__title">
-        <span class="boundaries__title-line">Some things we deliberately</span>
-        <span class="boundaries__title-line">do not optimize for.</span>
+        <span class="boundaries__title-line">有些事我们刻意</span>
+        <span class="boundaries__title-line">不去优化。</span>
       </h2>
     </header>
 
     <ul class="boundaries__list">
       <li v-for="item in communityBoundaries.items" :key="item.id" class="boundaries__row">
-        <p class="boundaries__not" aria-hidden="true">NOT</p>
+        <p class="boundaries__not" aria-hidden="true">不</p>
         <div class="boundaries__body">
           <h3 class="boundaries__label">{{ item.label }}</h3>
           <p class="boundaries__statement">{{ item.statement }}</p>

@@ -87,10 +87,10 @@ function focus(path: ExplorePathId | null) {
           r="3.5"
         />
         <text class="explore-hero__label explore-hero__label--build" x="430" y="42">
-          BUILD
+          构建
         </text>
         <text class="explore-hero__label explore-hero__label--understand" x="430" y="250">
-          UNDERSTAND
+          理解
         </text>
       </svg>
     </div>

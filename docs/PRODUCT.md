@@ -1,7 +1,7 @@
 # PRODUCT.md — Brand-first AI Community Website
 
 > 状态：Project Blueprint · Brand-first Revision  
-> 版本：v0.2  
+> 版本：v0.3  
 > Current Product Mode：`Brand-first AI Community Website`  
 > Current Phase：`Phase 8A — Backend Foundation & Domain Model`  
 > 约束：Frontend Phase 4–7 frozen；本阶段 Backend only，不改 production UI。
@@ -43,6 +43,8 @@
 
 ### 品牌语义方向（Brand Narrative）
 
+**品牌名（Brand Name）：** `LABA` —— 导航栏品牌标识、页脚版权与文案中的自称统一使用该名，与仓库 README 的 `LABA — Learn AI. Build AI.` 保持一致。原名 `AI Community` 作为品类描述（AI 技术社区）使用，不再作为品牌标识出现在界面上。
+
 **理念锚点（可保留）：**
 
 ```
@@ -61,6 +63,22 @@ Create with AI.
 - 我们在学 AI，也在用 AI 创造；  
 - 我们既做生产力实践，也做科研理解；  
 - 这是社区，不是课表。
+
+### 文案语言策略（Copy Language Policy · v0.3）
+
+站点**主体语言为中文**。英文只在下列三类位置保留，其余一律使用中文（含中文全角标点）：
+
+| 保留英文 | 内容 |
+|----------|------|
+| **品牌锚点句** | `Learn AI. Build Intelligence. Create with AI.` · `We Learn AI. We Build with AI.` · 浏览器标题 `Learn AI, Build AI` |
+| **方向 / 路径专名** | `Build with AI` · `Understand AI` · `AI × Productivity` · `Deep Learning × Research`（与路由、文档章节绑定，不译） |
+| **技术专有名词** | Deep Learning · PyTorch · Transformer · CNN · NLP · Agent · RAG · MCP · AI Coding · Vibecoding · Prompt Engineering · LLM 等，以及 `techStack` 标签 |
+
+**必须中文化：** 导航项、页面标题与 meta description、Section eyebrow / 标题 / 正文、按钮、空状态、可访问性标签（`aria-label` / `alt`）。
+
+**不变式：** 语言切换只作用于**面向访问者的字符串**；代码标识符、路由 path、slug、wire 枚举值、Design Token 名一律不受影响。
+
+**依据：** 本策略不改变品牌边界（仍不绑定百度品牌、不以 PaddlePaddle 为卖点）；品牌锚点句保留英文，是为了维持 `2. 产品本质` 与品牌语义方向的可识别性。
 
 ### 成功标准（产品级）
 

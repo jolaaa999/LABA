@@ -11,13 +11,13 @@ import SectionHeader from '../components/ui/SectionHeader.vue'
     <PageContainer narrow>
       <SectionHeader
         eyebrow="404"
-        title="Page not found"
-        description="This path is outside the current site map. Head back to Home and continue exploring."
+        title="页面不存在"
+        description="这条路径不在当前站点地图内。返回首页，继续探索。"
       />
       <div class="not-found__action">
         <RouterLink v-slot="{ navigate }" to="/" custom>
           <AuroraButton variant="primary" @click="navigate">
-            Back Home
+            返回首页
           </AuroraButton>
         </RouterLink>
       </div>

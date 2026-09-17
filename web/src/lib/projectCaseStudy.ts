@@ -35,52 +35,52 @@ type SectionTitleMap = Record<CaseSectionId, string>
 
 const VERIFIED_TITLES: Record<ProjectDetailPersona, SectionTitleMap> = {
   'ai-engineering': {
-    overview: 'Overview',
-    problem: 'Problem',
-    question: 'Question',
-    approach: 'System & Approach',
-    architecture: 'Architecture',
-    workflow: 'Workflow',
-    experiment: 'Experiment',
-    observations: 'Observations',
-    results: 'Outcome',
-    limitations: 'Limitations',
-    usage: 'Usage',
-    artifacts: 'Artifacts',
-    collaborators: 'Collaborators',
-    nextSteps: 'Next Steps',
+    overview: '概述',
+    problem: '问题',
+    question: '提问',
+    approach: '系统与方法',
+    architecture: '架构',
+    workflow: '工作流',
+    experiment: '实验',
+    observations: '观察',
+    results: '成果',
+    limitations: '局限',
+    usage: '使用方式',
+    artifacts: '产物',
+    collaborators: '协作者',
+    nextSteps: '下一步',
   },
   research: {
-    overview: 'Overview',
-    problem: 'Problem',
-    question: 'Question',
-    approach: 'Method',
-    architecture: 'Architecture',
-    workflow: 'Workflow',
-    experiment: 'Experiment',
-    observations: 'Observations',
-    results: 'Evidence',
-    limitations: 'Limitations',
-    usage: 'Usage',
-    artifacts: 'Artifacts',
-    collaborators: 'Collaborators',
-    nextSteps: 'Next Steps',
+    overview: '概述',
+    problem: '问题',
+    question: '提问',
+    approach: '方法',
+    architecture: '架构',
+    workflow: '工作流',
+    experiment: '实验',
+    observations: '观察',
+    results: '证据',
+    limitations: '局限',
+    usage: '使用方式',
+    artifacts: '产物',
+    collaborators: '协作者',
+    nextSteps: '下一步',
   },
   'developer-tool': {
-    overview: 'Overview',
-    problem: 'Pain Point',
-    question: 'Question',
-    approach: 'Interface & Design',
-    architecture: 'Implementation',
-    workflow: 'Pipeline',
-    experiment: 'Experiment',
-    observations: 'Observations',
-    results: 'Current Status',
-    limitations: 'Limitations',
-    usage: 'Usage',
-    artifacts: 'Artifacts',
-    collaborators: 'Collaborators',
-    nextSteps: 'Next Steps',
+    overview: '概述',
+    problem: '痛点',
+    question: '提问',
+    approach: '界面与设计',
+    architecture: '实现',
+    workflow: '流水线',
+    experiment: '实验',
+    observations: '观察',
+    results: '当前状态',
+    limitations: '局限',
+    usage: '使用方式',
+    artifacts: '产物',
+    collaborators: '协作者',
+    nextSteps: '下一步',
   },
 }
 
@@ -89,16 +89,16 @@ const PLACEHOLDER_TITLE_OVERRIDES: Partial<
   Record<ProjectDetailPersona, Partial<SectionTitleMap>>
 > = {
   'ai-engineering': {
-    results: 'Target Outcome',
-    artifacts: 'Design Artifacts',
+    results: '目标成果',
+    artifacts: '设计产物',
   },
   research: {
-    observations: 'Observation Targets',
-    results: 'Planned Evidence',
+    observations: '观察目标',
+    results: '预期证据',
   },
   'developer-tool': {
-    results: 'Intended Status',
-    artifacts: 'Design Artifacts',
+    results: '预期状态',
+    artifacts: '设计产物',
   },
 }
 
@@ -214,10 +214,10 @@ export function getCaseSectionPlan(project: Project): CaseSectionPlan[] {
 export function getPersonaLabel(persona: ProjectDetailPersona): string {
   switch (persona) {
     case 'ai-engineering':
-      return 'Engineering Case Study'
+      return 'AI 工程案例研究'
     case 'research':
-      return 'Research Case Study'
+      return '科研案例研究'
     case 'developer-tool':
-      return 'Tool Case Study'
+      return '工具案例研究'
   }
 }

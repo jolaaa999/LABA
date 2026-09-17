@@ -5,15 +5,15 @@
 import type { CommunityEvent, EventFormat } from '../types/event'
 
 export const eventsHero = {
-  eyebrow: 'Community Pulse',
-  title: 'Where ideas become shared time.',
-  lede: 'Workshops, paper reading, building, and research sharing turn individual practice into community practice.',
+  eyebrow: '社区脉动',
+  title: '想法变成共享时光的地方。',
+  lede: '工作坊、论文精读、项目开发与科研分享，把个人的实践变成社区的实践。',
 }
 
 export const communityRhythm = {
-  eyebrow: 'Community Rhythm',
-  title: 'The rhythm of the community.',
-  lede: 'These are the ways practice becomes shared — not a fixed weekly calendar, and not a claim about how often each happens.',
+  eyebrow: '社区节奏',
+  title: '社区自己的节奏。',
+  lede: '这些是实践变成共享的方式——不是固定的每周日历，也不代表每件事发生的频率。',
 }
 
 export const eventFormats: EventFormat[] = [
@@ -21,130 +21,122 @@ export const eventFormats: EventFormat[] = [
     id: 'ai-workshop',
     slug: 'ai-workshop',
     index: '01',
-    label: 'Workshop',
-    title: 'AI Workshop',
+    label: '工作坊',
+    title: 'AI 工作坊',
     description:
-      'Modern AI engineering practice — agents, tools, workflows, and delivery — worked through together.',
+      '现代 AI 工程实践——Agent、工具、工作流与交付——大家一起推进。',
     purpose:
-      'Move from “I tried a prompt” to “we can inspect a system that does real work.”',
+      '从「我试过一个提示词」走到「我们能检视一个真正干活的系统性东西」。',
     whatHappens: [
-      'Frame a small engineering question or workflow.',
-      'Build or extend a tool path with peers.',
-      'Evaluate what shipped and what broke.',
+      '提出一个小的工程问题或工作流。',
+      '与同伴一起构建或扩展工具路径。',
+      '评估哪些交付了、哪些坏了。',
     ],
     takeaway:
-      'A clearer sense of AI as engineering craft: context, tools, evaluation, delivery.',
+      '更清楚地把 AI 理解为一种工程手艺：上下文、工具、评测、交付。',
     direction: 'ai-engineering',
   },
   {
     id: 'paper-reading',
     slug: 'paper-reading',
     index: '02',
-    label: 'Read',
-    title: 'Paper Reading',
-    description:
-      'Map a paper’s argument — question, assumption, method, evidence — before chasing every formula.',
-    purpose:
-      'Read for claims you can challenge, not for slides you can paraphrase.',
+    label: '阅读',
+    title: '论文精读',
+    description: '梳理一篇论文的论证链——问题、假设、方法、证据——而不是追着每个公式跑。',
+    purpose: '为可以质疑的论点而读，而不是为可以复述的幻灯片而读。',
     whatHappens: [
-      'Build a one-page paper map.',
-      'Name the baseline and the claim.',
-      'Ask what evidence would change your mind.',
+      '做一张一页纸的论文地图。',
+      '点明基线与方法。',
+      '问：什么样的证据会改变你的看法。',
     ],
-    takeaway:
-      'A habit of linking claim → experiment → limitation — aligned with the Research path.',
+    takeaway: '养成「主张 → 实验 → 局限」的链接习惯——与科研方向一致。',
     direction: 'research',
   },
   {
     id: 'project-building',
     slug: 'project-building',
     index: '03',
-    label: 'Build',
-    title: 'Project Building',
-    description:
-      'Turn an idea into a prototype someone else can try — then test, feedback, and deliver.',
-    purpose:
-      'Practice shipping small, honest artifacts — not a staged hackathon brand.',
+    label: '构建',
+    title: '项目开发',
+    description: '把一个想法变成别人能试的原型——然后测试、反馈、交付。',
+    purpose: '练习交付小而诚实的成果——而不是一场摆拍的黑客松品牌。',
     whatHappens: [
-      'Pick a problem small enough to finish.',
-      'Prototype, show, and take critique.',
-      'Leave a repo, demo path, or note others can continue.',
+      '选一个足够小、能做完的问题。',
+      '做出原型、演示，并接受批评。',
+      '留下一个仓库、演示路径或笔记，供他人继续。',
     ],
-    takeaway: 'Something usable — or a clear record of why it is not yet.',
+    takeaway: '一件能用的东西——或一份清楚说明它为何还没能用的记录。',
     direction: 'hybrid',
   },
   {
     id: 'research-sharing',
     slug: 'research-sharing',
     index: '04',
-    label: 'Share',
-    title: 'Research Sharing',
-    description:
-      'Experiments, results, failure cases, and next questions — shared so others can inspect them.',
-    purpose:
-      'Make evidence public enough to discuss — without promising publication outcomes.',
+    label: '分享',
+    title: '科研分享',
+    description: '实验、结果、失败案例与下一步问题——公开分享，让别人能检视。',
+    purpose: '让证据公开到足以讨论——但不承诺发表结果。',
     whatHappens: [
-      'Present what was tried and what failed.',
-      'Show config, metric, and limits.',
-      'Leave the next question for the room.',
+      '展示试过什么、失败了什么。',
+      '展示配置、指标与边界。',
+      '把下一个问题留给在场的人。',
     ],
-    takeaway:
-      'Open notes others can challenge — the same evidence language as Research Case Studies.',
+    takeaway: '公开的、别人可以质疑的笔记——与科研案例研究使用同一种证据语言。',
     direction: 'research',
   },
 ]
 
 export const sessionFlow = {
-  eyebrow: 'How a Session Moves',
-  title: 'How a session moves.',
-  closing: 'An event should leave something behind.',
+  eyebrow: '一场活动如何推进',
+  title: '一场活动如何推进。',
+  closing: '一场活动应该留下点什么。',
   closingDetail:
-    'Notes, code, experiment config, failure cases, questions, or a small deliverable — something the next person can continue.',
+    '笔记、代码、实验配置、失败案例、问题，或一件小交付物——让下一个人能继续的东西。',
   steps: [
     {
       id: 'frame',
       index: '01',
-      label: 'Frame',
-      statement: 'Name the question or the thing we want to build.',
+      label: '定题',
+      statement: '点明我们要追问的问题，或想构建的东西。',
     },
     {
       id: 'prepare',
       index: '02',
-      label: 'Prepare',
-      statement: 'Bring a paper, repo, experiment, tool, or small problem.',
+      label: '准备',
+      statement: '带上一篇论文、一个仓库、一次实验、一件工具，或一个小题。',
     },
     {
       id: 'gather',
       index: '03',
-      label: 'Gather',
-      statement: 'Work together instead of watching passively.',
+      label: '相聚',
+      statement: '一起动手，而不是被动旁观。',
     },
     {
       id: 'work',
       index: '04',
-      label: 'Make / Test',
-      statement: 'Build, reproduce, inspect, question.',
+      label: '构建 / 验证',
+      statement: '构建、复现、检视、质疑。',
     },
     {
       id: 'share',
       index: '05',
-      label: 'Share',
-      statement: 'Leave notes, code, evidence, or the next question.',
+      label: '分享',
+      statement: '留下笔记、代码、证据，或下一个问题。',
     },
   ],
 }
 
 export const scheduleState = {
-  eyebrow: 'Next Session',
-  status: 'Schedule not published yet.',
-  body: 'Public event dates and joining details will appear here when they are confirmed.',
-  hint: 'Until then, explore how the community practices — and join when you are ready.',
+  eyebrow: '下一场',
+  status: '活动安排暂未发布。',
+  body: '公开的活动日期与报名信息，将在确认后显示在这里。',
+  hint: '在此之前，先看看社区如何实践——准备好时再加入。',
 }
 
 export const eventsClosing = {
-  eyebrow: 'Keep Moving',
-  title: 'Keep moving.',
-  lede: 'Learn a direction, see the work, or join when the next pulse is open.',
+  eyebrow: '继续前行',
+  title: '继续前行。',
+  lede: '学一个方向、看看作品，或在下一次脉动开放时加入。',
 }
 
 /** No real upcoming instances in Phase 7A — empty by design. */

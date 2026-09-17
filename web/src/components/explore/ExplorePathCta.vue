@@ -20,10 +20,10 @@ const focusedPath = inject<Ref<ExplorePathId | null>>('exploreFocusedPath')
     aria-labelledby="explore-cta-title"
   >
     <header class="explore-cta__header">
-      <p class="explore-cta__eyebrow">Continue into a path</p>
-      <h2 id="explore-cta-title" class="explore-cta__title">Choose a path.</h2>
+      <p class="explore-cta__eyebrow">深入路径</p>
+      <h2 id="explore-cta-title" class="explore-cta__title">选择一条路径。</h2>
       <p class="explore-cta__lede">
-        The hub orients you. The next pages go deeper into one direction.
+        枢纽为你定向，后续页面会深入其中一条路径。
       </p>
     </header>
 

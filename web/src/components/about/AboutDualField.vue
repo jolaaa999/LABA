@@ -60,20 +60,20 @@ onMounted(() => {
       <circle class="dual-lens__center" cx="280" cy="150" r="22" />
       <circle class="dual-lens__center-dot" cx="280" cy="150" r="4" />
 
-      <text class="dual-lens__label dual-lens__label--build" x="40" y="58">BUILD</text>
+      <text class="dual-lens__label dual-lens__label--build" x="40" y="58">构建</text>
       <text class="dual-lens__label dual-lens__label--understand" x="40" y="254">
-        UNDERSTAND
+        理解
       </text>
       <text class="dual-lens__label dual-lens__label--shared" x="280" y="126" text-anchor="middle">
-        SHARED
+        共同
       </text>
       <text class="dual-lens__label dual-lens__label--shared" x="280" y="140" text-anchor="middle">
-        PRACTICE
+        实践
       </text>
-      <text class="dual-lens__label" x="500" y="78" text-anchor="end">WORK</text>
-      <text class="dual-lens__label" x="520" y="244" text-anchor="end">EVIDENCE</text>
+      <text class="dual-lens__label" x="500" y="78" text-anchor="end">作品</text>
+      <text class="dual-lens__label" x="520" y="244" text-anchor="end">证据</text>
       <text class="dual-lens__label dual-lens__label--soft" x="460" y="168" text-anchor="middle">
-        COMMUNITY
+        社区
       </text>
     </svg>
   </div>

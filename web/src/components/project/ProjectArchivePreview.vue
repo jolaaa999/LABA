@@ -20,7 +20,7 @@ const detailTo = computed(() => `/projects/${props.project.slug}`)
 
 <template>
   <aside class="archive-preview" aria-live="polite" aria-atomic="true">
-    <p class="archive-preview__eyebrow">Preview</p>
+    <p class="archive-preview__eyebrow">预览</p>
 
     <div class="archive-preview__visual">
       <ProjectVisual :kind="project.visualKind" />
@@ -32,11 +32,11 @@ const detailTo = computed(() => `/projects/${props.project.slug}`)
     <p class="archive-preview__tech">{{ techLine }}</p>
 
     <p v-if="project.placeholder" class="archive-preview__dev">
-      Dev placeholder · not a real deliverable
+      开发占位 · 非真实交付物
     </p>
 
     <RouterLink class="archive-preview__cta" :to="detailTo">
-      Open entry
+      进入
       <span aria-hidden="true">→</span>
     </RouterLink>
   </aside>

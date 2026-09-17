@@ -34,8 +34,8 @@ function onCommit(id: JoinDirectionId) {
     <header class="entry-field__header">
       <p class="entry-field__eyebrow">{{ joinEntryField.eyebrow }}</p>
       <h2 id="entry-field-title" class="entry-field__title">
-        <span class="entry-field__title-line">Where do you want</span>
-        <span class="entry-field__title-line">to begin?</span>
+        <span class="entry-field__title-line">你想从哪里</span>
+        <span class="entry-field__title-line">开始？</span>
       </h2>
     </header>
 
@@ -84,15 +84,15 @@ function onCommit(id: JoinDirectionId) {
         <circle class="entry-field__hub" cx="320" cy="160" r="22" />
         <circle class="entry-field__hub-dot" cx="320" cy="160" r="4" />
         <circle class="entry-field__node" cx="560" cy="160" r="5" />
-        <text class="entry-field__svg-label" x="72" y="144">YOU</text>
+        <text class="entry-field__svg-label" x="72" y="144">你</text>
         <text class="entry-field__svg-label entry-field__svg-label--hub" x="320" y="146" text-anchor="middle">
-          ENTRY
+          入口
         </text>
-        <text class="entry-field__svg-label" x="560" y="144" text-anchor="middle">PRACTICE</text>
+        <text class="entry-field__svg-label" x="560" y="144" text-anchor="middle">实践</text>
       </svg>
     </div>
 
-    <div class="entry-field__choices" role="group" aria-label="Practice directions">
+    <div class="entry-field__choices" role="group" aria-label="实践方向">
       <button
         v-for="direction in joinDirections"
         :key="direction.id"
@@ -113,7 +113,7 @@ function onCommit(id: JoinDirectionId) {
       >
         <span class="entry-field__choice-index">{{ direction.index }}</span>
         <span class="entry-field__choice-label">{{ direction.label }}</span>
-        <span class="entry-field__choice-hint" aria-hidden="true">Select</span>
+        <span class="entry-field__choice-hint" aria-hidden="true">选择</span>
       </button>
     </div>
   </section>

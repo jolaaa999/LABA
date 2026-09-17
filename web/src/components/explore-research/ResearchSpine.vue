@@ -32,7 +32,7 @@ function isFocused(id: ResearchStageId) {
       <p class="research-spine__lede">{{ researchPathIntro.lede }}</p>
     </header>
 
-    <ol class="research-spine__list" aria-label="Research stages">
+    <ol class="research-spine__list" aria-label="科研阶段">
       <li
         v-for="(stage, index) in researchStages"
         :key="stage.id"
@@ -67,7 +67,7 @@ function isFocused(id: ResearchStageId) {
     </ol>
 
     <p class="research-spine__feedback" aria-hidden="true">
-      Evidence → new Question
+      证据 → 新的问题
     </p>
   </nav>
 </template>

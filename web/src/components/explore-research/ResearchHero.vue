@@ -33,7 +33,7 @@ function setFocus(node: typeof focusNode.value) {
     }"
   >
     <p class="research-hero__crumb">
-      <RouterLink class="research-hero__back" to="/explore">Explore</RouterLink>
+      <RouterLink class="research-hero__back" to="/explore">探索</RouterLink>
       <span aria-hidden="true"> / </span>
       <span>Understand AI</span>
     </p>
@@ -44,9 +44,9 @@ function setFocus(node: typeof focusNode.value) {
         <h1 class="research-hero__title">{{ exploreResearchHero.title }}</h1>
         <p class="research-hero__lede">{{ exploreResearchHero.lede }}</p>
         <p class="research-hero__map-text">
-          A scientific reasoning map:
-          Question → Assumption → Model / Method → Experiment → Evidence —
-          then Evidence feeds a new Question.
+          一张科学推理地图：
+          问题 → 假设 → 模型 / 方法 → 实验 → 证据——
+          随后证据催生新的问题。
         </p>
       </div>
 
@@ -117,12 +117,12 @@ function setFocus(node: typeof focusNode.value) {
           >
             <circle class="research-hero__node" cx="210" cy="28" r="5" />
             <text class="research-hero__label" x="210" y="16" text-anchor="middle">
-              QUESTION
+              问题
             </text>
           </g>
 
           <text class="research-hero__label research-hero__label--soft" x="210" y="108" text-anchor="middle">
-            ASSUMPTION
+            假设
           </text>
           <circle class="research-hero__node research-hero__node--soft" cx="210" cy="118" r="3.5" />
 
@@ -132,10 +132,10 @@ function setFocus(node: typeof focusNode.value) {
             @pointerleave="setFocus(null)"
           >
             <circle class="research-hero__node" cx="120" cy="168" r="4.5" />
-            <text class="research-hero__label" x="78" y="172" text-anchor="end">MODEL</text>
+            <text class="research-hero__label" x="78" y="172" text-anchor="end">模型</text>
             <circle class="research-hero__node research-hero__node--soft" cx="300" cy="168" r="4.5" />
             <text class="research-hero__label research-hero__label--soft" x="342" y="172">
-              METHOD
+              方法
             </text>
           </g>
 
@@ -145,7 +145,7 @@ function setFocus(node: typeof focusNode.value) {
             @pointerleave="setFocus(null)"
           >
             <circle class="research-hero__node" cx="210" cy="198" r="5" />
-            <text class="research-hero__label" x="248" y="202">EXPERIMENT</text>
+            <text class="research-hero__label" x="248" y="202">实验</text>
           </g>
 
           <g
@@ -155,7 +155,7 @@ function setFocus(node: typeof focusNode.value) {
           >
             <circle class="research-hero__node research-hero__node--end" cx="210" cy="268" r="5.5" />
             <text class="research-hero__label" x="210" y="294" text-anchor="middle">
-              EVIDENCE
+              证据
             </text>
           </g>
         </svg>
