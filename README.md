@@ -21,7 +21,7 @@ cd web
 npm run build
 ```
 
-静态站点由 GitHub Actions 自动部署到 Pages（`main` 分支推送触发）。
+静态站点在推送到 `main` 分支时自动构建，产物发布到 `gh-pages` 分支并由 GitHub Pages 提供（推送后约 1 分钟生效）。
 
 ## 仓库结构
 
