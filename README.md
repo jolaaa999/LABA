@@ -25,17 +25,19 @@ npm run build
 
 站点由 `gh-pages` 分支提供，`main` 是源码分支。
 
-推送到 `main` 时，本地 `pre-push` hook（`.git/hooks/pre-push`）会自动构建前端并把产物发布到 `gh-pages` 分支，推送后约 1 分钟生效。日常只需：
+推送到 `main` 时，`pre-push` hook 会自动构建前端并把产物发布到 `gh-pages` 分支，推送后约 1 分钟生效。日常只需：
 
 ```bash
 git push
 ```
 
-新克隆的仓库需要先启用 hook（Git 不把 hook 纳入版本控制）：
+Hook 脚本存放在仓库内的 `.githooks/pre-push`（纳入版本控制），通过 `core.hooksPath` 启用。新克隆的仓库执行一次即可：
 
 ```bash
-cp .githooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+git config core.hooksPath .githooks
 ```
+
+这样 hook 会跟随 `git pull` 自动更新，无需手工拷贝。`.git/hooks/pre-push` 保留了一份同样的副本作为兜底，仅在 `core.hooksPath` 未设置时生效。
 
 手动兜底：`cd web && npm run build`，把 `dist/` 的内容推送到 `gh-pages` 分支根目录，并将 `index.html` 复制为 `404.html`（SPA 深链回退）。
 

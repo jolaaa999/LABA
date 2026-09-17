@@ -6,7 +6,9 @@
 #       发布到 gh-pages 分支 —— 也就是 https://jolaaa999.github.io/LABA/ 的
 #       实际来源分支，从而让线上站点自动更新。
 #
-# 停用：删除本文件，或改名为 pre-push.off
+# 停用：删除本文件，或执行 git config --unset core.hooksPath
+# 本文件是权威版本，经 core.hooksPath 启用（见 README「## 部署」）：
+#   git config core.hooksPath .githooks
 # 添加时间：2026-09-17
 # ============================================================================
 
