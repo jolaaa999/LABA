@@ -22,6 +22,15 @@ import AuroraButton from '../ui/AuroraButton.vue'
     </div>
 
     <div class="community-closing__links">
+      <a
+        class="community-closing__link"
+        href="https://github.com/jolaaa999/LABA/discussions"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="community-closing__link-eyebrow">提问</span>
+        <span class="community-closing__link-title">打开 Discussions</span>
+      </a>
       <RouterLink class="community-closing__link" to="/explore">
         <span class="community-closing__link-eyebrow">学习</span>
         <span class="community-closing__link-title">找到你的方向</span>
@@ -71,7 +80,7 @@ import AuroraButton from '../ui/AuroraButton.vue'
 
 .community-closing__links {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-6);
   margin-top: var(--space-4);
 }

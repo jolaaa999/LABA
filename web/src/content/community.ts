@@ -117,6 +117,39 @@ export const communityPrinciples: CommunityPrinciple[] = [
   },
 ]
 
+/**
+ * Q&A surface — GitHub Discussions (account = GitHub).
+ * Not a local auth feed; discussion lives on the repo Discussions board.
+ */
+export const communityAsk = {
+  eyebrow: '提问与回答',
+  title: '有问题，就发出来。',
+  lede:
+    '用 GitHub 账号登录 Discussions，提出你卡住的地方——别人可以回答、补充，或留下可继续推进的线索。',
+  askLabel: '去提问',
+  browseLabel: '看全部讨论 ↗',
+  askUrl: 'https://github.com/jolaaa999/LABA/discussions/new?category=q-a',
+  browseUrl: 'https://github.com/jolaaa999/LABA/discussions',
+  note: '账号即你的 GitHub。提问与回答都发生在仓库 Discussions，本站不做单独注册。',
+  steps: [
+    {
+      index: '01',
+      label: '用 GitHub 登录',
+      text: '打开 Discussions 后，用你的 GitHub 账号即可发言。',
+    },
+    {
+      index: '02',
+      label: '提出一个具体问题',
+      text: '写清你在做什么、卡在哪、已经试过什么——越具体，越容易被回答。',
+    },
+    {
+      index: '03',
+      label: '回答或补充别人',
+      text: '看到能接住的问题，留下答案、链接或失败经验。',
+    },
+  ],
+}
+
 export const communityClosing = {
   eyebrow: '下一步',
   title: '我接下来去哪里？',
