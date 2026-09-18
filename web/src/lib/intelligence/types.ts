@@ -58,6 +58,9 @@ export interface IntelligenceSceneApi {
   mount: (container: HTMLElement) => void
   setMode: (mode: IntelligenceMode) => void
   setPointer: (x: number, y: number) => void
+  selectAt: (x: number, y: number) => void
+  rotateBy: (x: number, y: number) => void
+  clearSelection: () => void
   setVisible: (visible: boolean) => void
   setAwake: (awake: boolean) => void
   setReducedMotion: (reduced: boolean) => void

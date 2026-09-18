@@ -16,7 +16,7 @@ import { useMotionPreference } from './useMotionPreference'
 function labelsForMode(mode: IntelligenceMode): HotspotInfo[] {
   const source = mode === 'build' ? buildLayout : understandLayout
   return source.nodes
-    .filter((n) => n.label)
+    .filter((n) => n.role === 'primary' && n.label)
     .map((n) => ({
       id: n.id,
       label: n.label!,
@@ -37,6 +37,8 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
   const sceneApi = shallowRef<IntelligenceSceneApi | null>(null)
 
   let labelRaf = 0
+  let pointerDown: { x: number; y: number } | null = null
+  let isDragging = false
 
   function syncLabels() {
     const api = sceneApi.value
@@ -104,9 +106,46 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
     api.setPointer(nx, ny)
   }
 
-  function onPointerLeave() {
-    sceneApi.value?.setPointer(0, 0)
+  function onPointerDown(event: PointerEvent) {
+    pointerDown = { x: event.clientX, y: event.clientY }
+    isDragging = false
+  }
+
+  function onPointerMove(event: PointerEvent) {
+    if (!pointerDown) return
+    const host = canvasHost.value
+    if (!host) return
+    const dx = (event.clientX - pointerDown.x) / Math.max(host.clientWidth, 1)
+    const dy = (event.clientY - pointerDown.y) / Math.max(host.clientHeight, 1)
+    if (Math.abs(dx) + Math.abs(dy) > 0.008) isDragging = true
+    if (isDragging) {
+      sceneApi.value?.rotateBy(dx, dy)
+      pointerDown = { x: event.clientX, y: event.clientY }
+    }
+  }
+
+  function onPointerUp(event: PointerEvent) {
+    const host = canvasHost.value
+    if (!host || !pointerDown) return
+    if (!isDragging) {
+      const rect = host.getBoundingClientRect()
+      const nx = ((event.clientX - rect.left) / rect.width) * 2 - 1
+      const ny = -(((event.clientY - rect.top) / rect.height) * 2 - 1)
+      sceneApi.value?.selectAt(nx, ny)
+    }
+    pointerDown = null
+    isDragging = false
+  }
+
+  function clearSelection() {
+    sceneApi.value?.clearSelection()
     hotspot.value = null
+  }
+
+  function onPointerLeave() {
+    pointerDown = null
+    isDragging = false
+    sceneApi.value?.setPointer(0, 0)
   }
 
   useIntersectionObserver(
@@ -156,6 +195,10 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
     labelPositions,
     primaryLabels,
     onPointer,
+    onPointerDown,
+    onPointerMove,
+    onPointerUp,
     onPointerLeave,
+    clearSelection,
   }
 }

@@ -157,6 +157,9 @@ export function createIntelligenceScene(
   let awakenTween: gsap.core.Tween | null = null
   let pulseT = 0
   let focusedHotspot: string | null = null
+  let focusScale = 1
+  let rotationX = -0.08
+  let rotationY = -0.18
 
   const nodeOrder = buildLayout.nodes.map((n) => n.id)
   const edgeOrder = buildLayout.edges.map((e) => e.id)
@@ -634,9 +637,10 @@ export function createIntelligenceScene(
       colorMix.lerp(COLOR.snow, 0.22)
       const depthFade = 0.62 + depthT * 0.38
       const alpha = hide ? 0 : layout.opacity * awaken * depthFade * (hot ? 1 : 0.9)
-      nodeColors[ix] = Math.min(1, colorMix.r * (0.85 + alpha * 0.35))
-      nodeColors[ix + 1] = Math.min(1, colorMix.g * (0.85 + alpha * 0.35))
-      nodeColors[ix + 2] = Math.min(1, colorMix.b * (0.85 + alpha * 0.35))
+      const twinkle = 0.82 + Math.sin(pulseT * (1.9 + (i % 4) * 0.27) + i * 1.7) * 0.18
+      nodeColors[ix] = Math.min(1, colorMix.r * (0.85 + alpha * 0.35) * twinkle)
+      nodeColors[ix + 1] = Math.min(1, colorMix.g * (0.85 + alpha * 0.35) * twinkle)
+      nodeColors[ix + 2] = Math.min(1, colorMix.b * (0.85 + alpha * 0.35) * twinkle)
 
       if (layout.role === 'primary') {
         const pi = pIdx * 3
@@ -705,8 +709,8 @@ export function createIntelligenceScene(
 
   function updateCamera() {
     if (!camera || !root) return
-    root.rotation.x = 0
-    root.rotation.y = 0
+    root.rotation.x = rotationX
+    root.rotation.y = rotationY
     if (reducedMotion) {
       camera.position.x = 0
       camera.position.y = 0
@@ -756,11 +760,11 @@ export function createIntelligenceScene(
     if (!renderer || !camera) return
     renderer.setPixelRatio(maxDpr())
     renderer.setSize(width, height, false)
-    const viewW = viewH * aspect
+    const viewW = viewH * aspect * focusScale
     camera.left = -viewW
     camera.right = viewW
-    camera.top = viewH
-    camera.bottom = -viewH
+    camera.top = viewH * focusScale
+    camera.bottom = -viewH * focusScale
     camera.updateProjectionMatrix()
   }
 
@@ -873,26 +877,44 @@ export function createIntelligenceScene(
     pointer.ty = Math.max(-1, Math.min(1, ny))
     if (!reducedMotion) ensureLoop()
 
-    // hotspot proximity
-    if (!nodePositions) return
+    if (!reducedMotion) ensureLoop()
+  }
+
+  function selectAt(nx: number, ny: number) {
+    if (!nodePositions || !camera || !root) return
     let best: HotspotInfo | null = null
-    let bestDist = 0.18
-    for (const hs of currentHotspots()) {
-      const idx = nodeOrder.indexOf(hs.id)
-      if (idx < 0) continue
-      const dx = nodePositions[idx * 3]! - pointer.tx * 0.9
-      const dy = nodePositions[idx * 3 + 1]! - pointer.ty * 0.55
-      const d = Math.sqrt(dx * dx + dy * dy)
-      if (d < bestDist) {
-        bestDist = d
-        best = hs
+    let bestDist = 0.095
+    for (const candidate of currentHotspots()) {
+      const projected = projectNode(candidate.id)
+      if (!projected) continue
+      const px = (projected.x / width) * 2 - 1
+      const py = -((projected.y / height) * 2 - 1)
+      const distance = Math.hypot(px - nx, py - ny)
+      if (distance < bestDist) {
+        bestDist = distance
+        best = candidate
       }
     }
-    const nextId = best?.id ?? null
-    if (nextId !== focusedHotspot) {
-      focusedHotspot = nextId
-      options.onHotspotChange?.(best)
-    }
+    focusedHotspot = best?.id ?? null
+    focusScale = best ? (best.id === 'research' || best.id === 'agent' ? 0.82 : 0.52) : 1
+    applySize(width, height)
+    options.onHotspotChange?.(best)
+    ensureLoop()
+  }
+
+  function clearSelection() {
+    focusedHotspot = null
+    focusScale = 1
+    applySize(width, height)
+    options.onHotspotChange?.(null)
+    ensureLoop()
+  }
+
+  function rotateBy(dx: number, dy: number) {
+    if (reducedMotion) return
+    rotationY += dx * 1.25
+    rotationX = Math.max(-0.65, Math.min(0.65, rotationX + dy * 0.85))
+    ensureLoop()
   }
 
   function setVisible(v: boolean) {
@@ -959,6 +981,7 @@ export function createIntelligenceScene(
       nodePositions[idx * 3 + 1]!,
       nodePositions[idx * 3 + 2]!,
     )
+    root?.localToWorld(world)
     world.project(camera)
     return {
       x: (world.x * 0.5 + 0.5) * width,
@@ -1014,6 +1037,9 @@ export function createIntelligenceScene(
     mount,
     setMode,
     setPointer,
+    selectAt,
+    rotateBy,
+    clearSelection,
     setVisible,
     setAwake,
     setReducedMotion,
