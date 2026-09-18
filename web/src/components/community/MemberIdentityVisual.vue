@@ -1,9 +1,20 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 import type { Member } from '../../types/member'
 
-defineProps<{
+const props = defineProps<{
   member: Member
 }>()
+
+/** Resolve public/ assets against Vite `base` (GitHub Pages uses `/LABA/`). */
+const avatarSrc = computed(() => {
+  const avatar = props.member.avatar
+  if (!avatar) return undefined
+  if (/^(https?:|data:)/i.test(avatar)) return avatar
+  const base = import.meta.env.BASE_URL || '/'
+  return `${base}${avatar.replace(/^\//, '')}`
+})
 </script>
 
 <template>
@@ -11,15 +22,15 @@ defineProps<{
     class="member-identity"
     :class="[
       `member-identity--${member.direction}`,
-      { 'member-identity--portrait': Boolean(member.avatar) },
+      { 'member-identity--portrait': Boolean(avatarSrc) },
     ]"
     aria-hidden="true"
   >
     <div class="member-identity__field">
       <img
-        v-if="member.avatar"
+        v-if="avatarSrc"
         class="member-identity__avatar"
-        :src="member.avatar"
+        :src="avatarSrc"
         :alt="''"
         loading="lazy"
         decoding="async"

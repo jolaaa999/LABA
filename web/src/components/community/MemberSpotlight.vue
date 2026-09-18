@@ -50,26 +50,47 @@ defineProps<{
           </div>
 
           <div
-            v-if="member.githubUrl || member.homepageUrl"
+            v-if="member.githubUrl || member.giteeUrl || member.homepageUrl || member.email"
             class="member-spotlight__links"
           >
-            <a
-              v-if="member.githubUrl"
-              class="member-spotlight__link"
-              :href="member.githubUrl"
-              target="_blank"
-              rel="noopener noreferrer"
+            <div
+              v-if="member.githubUrl || member.giteeUrl || member.homepageUrl"
+              class="member-spotlight__link-row"
             >
-              GitHub ↗
-            </a>
+              <a
+                v-if="member.githubUrl"
+                class="member-spotlight__link"
+                :href="member.githubUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub ↗
+              </a>
+              <a
+                v-if="member.giteeUrl"
+                class="member-spotlight__link"
+                :href="member.giteeUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Gitee ↗
+              </a>
+              <a
+                v-if="member.homepageUrl"
+                class="member-spotlight__link"
+                :href="member.homepageUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Blog ↗
+              </a>
+            </div>
             <a
-              v-if="member.homepageUrl"
-              class="member-spotlight__link"
-              :href="member.homepageUrl"
-              target="_blank"
-              rel="noopener noreferrer"
+              v-if="member.email"
+              class="member-spotlight__link member-spotlight__link--email"
+              :href="`mailto:${member.email}`"
             >
-              Blog ↗
+              {{ member.email }}
             </a>
           </div>
         </div>
@@ -196,10 +217,15 @@ defineProps<{
 }
 
 .member-spotlight__links {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.member-spotlight__link-row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
-  margin-top: var(--space-2);
 }
 
 .member-spotlight__link {
@@ -207,6 +233,12 @@ defineProps<{
   font-weight: 600;
   color: var(--color-mountain);
   text-decoration: none;
+}
+
+.member-spotlight__link--email {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 .member-spotlight__link:hover {

@@ -9,8 +9,8 @@ export const members: Member[] = [
   {
     id: 'member-01',
     index: '01',
-    name: 'jolaaa999',
-    slug: 'jolaaa999',
+    name: 'jolly',
+    slug: 'jolly',
     monogram: 'JO',
     role: 'AI 工程',
     direction: 'ai',
@@ -21,8 +21,10 @@ export const members: Member[] = [
     publicProfile: true,
     placeholder: false,
     githubUrl: 'https://github.com/jolaaa999',
+    giteeUrl: 'https://gitee.com/xuan060316',
     homepageUrl: 'https://jol-ten.vercel.app/',
-    avatar: '/members/jolaaa999.png',
+    email: '2843422418@qq.com',
+    avatar: 'members/jolaaa999.png',
   },
   {
     id: 'member-02',

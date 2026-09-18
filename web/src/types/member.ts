@@ -30,8 +30,11 @@ export interface Member {
   /** Opt-in contribution modes for Community page (optional on Homepage placeholders) */
   contributionModes?: ContributionModeId[]
   githubUrl?: string
+  giteeUrl?: string
   homepageUrl?: string
-  /** Authorized portrait URL — omit until authentic assets exist */
+  /** Public contact email — omit until authorized */
+  email?: string
+  /** Authorized portrait path (site-root relative, e.g. members/foo.png) or absolute URL */
   avatar?: string
   /** Link to a project slug / title for editorial connection */
   featuredProject?: string
