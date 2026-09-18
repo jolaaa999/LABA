@@ -69,7 +69,7 @@ defineProps<{
               target="_blank"
               rel="noopener noreferrer"
             >
-              Homepage ↗
+              Blog ↗
             </a>
           </div>
         </div>

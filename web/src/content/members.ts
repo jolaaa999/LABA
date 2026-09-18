@@ -1,7 +1,7 @@
 /**
- * Homepage Community members — DEVELOPMENT PLACEHOLDERS only.
- * Not real students. No stock portraits. No fake personal URLs.
- * Replace with authorized publicProfile members when available.
+ * Homepage Community members.
+ * Real opt-in profiles use placeholder:false + authorized avatar/URLs.
+ * Remaining entries may still be development placeholders.
  */
 import type { Member } from '../types/member'
 
@@ -9,16 +9,20 @@ export const members: Member[] = [
   {
     id: 'member-01',
     index: '01',
-    name: '成员 01',
-    monogram: 'M1',
+    name: 'jolaaa999',
+    slug: 'jolaaa999',
+    monogram: 'JO',
     role: 'AI 工程',
     direction: 'ai',
     bio: '构建 Agent 工作流与可调用工具的系统——从意图到真正能跑起来的东西。',
     skills: ['AI 工程', 'Agent', 'Vue', '工作流'],
-    featuredProject: '校园 Agent 工作坊',
+    featuredProject: 'AGENT — 图谱提取与导航',
     featured: true,
     publicProfile: true,
-    placeholder: true,
+    placeholder: false,
+    githubUrl: 'https://github.com/jolaaa999',
+    homepageUrl: 'https://jol-ten.vercel.app/',
+    avatar: '/members/jolaaa999.png',
   },
   {
     id: 'member-02',

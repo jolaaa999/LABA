@@ -9,45 +9,58 @@ defineProps<{
 <template>
   <div
     class="member-identity"
-    :class="`member-identity--${member.direction}`"
+    :class="[
+      `member-identity--${member.direction}`,
+      { 'member-identity--portrait': Boolean(member.avatar) },
+    ]"
     aria-hidden="true"
   >
     <div class="member-identity__field">
-      <svg class="member-identity__geometry" viewBox="0 0 240 280" fill="none">
-        <defs>
-          <linearGradient :id="`id-grad-${member.id}`" x1="40" y1="40" x2="200" y2="240">
-            <stop stop-color="#DDEEFF" stop-opacity="0.9" />
-            <stop offset="0.55" stop-color="#79BEFF" stop-opacity="0.35" />
-            <stop offset="1" stop-color="#B8DEFF" stop-opacity="0.15" />
-          </linearGradient>
-        </defs>
-        <rect
-          x="18"
-          y="18"
-          width="204"
-          height="244"
-          rx="2"
-          stroke="#D5DEE7"
-          stroke-opacity="0.7"
-        />
-        <path
-          v-if="member.direction === 'ai'"
-          d="M48 210 H192 M48 70 L120 150 L192 70"
-          :stroke="`url(#id-grad-${member.id})`"
-          stroke-width="1.2"
-        />
-        <g v-else-if="member.direction === 'research'" stroke="#4EA5F5" stroke-opacity="0.35">
-          <circle cx="120" cy="118" r="46" />
-          <circle cx="120" cy="118" r="22" />
-          <path d="M74 118 H166 M120 72 V164" stroke-width="1" />
-        </g>
-        <g v-else stroke="#79BEFF" stroke-opacity="0.4">
-          <path d="M56 88 H184 M56 140 H184 M56 192 H184" stroke-width="1" />
-          <path d="M88 60 V220 M152 60 V220" stroke-width="1" />
-        </g>
-        <circle cx="120" cy="118" r="3.5" fill="#4EA5F5" fill-opacity="0.55" />
-      </svg>
-      <span class="member-identity__mono">{{ member.monogram }}</span>
+      <img
+        v-if="member.avatar"
+        class="member-identity__avatar"
+        :src="member.avatar"
+        :alt="''"
+        loading="lazy"
+        decoding="async"
+      />
+      <template v-else>
+        <svg class="member-identity__geometry" viewBox="0 0 240 280" fill="none">
+          <defs>
+            <linearGradient :id="`id-grad-${member.id}`" x1="40" y1="40" x2="200" y2="240">
+              <stop stop-color="#DDEEFF" stop-opacity="0.9" />
+              <stop offset="0.55" stop-color="#79BEFF" stop-opacity="0.35" />
+              <stop offset="1" stop-color="#B8DEFF" stop-opacity="0.15" />
+            </linearGradient>
+          </defs>
+          <rect
+            x="18"
+            y="18"
+            width="204"
+            height="244"
+            rx="2"
+            stroke="#D5DEE7"
+            stroke-opacity="0.7"
+          />
+          <path
+            v-if="member.direction === 'ai'"
+            d="M48 210 H192 M48 70 L120 150 L192 70"
+            :stroke="`url(#id-grad-${member.id})`"
+            stroke-width="1.2"
+          />
+          <g v-else-if="member.direction === 'research'" stroke="#4EA5F5" stroke-opacity="0.35">
+            <circle cx="120" cy="118" r="46" />
+            <circle cx="120" cy="118" r="22" />
+            <path d="M74 118 H166 M120 72 V164" stroke-width="1" />
+          </g>
+          <g v-else stroke="#79BEFF" stroke-opacity="0.4">
+            <path d="M56 88 H184 M56 140 H184 M56 192 H184" stroke-width="1" />
+            <path d="M88 60 V220 M152 60 V220" stroke-width="1" />
+          </g>
+          <circle cx="120" cy="118" r="3.5" fill="#4EA5F5" fill-opacity="0.55" />
+        </svg>
+        <span class="member-identity__mono">{{ member.monogram }}</span>
+      </template>
     </div>
   </div>
 </template>
@@ -78,6 +91,21 @@ defineProps<{
       color-mix(in srgb, var(--color-frost) 40%, var(--color-snow))
     );
   overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-line) 70%, transparent);
+}
+
+.member-identity__avatar {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+}
+
+.member-identity--portrait .member-identity__field {
+  background: var(--color-snow);
 }
 
 .member-identity__geometry {
