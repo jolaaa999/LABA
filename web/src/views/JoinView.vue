@@ -6,6 +6,7 @@ import JoinEntryField from '../components/join/JoinEntryField.vue'
 import JoinHero from '../components/join/JoinHero.vue'
 import JoinPersonalizedEntry from '../components/join/JoinPersonalizedEntry.vue'
 import JoinProcess from '../components/join/JoinProcess.vue'
+import JoinRecruitPanel from '../components/join/JoinRecruitPanel.vue'
 import JoinStatus from '../components/join/JoinStatus.vue'
 import PageContainer from '../components/layout/PageContainer.vue'
 import type { JoinDirectionId } from '../content/join-page'
@@ -40,6 +41,7 @@ function commitDirection(id: JoinDirectionId) {
       />
       <JoinPersonalizedEntry :committed="committedDirection" />
       <JoinProcess />
+      <JoinRecruitPanel />
       <JoinStatus />
       <JoinClosing />
     </PageContainer>

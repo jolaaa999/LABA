@@ -27,7 +27,7 @@ const ledeBlocks = joinStatus.lede.split('\n\n')
         :key="item.index"
         class="status__row"
         :class="{
-          'status__row--muted': item.status === 'not-published',
+          'status__row--muted': item.status !== 'available',
         }"
       >
         <span class="status__index">{{ item.index }}</span>

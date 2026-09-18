@@ -1,7 +1,6 @@
 /**
  * Join page — Entry Field / orientation layer (static public content).
  * Not an application form, signup system, or recruiting CRM.
- * No fake QQ / QR / dates / member counts.
  */
 
 export type JoinDirectionId = 'build' | 'research' | 'hybrid'
@@ -145,8 +144,8 @@ export interface JoinStatusItem {
 
 export const joinStatus = {
   eyebrow: '入口状态',
-  title: '公开的招新信息\n暂未发布。',
-  lede: '站点已经可以展示我们如何学习、构建、做科研、分享作品与相聚。\n\n正式的招新信息在可以公开时，会出现在这里。',
+  title: '2026 招新入口\n已经开放。',
+  lede: '想一起学 AI、做项目、参加飞桨实践？先扫码进群，或在本页查看招新海报。\n\n站内的学习地图、作品与社区讨论也已开放，可以先逛起来。',
   items: [
     {
       index: '01',
@@ -179,10 +178,26 @@ export const joinStatus = {
     {
       index: '05',
       label: '公开入口',
-      status: 'not-published',
-      statusLabel: '暂未发布',
+      status: 'available',
+      statusLabel: 'QQ 群已开放',
     },
   ] satisfies JoinStatusItem[],
+}
+
+/** Official recruiting poster + QQ channel (authorized public assets). */
+export const joinRecruit = {
+  eyebrow: '招新',
+  title: '加入我们。',
+  lede: '武汉科技大学百度飞桨社团 2026 招新。深度学习 · 创造未来。',
+  poster: 'join/recruit-poster.png',
+  posterAlt: '武汉科技大学百度飞桨社团 2026 招新海报',
+  posterCaption: '招新海报：了解我们做什么、你将收获什么，以及适合谁加入。',
+  contactLabel: '加入 QQ 群',
+  qqGroup: '1050332675',
+  contactNote: '扫码加群；若无法扫码，可在 QQ 搜索群号加入。',
+  qrCode: 'join/qq-qrcode.png',
+  qrAlt: '飞桨社团 QQ 群二维码，群号 1050332675',
+  scanHint: '扫一扫二维码，加入群聊',
 }
 
 export interface JoinExit {
@@ -194,7 +209,7 @@ export interface JoinExit {
 export const joinClosing = {
   eyebrow: '下一步',
   title: '你不需要\n等到以后才开始。',
-  lede: '读一读地图，看一看作品，跟上这里的节奏。\n\n正式入口可以晚一点，实践现在就能开始。',
+  lede: '扫码进群，读一读地图，看一看作品，跟上这里的节奏。\n\n招新入口已经开放——实践现在就能开始。',
   exits: [
     {
       eyebrow: '学习',

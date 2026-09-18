@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { useIntersectionObserver } from '@vueuse/core'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import AuroraButton from '../ui/AuroraButton.vue'
 import MotionSection from '../ui/MotionSection.vue'
@@ -13,6 +13,13 @@ const info = getJoinInfo()
 const observeEl = ref<HTMLElement | null>(null)
 const revealed = ref(false)
 const { prefersReducedMotion } = useMotionPreference()
+
+const qrSrc = computed(() => {
+  if (!info.qrCode) return undefined
+  if (/^(https?:|data:)/i.test(info.qrCode)) return info.qrCode
+  const base = import.meta.env.BASE_URL || '/'
+  return `${base}${info.qrCode.replace(/^\//, '')}`
+})
 
 useIntersectionObserver(
   observeEl,
@@ -78,9 +85,9 @@ useIntersectionObserver(
         <p v-if="info.contact" class="join__meta">{{ info.contact }}</p>
         <p v-if="info.contactNote" class="join__note">{{ info.contactNote }}</p>
         <img
-          v-if="info.qrCode"
+          v-if="qrSrc"
           class="join__qr"
-          :src="info.qrCode"
+          :src="qrSrc"
           alt="加入社区二维码"
           width="120"
           height="120"
