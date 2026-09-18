@@ -15,6 +15,9 @@ type Config struct {
 	Server   ServerConfig
 	Database DatabaseConfig
 	CORS     CORSConfig
+	GitHub   GitHubConfig
+	Session  SessionConfig
+	Frontend FrontendConfig
 }
 
 type ServerConfig struct {
@@ -37,6 +40,25 @@ type DatabaseConfig struct {
 
 type CORSConfig struct {
 	AllowedOrigins []string
+}
+
+type GitHubConfig struct {
+	ClientID        string
+	ClientSecret    string
+	RedirectURL     string
+	Owner           string
+	Repo            string
+	RepoID          string
+	QACategoryID    string
+	Enabled         bool
+}
+
+type SessionConfig struct {
+	Secret string
+}
+
+type FrontendConfig struct {
+	Origin string
 }
 
 func (d DatabaseConfig) DSN() string {
@@ -81,7 +103,23 @@ func Load() (*Config, error) {
 		CORS: CORSConfig{
 			AllowedOrigins: splitCSV(getenv("CORS_ALLOWED_ORIGINS", "http://127.0.0.1:5173,http://localhost:5173")),
 		},
+		GitHub: GitHubConfig{
+			ClientID:     getenv("GITHUB_CLIENT_ID", ""),
+			ClientSecret: getenv("GITHUB_CLIENT_SECRET", ""),
+			RedirectURL:  getenv("GITHUB_OAUTH_REDIRECT_URL", "http://localhost:8080/api/v1/auth/github/callback"),
+			Owner:        getenv("GITHUB_OWNER", "jolaaa999"),
+			Repo:         getenv("GITHUB_REPO", "LABA"),
+			RepoID:       getenv("GITHUB_REPO_ID", ""),
+			QACategoryID: getenv("GITHUB_QA_CATEGORY_ID", ""),
+		},
+		Session: SessionConfig{
+			Secret: getenv("SESSION_SECRET", ""),
+		},
+		Frontend: FrontendConfig{
+			Origin: getenv("FRONTEND_ORIGIN", "http://localhost:5173"),
+		},
 	}
+	cfg.GitHub.Enabled = cfg.GitHub.ClientID != "" && cfg.GitHub.ClientSecret != "" && cfg.Session.Secret != ""
 	return cfg, nil
 }
 

@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 
 import CollaborationField from '../components/community/CollaborationField.vue'
-import CommunityAskField from '../components/community/CommunityAskField.vue'
 import CommunityClosing from '../components/community/CommunityClosing.vue'
+import CommunityGiscusBoard from '../components/community/CommunityGiscusBoard.vue'
 import CommunityPageHero from '../components/community/CommunityPageHero.vue'
 import CommunityPrinciples from '../components/community/CommunityPrinciples.vue'
 import ContributionStream from '../components/community/ContributionStream.vue'
@@ -27,14 +27,13 @@ function setActiveMode(id: ContributionModeId | null) {
         @focus="setActiveMode"
       />
       <CollaborationField />
-      <CommunityAskField />
+      <CommunityGiscusBoard />
       <PublicMemberRoster />
       <CommunityPrinciples />
       <CommunityClosing />
     </PageContainer>
   </main>
 </template>
-
 
 <style scoped>
 .community-page {

@@ -11,7 +11,9 @@ import (
 	"syscall"
 	"time"
 
+	"ai-community/backend/internal/auth/session"
 	"ai-community/backend/internal/config"
+	"ai-community/backend/internal/githubdiscuss"
 	"ai-community/backend/internal/http/handler"
 	"ai-community/backend/internal/http/router"
 	"ai-community/backend/internal/platform/database"
@@ -46,14 +48,36 @@ func main() {
 	memberRepo := mysqlrepo.NewCommunityMemberRepository(db)
 	recruitingRepo := mysqlrepo.NewRecruitingStatusRepository(db)
 
-	engine := router.New(router.Deps{
+	deps := router.Deps{
 		Config:     cfg,
 		Health:     handler.NewHealthHandler(db),
 		Projects:   handler.NewProjectHandler(service.NewProjectService(projectRepo)),
 		Events:     handler.NewEventHandler(service.NewEventService(eventRepo)),
 		Community:  handler.NewCommunityHandler(service.NewCommunityMemberService(memberRepo)),
 		Recruiting: handler.NewRecruitingHandler(service.NewRecruitingService(recruitingRepo)),
-	})
+	}
+
+	if cfg.GitHub.Enabled {
+		store, err := session.NewStore(cfg.Session.Secret, !cfg.IsDevelopment())
+		if err != nil {
+			log.Fatalf("session: %v", err)
+		}
+		gh := githubdiscuss.New(githubdiscuss.Config{
+			ClientID:     cfg.GitHub.ClientID,
+			ClientSecret: cfg.GitHub.ClientSecret,
+			RedirectURL:  cfg.GitHub.RedirectURL,
+			Owner:        cfg.GitHub.Owner,
+			Repo:         cfg.GitHub.Repo,
+			RepoID:       cfg.GitHub.RepoID,
+			QACategoryID: cfg.GitHub.QACategoryID,
+		})
+		deps.AuthDiscussions = handler.NewAuthDiscussionHandler(cfg, gh, store)
+		log.Printf("github oauth enabled for %s/%s", cfg.GitHub.Owner, cfg.GitHub.Repo)
+	} else {
+		log.Printf("github oauth disabled (missing GITHUB_CLIENT_ID / SECRET / SESSION_SECRET)")
+	}
+
+	engine := router.New(deps)
 
 	srv := &http.Server{
 		Addr:         cfg.Server.Addr,

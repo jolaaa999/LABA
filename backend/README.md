@@ -53,6 +53,13 @@ go build -o bin/server ./cmd/server
 
 See `../docs/api/public-api.md`.
 
-## Out of scope
+## Out of scope (default)
 
-Auth, Admin, CMS, LMS, uploads, Frontend API integration.
+Admin, CMS, LMS, uploads. Full member JWT product auth remains deferred.
+
+## Optional: GitHub Discussions board (local OAuth API)
+
+A self-hosted OAuth + Discussions API exists under `/api/v1/auth/*` and `/api/v1/discussions/*`
+for local experiments. The public community page uses **giscus** instead (no always-on backend).
+
+To use the API locally, set `GITHUB_CLIENT_*` / `SESSION_SECRET` in `.env` and run `go run ./cmd/server`.

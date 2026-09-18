@@ -118,24 +118,24 @@ export const communityPrinciples: CommunityPrinciple[] = [
 ]
 
 /**
- * Q&A surface — GitHub Discussions (account = GitHub).
- * Not a local auth feed; discussion lives on the repo Discussions board.
+ * Q&A surface — GitHub Discussions via giscus embed (no self-hosted backend).
+ * Account = GitHub through the giscus OAuth app.
  */
 export const communityAsk = {
   eyebrow: '提问与回答',
   title: '有问题，就发出来。',
   lede:
-    '用 GitHub 账号登录 Discussions，提出你卡住的地方——别人可以回答、补充，或留下可继续推进的线索。',
+    '在社区页直接留言。用 GitHub 账号登录即可提问与回复；讨论保存在仓库 Discussions。',
   askLabel: '去提问',
   browseLabel: '看全部讨论 ↗',
   askUrl: 'https://github.com/jolaaa999/LABA/discussions/new?category=q-a',
   browseUrl: 'https://github.com/jolaaa999/LABA/discussions',
-  note: '账号即你的 GitHub。提问与回答都发生在仓库 Discussions，本站不做单独注册。',
+  note: '账号即你的 GitHub。本站通过 giscus 嵌入 Discussions，无需自建登录后端。',
   steps: [
     {
       index: '01',
       label: '用 GitHub 登录',
-      text: '打开 Discussions 后，用你的 GitHub 账号即可发言。',
+      text: '在下方评论区点击登录，授权 giscus 即可发言。',
     },
     {
       index: '02',
