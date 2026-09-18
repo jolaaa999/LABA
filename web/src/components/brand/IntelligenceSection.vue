@@ -12,18 +12,14 @@ const hotspotLabel = ref<string | null>(null)
 const hotspotCopy = ref<string | null>(null)
 
 const summary = computed(() =>
-  mode.value === 'build'
-    ? '构建 展示了意图如何成为可运行的系统：任务、计划、工具、观察、结果。'
-    : '理解 从内部展示同一种智能：Token、Attention、表示、实验。',
+  '两条相连的学习星路：深度学习面向科研，AI Agent 面向工作实践。',
 )
 
 const micro = computed(() => {
   if (hotspotLabel.value && hotspotCopy.value) {
     return { label: hotspotLabel.value, copy: hotspotCopy.value }
   }
-  return mode.value === 'build'
-    ? { label: '流程', copy: '从意图到人们可用的东西。' }
-    : { label: '场域', copy: '同一种智能，不同的视角。' }
+  return { label: '双星图', copy: '科研与工作，两条路径在这里相连。' }
 })
 </script>
 
@@ -34,11 +30,11 @@ const micro = computed(() => {
         <div class="intelligence__heading">
           <p class="intelligence__eyebrow">流动的智能</p>
           <h2 id="intelligence-title" class="intelligence__title">
-            一种智能。<br />
-            两种看待它的方式。
+            两条 AI 路径。<br />
+            一片共同的星图。
           </h2>
           <p class="intelligence__lede">
-            我们用 AI 构建——并深入那些让 AI 运转的模型之下。
+            一边走向深度学习与科研，一边走向 AI Agent 与工作实践；知识点如星辰，围绕各自的核心聚合。
           </p>
         </div>
 

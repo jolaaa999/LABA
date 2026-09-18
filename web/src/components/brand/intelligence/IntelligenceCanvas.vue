@@ -58,16 +58,17 @@ watch(
         class="intel-canvas__label"
         :class="{
           'intel-canvas__label--hot': hotspot?.id === item.id,
-          'intel-canvas__label--secondary': !item.microcopy,
+          'intel-canvas__label--core': item.id === 'n0' || item.id === 'n1',
+          'intel-canvas__label--secondary': item.id !== 'n0' && item.id !== 'n1',
         }"
         :style="
-          labelPositions[item.id]
-            ? {
-                transform: `translate(-50%, -140%) translate(${labelPositions[item.id]!.x}px, ${labelPositions[item.id]!.y}px)`,
-                opacity: 0.5 + (hotspot?.id === item.id ? 0.4 : 0),
-              }
-            : { opacity: 0 }
-        "
+        labelPositions[item.id]
+          ? {
+              transform: `translate(-50%, ${item.id === 'n0' || item.id === 'n1' ? '-170%' : '-145%'}) translate(${labelPositions[item.id]!.x}px, ${labelPositions[item.id]!.y}px)`,
+              opacity: 0.62 + (hotspot?.id === item.id ? 0.32 : 0),
+            }
+          : { opacity: 0 }
+      "
       >
         {{ item.label }}
       </span>
@@ -109,10 +110,17 @@ watch(
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-text-muted) 88%, var(--color-stream));
-  white-space: nowrap;
+  color: color-mix(in srgb, var(--color-mountain) 78%, var(--color-text-muted));
+  font-size: 0.61rem;
+  font-weight: 550;
   transition: opacity var(--duration-fast) var(--ease-out-soft), color var(--duration-fast) var(--ease-out-soft);
   will-change: transform, opacity;
+}
+
+.intel-canvas__label--core {
+  font-size: 0.73rem;
+  font-weight: 650;
+  color: var(--color-mountain);
 }
 
 .intel-canvas__label--hot {
@@ -120,7 +128,8 @@ watch(
 }
 
 .intel-canvas__label--secondary {
-  opacity: 0.45;
+  color: color-mix(in srgb, var(--color-text-muted) 80%, var(--color-stream));
+  font-weight: 500;
 }
 
 @media (max-width: 720px) {
@@ -129,7 +138,7 @@ watch(
   }
 
   .intel-canvas__label {
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     letter-spacing: 0.1em;
   }
 }

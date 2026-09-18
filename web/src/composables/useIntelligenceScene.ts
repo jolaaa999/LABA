@@ -16,7 +16,7 @@ import { useMotionPreference } from './useMotionPreference'
 function labelsForMode(mode: IntelligenceMode): HotspotInfo[] {
   const source = mode === 'build' ? buildLayout : understandLayout
   return source.nodes
-    .filter((n) => n.role === 'primary' && n.label)
+    .filter((n) => n.label)
     .map((n) => ({
       id: n.id,
       label: n.label!,

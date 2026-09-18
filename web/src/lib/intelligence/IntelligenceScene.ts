@@ -234,7 +234,7 @@ export function createIntelligenceScene(
   function getPrimaryLabels(forMode: IntelligenceMode): HotspotInfo[] {
     const source = forMode === 'build' ? activeBuild() : activeUnderstand()
     return source.nodes
-      .filter((n) => n.role === 'primary' && n.label)
+      .filter((n) => n.label)
       .map((n) => ({
         id: n.id,
         label: n.label!,

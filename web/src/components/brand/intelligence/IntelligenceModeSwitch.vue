@@ -10,8 +10,8 @@ const emit = defineEmits<{
 }>()
 
 const modes: { id: IntelligenceMode; label: string }[] = [
-  { id: 'build', label: '构建' },
-  { id: 'understand', label: '理解' },
+  { id: 'build', label: '深度学习 · 科研' },
+  { id: 'understand', label: 'AI Agent · 工作' },
 ]
 
 function select(id: IntelligenceMode) {
