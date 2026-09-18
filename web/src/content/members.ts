@@ -12,7 +12,7 @@ export const members: Member[] = [
     name: 'jolly',
     slug: 'jolly',
     monogram: 'JO',
-    role: 'AI 工程',
+    role: '2026届百度飞桨团长',
     direction: 'ai',
     bio: '构建 Agent 工作流与可调用工具的系统——从意图到真正能跑起来的东西。',
     skills: ['AI 工程', 'Agent', 'Vue', '工作流'],

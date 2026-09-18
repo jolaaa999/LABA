@@ -33,7 +33,7 @@ const emit = defineEmits<{
       <span class="member-roster__body">
         <span class="member-roster__name">{{ member.name }}</span>
         <span class="member-roster__direction">
-          {{ formatMemberDirection(member.direction) }}
+          {{ member.role || formatMemberDirection(member.direction) }}
         </span>
         <span v-if="member.skills.length" class="member-roster__skills">
           {{ formatMemberSkills(member.skills.slice(0, 3)) }}
