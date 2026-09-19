@@ -138,6 +138,7 @@ export function createIntelligenceScene(
   let secondaryPoints: Points | null = null
   let ambientPoints: Points | null = null
   let edgeLines: LineSegments | null = null
+  let verticalLines: LineSegments | null = null
   let hazePoints: Points | null = null
 
   let nodePositions: Float32Array | null = null
@@ -151,6 +152,7 @@ export function createIntelligenceScene(
   let ambientBase: Float32Array | null = null
   let edgePositions: Float32Array | null = null
   let edgeColors: Float32Array | null = null
+  let verticalPositions: Float32Array | null = null
 
   let pointTexture: Texture | null = null
   let modeTween: gsap.core.Tween | null = null
@@ -158,6 +160,9 @@ export function createIntelligenceScene(
   let pulseT = 0
   let focusedHotspot: string | null = null
   let focusScale = 1
+  let targetFocusScale = 1
+  const focusOffset = { x: 0, y: 0, z: 0 }
+  const targetFocusOffset = { x: 0, y: 0, z: 0 }
   let rotationX = -0.08
   let rotationY = -0.18
 
@@ -225,7 +230,7 @@ export function createIntelligenceScene(
     const source = morph < 0.5 ? activeBuild() : activeUnderstand()
     const m: IntelligenceMode = morph < 0.5 ? 'build' : 'understand'
     return source.nodes
-      .filter((n) => n.hotspot && n.label && n.microcopy)
+      .filter((n) => n.label && (n.hotspot || n.role === 'secondary'))
       .map((n) => ({
         id: n.id,
         label: n.label!,
@@ -427,6 +432,40 @@ export function createIntelligenceScene(
       }),
     )
     root.add(edgeLines)
+
+    verticalPositions = new Float32Array(secondaryIds.length * 6)
+    const verticalGeo = new BufferGeometry()
+    verticalGeo.setAttribute('position', new BufferAttribute(verticalPositions, 3))
+    verticalLines = new LineSegments(
+      verticalGeo,
+      new LineBasicMaterial({
+        color: COLOR.aurora,
+        transparent: true,
+        opacity: 0.18,
+        depthWrite: false,
+        blending: AdditiveBlending,
+      }),
+    )
+    root.add(verticalLines)
+  }
+
+  function updateVerticalLines() {
+    if (!verticalPositions || !verticalLines || !nodePositions) return
+    for (let i = 0; i < secondaryIds.length; i++) {
+      const nodeIndex = nodeOrder.indexOf(secondaryIds[i]!)
+      const source = nodeIndex * 3
+      const target = i * 6
+      const phase = (pulseT * 0.22 + i * 0.13) % 1
+      const length = 0.18 + phase * 0.72
+      verticalPositions[target] = nodePositions[source]!
+      verticalPositions[target + 1] = nodePositions[source + 1]!
+      verticalPositions[target + 2] = nodePositions[source + 2]!
+      verticalPositions[target + 3] = nodePositions[source]!
+      verticalPositions[target + 4] = nodePositions[source + 1]!
+      verticalPositions[target + 5] = nodePositions[source + 2]! - length
+    }
+    ;(verticalLines.geometry.getAttribute('position') as BufferAttribute).needsUpdate = true
+    ;(verticalLines.material as LineBasicMaterial).opacity = 0.08 + awaken * 0.2
   }
 
   function updateEdges() {
@@ -465,6 +504,8 @@ export function createIntelligenceScene(
       if (hierarchy === 'ambient') opacity *= 1 - morphQuiet * 0.65
       else if (hierarchy === 'secondary') opacity *= 1 - morphQuiet * 0.3
 
+      const stagedReveal = Math.max(0.16, Math.min(1, (pulseT * 0.38 - edgeOrder.indexOf(id) * 0.025 + 1.15) % 1.15))
+      opacity *= 0.35 + stagedReveal * 0.65
       const hierarchyMul =
         hierarchy === 'primary' ? 1 : hierarchy === 'secondary' ? 0.55 : 0.28
       opacity *= hierarchyMul * (0.65 + weight * 0.35)
@@ -517,12 +558,13 @@ export function createIntelligenceScene(
         edgePositions[cursor * 3 + 1] = tmpP.y
         edgePositions[cursor * 3 + 2] = tmpP.z
         colorMix.copy(colorA).lerp(colorB, t0)
+        const radialPulse = Math.max(0.15, 1 - Math.abs(t0 - ((pulseT * 0.22 + edgeOrder.indexOf(id) * 0.037) % 1)) * 2.8)
         const gain =
           hierarchy === 'primary'
             ? 0.45 + opacity * 0.7
             : hierarchy === 'secondary'
               ? 0.22 + opacity * 0.55
-              : 0.12 + opacity * 0.4
+              : (0.12 + opacity * 0.4) * radialPulse
         edgeColors[cursor * 3] = colorMix.r * gain
         edgeColors[cursor * 3 + 1] = colorMix.g * gain
         edgeColors[cursor * 3 + 2] = colorMix.b * gain
@@ -709,6 +751,11 @@ export function createIntelligenceScene(
 
   function updateCamera() {
     if (!camera || !root) return
+    focusScale = lerp(focusScale, targetFocusScale, reducedMotion ? 1 : 0.075)
+    focusOffset.x = lerp(focusOffset.x, targetFocusOffset.x, reducedMotion ? 1 : 0.075)
+    focusOffset.y = lerp(focusOffset.y, targetFocusOffset.y, reducedMotion ? 1 : 0.075)
+    focusOffset.z = lerp(focusOffset.z, targetFocusOffset.z, reducedMotion ? 1 : 0.075)
+    root.position.set(focusOffset.x, focusOffset.y, focusOffset.z)
     root.rotation.x = rotationX
     root.rotation.y = rotationY
     if (reducedMotion) {
@@ -728,6 +775,7 @@ export function createIntelligenceScene(
     if (!renderer || !scene || !camera) return
     updateNodes(dt)
     updateEdges()
+    updateVerticalLines()
     updateAmbient(dt)
     updateCamera()
     renderer.render(scene, camera)
@@ -760,9 +808,9 @@ export function createIntelligenceScene(
     if (!renderer || !camera) return
     renderer.setPixelRatio(maxDpr())
     renderer.setSize(width, height, false)
-    const viewW = viewH * aspect * focusScale
-    camera.left = -viewW
-    camera.right = viewW
+    const animatedViewW = viewH * aspect * focusScale
+    camera.left = -animatedViewW
+    camera.right = animatedViewW
     camera.top = viewH * focusScale
     camera.bottom = -viewH * focusScale
     camera.updateProjectionMatrix()
@@ -896,16 +944,27 @@ export function createIntelligenceScene(
       }
     }
     focusedHotspot = best?.id ?? null
-    focusScale = best ? (best.id === 'research' || best.id === 'agent' ? 0.82 : 0.52) : 1
-    applySize(width, height)
+    targetFocusScale = best ? (best.id === 'research' || best.id === 'agent' ? 0.72 : 0.42) : 1
+    if (best) {
+      const idx = nodeOrder.indexOf(best.id)
+      targetFocusOffset.x = -(nodePositions[idx * 3] ?? 0)
+      targetFocusOffset.y = -(nodePositions[idx * 3 + 1] ?? 0)
+      targetFocusOffset.z = 0
+    } else {
+      targetFocusOffset.x = 0
+      targetFocusOffset.y = 0
+      targetFocusOffset.z = 0
+    }
     options.onHotspotChange?.(best)
     ensureLoop()
   }
 
   function clearSelection() {
     focusedHotspot = null
-    focusScale = 1
-    applySize(width, height)
+    targetFocusScale = 1
+    targetFocusOffset.x = 0
+    targetFocusOffset.y = 0
+    targetFocusOffset.z = 0
     options.onHotspotChange?.(null)
     ensureLoop()
   }
@@ -981,6 +1040,8 @@ export function createIntelligenceScene(
       nodePositions[idx * 3 + 1]!,
       nodePositions[idx * 3 + 2]!,
     )
+    root?.updateMatrixWorld()
+    camera.updateMatrixWorld()
     root?.localToWorld(world)
     world.project(camera)
     return {
@@ -1017,6 +1078,7 @@ export function createIntelligenceScene(
     disposeObj(secondaryPoints)
     disposeObj(ambientPoints)
     disposeObj(edgeLines)
+    disposeObj(verticalLines)
     disposeObj(hazePoints)
     pointTexture?.dispose()
     pointTexture = null
@@ -1025,6 +1087,7 @@ export function createIntelligenceScene(
     secondaryPoints = null
     ambientPoints = null
     edgeLines = null
+    verticalLines = null
     hazePoints = null
     scene = null
     camera = null

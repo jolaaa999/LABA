@@ -44,7 +44,11 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
     const api = sceneApi.value
     if (!api) return
     const next: Record<string, { x: number; y: number }> = {}
-    for (const item of api.getPrimaryLabels(mode.value)) {
+    const labels = [...api.getPrimaryLabels(mode.value)]
+    if (hotspot.value && !labels.some((item) => item.id === hotspot.value?.id)) {
+      labels.push(hotspot.value)
+    }
+    for (const item of labels) {
       const projected = api.projectNode(item.id)
       if (projected) next[item.id] = projected
     }
@@ -74,6 +78,7 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
       },
       onHotspotChange(next) {
         hotspot.value = next
+        scheduleLabelSync()
       },
       onReady() {
         scheduleLabelSync()
