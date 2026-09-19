@@ -18,8 +18,8 @@ defineProps<{
         <filter id="glow"><feGaussianBlur stdDeviation="5" /></filter>
       </defs>
       <g class="intel-fallback__links">
-        <path d="M215 160 L110 82 M215 160 L98 236 M215 160 L214 58 M215 160 L330 104 M215 160 L326 240" />
-        <path d="M505 160 L610 82 M505 160 L622 236 M505 160 L506 58 M505 160 L390 104 M505 160 L394 240 M505 160 L506 270" />
+        <path d="M215 160 L110 160 L110 82 M215 160 L98 160 L98 236 M215 160 L214 160 L214 58 M215 160 L330 160 L330 104 M215 160 L326 160 L326 240" />
+        <path d="M505 160 L610 160 L610 82 M505 160 L622 160 L622 236 M505 160 L506 160 L506 58 M505 160 L390 160 L390 104 M505 160 L394 160 L394 240 M505 160 L506 160 L506 270" />
       </g>
       <path d="M215 160 C305 130 415 130 505 160" stroke="url(#bridge)" stroke-width="2" />
       <path d="M215 160 C305 130 415 130 505 160" stroke="#79BEFF" stroke-opacity="0.3" stroke-width="8" filter="url(#glow)" />

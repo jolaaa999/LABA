@@ -32,6 +32,7 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
   const isSectionVisible = ref(false)
   const hasAwakened = ref(false)
   const hotspot = ref<HotspotInfo | null>(null)
+  const hovered = ref<HotspotInfo | null>(null)
   const labelPositions = ref<Record<string, { x: number; y: number }>>({})
   const primaryLabels = ref<HotspotInfo[]>(labelsForMode('build'))
   const sceneApi = shallowRef<IntelligenceSceneApi | null>(null)
@@ -45,6 +46,9 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
     if (!api) return
     const next: Record<string, { x: number; y: number }> = {}
     const labels = [...api.getPrimaryLabels(mode.value)]
+    if (hovered.value && !labels.some((item) => item.id === hovered.value?.id)) {
+      labels.push(hovered.value)
+    }
     if (hotspot.value && !labels.some((item) => item.id === hotspot.value?.id)) {
       labels.push(hotspot.value)
     }
@@ -80,6 +84,10 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
         hotspot.value = next
         scheduleLabelSync()
       },
+      onHoverChange(next) {
+        hovered.value = next
+        scheduleLabelSync()
+      },
       onReady() {
         scheduleLabelSync()
       },
@@ -87,7 +95,8 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
 
     sceneApi.value = api
     api.mount(host)
-    api.setMode(mode.value)
+    // 初始只保留「深度学习」与「AI Agent」两个核心点，不自动展开星团
+    api.setMode(mode.value, false)
     api.setVisible(isSectionVisible.value)
     if (hasAwakened.value) api.setAwake(true)
   }
@@ -109,6 +118,7 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
     const nx = ((event.clientX - rect.left) / rect.width) * 2 - 1
     const ny = -(((event.clientY - rect.top) / rect.height) * 2 - 1)
     api.setPointer(nx, ny)
+    if (!isDragging) api.hoverAt(nx, ny)
   }
 
   function onPointerDown(event: PointerEvent) {
@@ -151,6 +161,7 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
     pointerDown = null
     isDragging = false
     sceneApi.value?.setPointer(0, 0)
+    sceneApi.value?.hoverAt(9, 9) // 远离画布 → 清除悬停
   }
 
   useIntersectionObserver(
@@ -197,6 +208,7 @@ export function useIntelligenceScene(canvasHost: Ref<HTMLElement | null>) {
     isSectionVisible,
     hasAwakened,
     hotspot,
+    hovered,
     labelPositions,
     primaryLabels,
     onPointer,

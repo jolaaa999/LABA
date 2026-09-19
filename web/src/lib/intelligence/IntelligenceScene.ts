@@ -6,6 +6,7 @@ import {
   Color,
   Group,
   LineBasicMaterial,
+  LineLoop,
   LineSegments,
   OrthographicCamera,
   Points,
@@ -43,6 +44,19 @@ const COLOR = {
   mountain: new Color('#276fae'),
   text: new Color('#10243a'),
 }
+
+// ── 诗云《行星指引》同款参数：平面段先向四周发散，垂直段再上升（L 形折线，非弧线） ──
+const GUIDE_SPLIT = 0.6 // 平面段占生长窗口 [0, SPLIT]，垂直段占 [SPLIT, 1]
+const GUIDE_GROW = 1.2 // s — 指引线从核心向外生长的时长
+const GUIDE_FADE = 1.2 // s — 收起时的淡出时长
+const NODE_FADE_IN = 0.4 // s — 星点闪光渐入
+const NODE_HOLD_FLARE = 0.6 // 选中期间持续的高亮余量（诗云 HOLD_FLARE）
+const RING_SEGMENTS = 96 // 赤道参考环分段
+const RING_ALPHA = 0.16
+const RING_INTENSITY = 0.35
+const PLANE_SEG_DIM = 0.38 // 平面段亮度（最暗：只表达方位/半径）
+const VERT_SEG_BRIGHT = 0.8 // 垂直段亮度（较亮：表达高度信息）
+const BRIDGE_SEGMENTS = 24
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t
@@ -137,8 +151,8 @@ export function createIntelligenceScene(
   let primaryPoints: Points | null = null
   let secondaryPoints: Points | null = null
   let ambientPoints: Points | null = null
-  let edgeLines: LineSegments | null = null
-  let verticalLines: LineSegments | null = null
+  let guideLines: LineSegments | null = null
+  let bridgeLines: LineSegments | null = null
   let hazePoints: Points | null = null
 
   let nodePositions: Float32Array | null = null
@@ -150,30 +164,92 @@ export function createIntelligenceScene(
   let secondaryCol: Float32Array | null = null
   let ambientPositions: Float32Array | null = null
   let ambientBase: Float32Array | null = null
-  let edgePositions: Float32Array | null = null
-  let edgeColors: Float32Array | null = null
-  let verticalPositions: Float32Array | null = null
+  let guidePositions: Float32Array | null = null
+  let guideColors: Float32Array | null = null
+  let bridgePositions: Float32Array | null = null
+  let bridgeColors: Float32Array | null = null
 
   let pointTexture: Texture | null = null
   let modeTween: gsap.core.Tween | null = null
   let awakenTween: gsap.core.Tween | null = null
+  let focusTween: gsap.core.Tween | null = null
   let pulseT = 0
+  let sceneT = 0
+  let hoveredId: string | null = null
   let focusedHotspot: string | null = null
-  let focusScale = 1
-  let targetFocusScale = 1
-  const focusOffset = { x: 0, y: 0, z: 0 }
-  const targetFocusOffset = { x: 0, y: 0, z: 0 }
+  const focus = { scale: 1, x: 0, y: 0 }
   let rotationX = -0.08
   let rotationY = -0.18
 
   const nodeOrder = buildLayout.nodes.map((n) => n.id)
-  const edgeOrder = buildLayout.edges.map((e) => e.id)
   const primaryIds = nodeOrder.filter(
     (id) => buildLayout.nodes.find((n) => n.id === id)?.role === 'primary',
   )
   const secondaryIds = nodeOrder.filter(
     (id) => buildLayout.nodes.find((n) => n.id === id)?.role === 'secondary',
   )
+  const clusterIds: string[] = ['research', 'agent']
+
+  /** 星团状态机：expand → 平面段发散 → 垂直段上升 → 节点闪光渐入（诗云《行星指引》同款时序） */
+  interface ClusterState {
+    id: string
+    coreIdx: number
+    nodeIdxs: number[]
+    expanded: boolean
+    alpha: number
+    nodesAlpha: number
+    flare: number
+    grow: number
+    born: number
+    collapseAt: number | null
+    ringRadius: number
+  }
+
+  const clusters = new Map<string, ClusterState>()
+  const nodeClusterById = new Map<string, ClusterState>()
+  const ringLoops = new Map<string, LineLoop>()
+  const clusterTints = {
+    plane: [
+      COLOR.glacier.clone().lerp(COLOR.stream, 0.45),
+      COLOR.stream.clone().lerp(COLOR.aurora, 0.4),
+    ],
+    vert: [
+      COLOR.aurora.clone().lerp(COLOR.sky, 0.35),
+      COLOR.aurora.clone().lerp(COLOR.stream, 0.5),
+    ],
+  }
+
+  function initClusters() {
+    clusters.clear()
+    nodeClusterById.clear()
+    for (const cid of clusterIds) {
+      const coreIdx = nodeOrder.indexOf(cid)
+      if (coreIdx < 0) continue
+      const nodeIdxs: number[] = []
+      for (const edge of buildLayout.edges) {
+        if (edge.from !== cid) continue
+        const idx = nodeOrder.indexOf(edge.to)
+        if (idx < 0) continue
+        nodeIdxs.push(idx)
+      }
+      const state: ClusterState = {
+        id: cid,
+        coreIdx,
+        nodeIdxs,
+        expanded: false,
+        alpha: 0,
+        nodesAlpha: 0,
+        flare: 1,
+        grow: 0,
+        born: 0,
+        collapseAt: null,
+        ringRadius: 0.3,
+      }
+      clusters.set(cid, state)
+      for (const idx of nodeIdxs) nodeClusterById.set(nodeOrder[idx]!, state)
+    }
+  }
+  initClusters()
 
   function activeBuild() {
     return compact ? buildLayoutMobile : buildLayout
@@ -185,16 +261,12 @@ export function createIntelligenceScene(
 
   let buildById = new Map(buildLayout.nodes.map((n) => [n.id, n]))
   let understandById = new Map(understandLayout.nodes.map((n) => [n.id, n]))
-  let buildEdges = new Map(buildLayout.edges.map((e) => [e.id, e]))
-  let understandEdges = new Map(understandLayout.edges.map((e) => [e.id, e]))
 
   function syncLayoutMaps() {
     const b = activeBuild()
     const u = activeUnderstand()
     buildById = new Map(b.nodes.map((n) => [n.id, n]))
     understandById = new Map(u.nodes.map((n) => [n.id, n]))
-    buildEdges = new Map(b.edges.map((e) => [e.id, e]))
-    understandEdges = new Map(u.edges.map((e) => [e.id, e]))
   }
 
   const tmpA = new Vector3()
@@ -224,19 +296,6 @@ export function createIntelligenceScene(
       hotspot: t < 0.5 ? a.hotspot : b.hotspot,
       microcopy: t < 0.5 ? a.microcopy : b.microcopy,
     }
-  }
-
-  function currentHotspots(): HotspotInfo[] {
-    const source = morph < 0.5 ? activeBuild() : activeUnderstand()
-    const m: IntelligenceMode = morph < 0.5 ? 'build' : 'understand'
-    return source.nodes
-      .filter((n) => n.label && (n.hotspot || n.role === 'secondary'))
-      .map((n) => ({
-        id: n.id,
-        label: n.label!,
-        microcopy: n.microcopy!,
-        mode: m,
-      }))
   }
 
   function getPrimaryLabels(forMode: IntelligenceMode): HotspotInfo[] {
@@ -414,180 +473,230 @@ export function createIntelligenceScene(
       nodePositions[i * 3 + 2] = layout.position.z
     }
 
-    const segs = counts().curveSegments
-    const maxVerts = edgeOrder.length * (segs + 1) * 2
-    edgePositions = new Float32Array(maxVerts * 3)
-    edgeColors = new Float32Array(maxVerts * 3)
-    const edgeGeo = new BufferGeometry()
-    edgeGeo.setAttribute('position', new BufferAttribute(edgePositions, 3))
-    edgeGeo.setAttribute('color', new BufferAttribute(edgeColors, 3))
-    edgeLines = new LineSegments(
-      edgeGeo,
+    // ── 电路式指引线（诗云平面坐标式）：每个次级节点 4 顶点 = 平面段 + 垂直段 ──
+    guidePositions = new Float32Array(secondaryIds.length * 4 * 3)
+    guideColors = new Float32Array(secondaryIds.length * 4 * 3)
+    const guideGeo = new BufferGeometry()
+    guideGeo.setAttribute('position', new BufferAttribute(guidePositions, 3))
+    guideGeo.setAttribute('color', new BufferAttribute(guideColors, 3))
+    guideLines = new LineSegments(
+      guideGeo,
       new LineBasicMaterial({
         vertexColors: true,
         transparent: true,
-        opacity: 0.85,
+        opacity: 0.9,
         depthWrite: false,
         blending: AdditiveBlending,
       }),
     )
-    root.add(edgeLines)
+    guideLines.frustumCulled = false
+    root.add(guideLines)
 
-    verticalPositions = new Float32Array(secondaryIds.length * 6)
-    const verticalGeo = new BufferGeometry()
-    verticalGeo.setAttribute('position', new BufferAttribute(verticalPositions, 3))
-    verticalLines = new LineSegments(
-      verticalGeo,
+    // 双核桥连线（两团星之间的弧线，展开后才显现）
+    bridgePositions = new Float32Array((BRIDGE_SEGMENTS + 1) * 2 * 3)
+    bridgeColors = new Float32Array((BRIDGE_SEGMENTS + 1) * 2 * 3)
+    const bridgeGeo = new BufferGeometry()
+    bridgeGeo.setAttribute('position', new BufferAttribute(bridgePositions, 3))
+    bridgeGeo.setAttribute('color', new BufferAttribute(bridgeColors, 3))
+    bridgeLines = new LineSegments(
+      bridgeGeo,
       new LineBasicMaterial({
-        color: COLOR.aurora,
+        vertexColors: true,
         transparent: true,
-        opacity: 0.18,
+        opacity: 1,
         depthWrite: false,
         blending: AdditiveBlending,
       }),
     )
-    root.add(verticalLines)
+    bridgeLines.frustumCulled = false
+    root.add(bridgeLines)
+
+    // 赤道参考环（诗云：极淡的平面参考环，随平面段一起淡入）
+    for (const cid of clusterIds) {
+      const ringGeo = new BufferGeometry()
+      ringGeo.setAttribute('position', new BufferAttribute(new Float32Array(RING_SEGMENTS * 3), 3))
+      const ringMat = new LineBasicMaterial({
+        color: COLOR.aurora.clone().multiplyScalar(RING_INTENSITY),
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+        blending: AdditiveBlending,
+      })
+      const ring = new LineLoop(ringGeo, ringMat)
+      ring.frustumCulled = false
+      ringLoops.set(cid, ring)
+      root.add(ring)
+    }
   }
 
-  function updateVerticalLines() {
-    if (!verticalPositions || !verticalLines || !nodePositions) return
-    for (let i = 0; i < secondaryIds.length; i++) {
-      const nodeIndex = nodeOrder.indexOf(secondaryIds[i]!)
-      const source = nodeIndex * 3
-      const target = i * 6
-      const phase = (pulseT * 0.22 + i * 0.13) % 1
-      const length = 0.18 + phase * 0.72
-      verticalPositions[target] = nodePositions[source]!
-      verticalPositions[target + 1] = nodePositions[source + 1]!
-      verticalPositions[target + 2] = nodePositions[source + 2]!
-      verticalPositions[target + 3] = nodePositions[source]!
-      verticalPositions[target + 4] = nodePositions[source + 1]!
-      verticalPositions[target + 5] = nodePositions[source + 2]! - length
+  // ── 星团时序：grow（平面段→垂直段）+ 闪光渐入 + 收起淡出（诗云同款） ──
+  function updateClusters(dt: number) {
+    sceneT += dt
+    if (reducedMotion) return
+    for (const c of clusters.values()) {
+      if (c.expanded) {
+        const age = Math.max(0, sceneT - c.born)
+        c.grow = Math.min(1, age / GUIDE_GROW)
+        c.alpha = Math.min(1, age / GUIDE_GROW)
+        c.nodesAlpha = Math.min(1, age / NODE_FADE_IN)
+        c.flare = Math.max(NODE_HOLD_FLARE, 1 - (1 - NODE_HOLD_FLARE) * (age / NODE_FADE_IN))
+      } else if (c.collapseAt != null) {
+        const k = (sceneT - c.collapseAt) / GUIDE_FADE
+        if (k >= 1) {
+          c.collapseAt = null
+          c.alpha = 0
+          c.nodesAlpha = 0
+          c.grow = 0
+          c.flare = 1
+        } else {
+          c.alpha = 1 - k
+          c.nodesAlpha = c.alpha
+          c.flare = 1
+        }
+      }
     }
-    ;(verticalLines.geometry.getAttribute('position') as BufferAttribute).needsUpdate = true
-    ;(verticalLines.material as LineBasicMaterial).opacity = 0.08 + awaken * 0.2
   }
 
-  function updateEdges() {
-    if (!edgePositions || !edgeColors || !edgeLines || !nodePositions) return
-    const segs = counts().curveSegments
-    let cursor = 0
-    const t = smoothstep(morph)
-    const awakenFade = awaken
-    const morphQuiet = Math.sin(morph * Math.PI)
-
-    for (const id of edgeOrder) {
-      const be = buildEdges.get(id)!
-      const ue = understandEdges.get(id)!
-      const fromIdx = nodeOrder.indexOf(be.from)
-      const toIdx = nodeOrder.indexOf(be.to)
-      if (fromIdx < 0 || toIdx < 0) continue
-
-      tmpA.set(
-        nodePositions[fromIdx * 3]!,
-        nodePositions[fromIdx * 3 + 1]!,
-        nodePositions[fromIdx * 3 + 2]!,
-      )
-      tmpB.set(
-        nodePositions[toIdx * 3]!,
-        nodePositions[toIdx * 3 + 1]!,
-        nodePositions[toIdx * 3 + 2]!,
-      )
-
-      const curved = t < 0.5 ? be.curved : ue.curved
-      const kind = t < 0.5 ? be.kind : ue.kind
-      const hierarchy = t < 0.5 ? be.hierarchy : ue.hierarchy
-      const weight = lerp(be.weight, ue.weight, t)
-      let opacity = lerp(be.opacity, ue.opacity, t) * awakenFade
-
-      // Quiet secondary/ambient during morph to avoid spaghetti snaps
-      if (hierarchy === 'ambient') opacity *= 1 - morphQuiet * 0.65
-      else if (hierarchy === 'secondary') opacity *= 1 - morphQuiet * 0.3
-
-      const stagedReveal = Math.max(0.16, Math.min(1, (pulseT * 0.38 - edgeOrder.indexOf(id) * 0.025 + 1.15) % 1.15))
-      opacity *= 0.35 + stagedReveal * 0.65
-      const hierarchyMul =
-        hierarchy === 'primary' ? 1 : hierarchy === 'secondary' ? 0.55 : 0.28
-      opacity *= hierarchyMul * (0.65 + weight * 0.35)
-
-      const midX = (tmpA.x + tmpB.x) * 0.5
-      const midY = (tmpA.y + tmpB.y) * 0.5
-      const bow = midY >= 0 ? 1 : -1
-      const liftBase =
-        hierarchy === 'primary'
-          ? kind === 'attention'
-            ? 0.16
-            : 0.05
-          : kind === 'attention'
-            ? 0.1
-            : 0.04
-      const side =
-        hierarchy === 'primary' ? 0.03 : hierarchy === 'secondary' ? 0.07 : 0.05
-      // Interpolate control points gently with morph to reduce jumps
-      const lift = liftBase * bow * (0.85 + (1 - morphQuiet) * 0.15)
-
-      tmpC1.set(
-        lerp(tmpA.x, midX, 0.38) + (curved ? -side * bow : 0),
-        lerp(tmpA.y, midY, 0.38) + (curved ? lift : 0),
-        lerp(tmpA.z, tmpB.z, 0.35),
-      )
-      tmpC2.set(
-        lerp(midX, tmpB.x, 0.62) + (curved ? side * bow * 0.5 : 0),
-        lerp(midY, tmpB.y, 0.62) + (curved ? lift * 0.75 : 0),
-        lerp(tmpA.z, tmpB.z, 0.65),
-      )
-
-      // Same family blues — weight via brightness only; primary stays luminous
-      if (hierarchy === 'primary') {
-        colorA.copy(COLOR.aurora).lerp(COLOR.sky, 0.25)
-        colorB.copy(COLOR.stream).lerp(COLOR.glacier, 0.35)
-      } else if (hierarchy === 'secondary') {
-        colorA.copy(COLOR.stream).lerp(COLOR.glacier, 0.4)
-        colorB.copy(COLOR.glacier).lerp(COLOR.frost, 0.3)
-      } else {
-        colorA.copy(COLOR.glacier).lerp(COLOR.frost, 0.5)
-        colorB.copy(COLOR.frost)
-      }
-
-      for (let s = 0; s < segs; s++) {
-        const t0 = s / segs
-        const t1 = (s + 1) / segs
-        if (curved) bezierPoint(tmpA, tmpC1, tmpC2, tmpB, t0, tmpP)
-        else tmpP.lerpVectors(tmpA, tmpB, t0)
-        edgePositions[cursor * 3] = tmpP.x
-        edgePositions[cursor * 3 + 1] = tmpP.y
-        edgePositions[cursor * 3 + 2] = tmpP.z
-        colorMix.copy(colorA).lerp(colorB, t0)
-        const radialPulse = Math.max(0.15, 1 - Math.abs(t0 - ((pulseT * 0.22 + edgeOrder.indexOf(id) * 0.037) % 1)) * 2.8)
-        const gain =
-          hierarchy === 'primary'
-            ? 0.45 + opacity * 0.7
-            : hierarchy === 'secondary'
-              ? 0.22 + opacity * 0.55
-              : (0.12 + opacity * 0.4) * radialPulse
-        edgeColors[cursor * 3] = colorMix.r * gain
-        edgeColors[cursor * 3 + 1] = colorMix.g * gain
-        edgeColors[cursor * 3 + 2] = colorMix.b * gain
-        cursor++
-
-        if (curved) bezierPoint(tmpA, tmpC1, tmpC2, tmpB, t1, tmpP)
-        else tmpP.lerpVectors(tmpA, tmpB, t1)
-        edgePositions[cursor * 3] = tmpP.x
-        edgePositions[cursor * 3 + 1] = tmpP.y
-        edgePositions[cursor * 3 + 2] = tmpP.z
-        colorMix.copy(colorA).lerp(colorB, t1)
-        edgeColors[cursor * 3] = colorMix.r * gain
-        edgeColors[cursor * 3 + 1] = colorMix.g * gain
-        edgeColors[cursor * 3 + 2] = colorMix.b * gain
-        cursor++
+  // ── 诗云《行星指引》平面坐标式：先向四周发散（平面段），再垂直方向发散（垂直段） ──
+  function updateGuides() {
+    if (!guidePositions || !guideColors || !guideLines || !nodePositions) return
+    for (const c of clusters.values()) {
+      const env = c.alpha * awaken
+      const ci = clusterIds.indexOf(c.id)
+      const planeTint = clusterTints.plane[ci] ?? COLOR.glacier
+      const vertTint = clusterTints.vert[ci] ?? COLOR.aurora
+      const hotCore = focusedHotspot === c.id ? 1.2 : 1
+      const planeP = Math.max(0, Math.min(1, c.grow / GUIDE_SPLIT))
+      const vertP = Math.max(0, Math.min(1, (c.grow - GUIDE_SPLIT) / (1 - GUIDE_SPLIT)))
+      const coreIdx = c.coreIdx * 3
+      const cx = nodePositions[coreIdx]!
+      const cy = nodePositions[coreIdx + 1]!
+      const cz = nodePositions[coreIdx + 2]!
+      for (let k = 0; k < c.nodeIdxs.length; k++) {
+        const idx = c.nodeIdxs[k]!
+        const p = idx * 3
+        const ox = nodePositions[p]! - cx
+        const oy = nodePositions[p + 1]! - cy
+        const oz = nodePositions[p + 2]! - cz
+        const hotNode = focusedHotspot === nodeOrder[idx] ? 1.5 : 1
+        const v = k * 12
+        // v0 = 核心（平面段起点）
+        guidePositions[v] = cx
+        guidePositions[v + 1] = cy
+        guidePositions[v + 2] = cz
+        // v1 = 平面段终点：先向四周发散
+        guidePositions[v + 3] = cx + ox * planeP
+        guidePositions[v + 4] = cy
+        guidePositions[v + 5] = cz + oz * planeP
+        // v2 = 折点 H（节点在水平参考面上的投影）——直角折弯，非弧线
+        guidePositions[v + 6] = cx + ox
+        guidePositions[v + 7] = cy
+        guidePositions[v + 8] = cz + oz
+        // v3 = 节点：垂直段再向上/下发散
+        guidePositions[v + 9] = cx + ox
+        guidePositions[v + 10] = cy + oy * vertP
+        guidePositions[v + 11] = cz + oz
+        const gain = env * hotCore * hotNode
+        // 平面段暗（只表达方位/半径），垂直段亮（表达高度信息）——诗云同款亮度分级
+        for (let s = 0; s < 2; s++) {
+          const tint = s === 0 ? planeTint : vertTint
+          const stage = s === 0 ? PLANE_SEG_DIM : VERT_SEG_BRIGHT
+          const g = stage * gain
+          const base = v + s * 6
+          guideColors[base] = tint.r * g
+          guideColors[base + 1] = tint.g * g
+          guideColors[base + 2] = tint.b * g
+          guideColors[base + 3] = tint.r * g
+          guideColors[base + 4] = tint.g * g
+          guideColors[base + 5] = tint.b * g
+        }
       }
     }
-
-    const geo = edgeLines.geometry as BufferGeometry
+    const geo = guideLines.geometry as BufferGeometry
     ;(geo.getAttribute('position') as BufferAttribute).needsUpdate = true
     ;(geo.getAttribute('color') as BufferAttribute).needsUpdate = true
-    geo.setDrawRange(0, cursor)
-    ;(edgeLines.material as LineBasicMaterial).opacity = 0.5 + awaken * 0.35
+  }
+
+  // 双核桥连线（两团星之间的连接弧线，星团展开后显现）
+  function updateBridge() {
+    if (!bridgeLines || !bridgePositions || !bridgeColors || !nodePositions) return
+    const mat = bridgeLines.material as LineBasicMaterial
+    const research = clusters.get('research')
+    const agent = clusters.get('agent')
+    const alpha = Math.max(research?.alpha ?? 0, agent?.alpha ?? 0) * awaken
+    if (alpha <= 0.004) {
+      mat.opacity = 0
+      return
+    }
+    const t = smoothstep(morph)
+    const a = layoutAt('research', t).position
+    const b = layoutAt('agent', t).position
+    tmpA.set(a.x, a.y, a.z)
+    tmpB.set(b.x, b.y, b.z)
+    const midX = (tmpA.x + tmpB.x) * 0.5
+    const midY = (tmpA.y + tmpB.y) * 0.5
+    const bow = midY >= 0 ? 1 : -1
+    const lift = 0.14 * bow
+    tmpC1.set(
+      lerp(tmpA.x, midX, 0.38),
+      lerp(tmpA.y, midY, 0.38) + lift,
+      lerp(tmpA.z, tmpB.z, 0.35),
+    )
+    tmpC2.set(
+      lerp(midX, tmpB.x, 0.62),
+      lerp(midY, tmpB.y, 0.62) + lift * 0.75,
+      lerp(tmpA.z, tmpB.z, 0.65),
+    )
+    for (let s = 0; s <= BRIDGE_SEGMENTS; s++) {
+      const tt = s / BRIDGE_SEGMENTS
+      bezierPoint(tmpA, tmpC1, tmpC2, tmpB, tt, tmpP)
+      const vi = s * 6
+      bridgePositions[vi] = tmpP.x
+      bridgePositions[vi + 1] = tmpP.y
+      bridgePositions[vi + 2] = tmpP.z
+      bridgePositions[vi + 3] = tmpP.x
+      bridgePositions[vi + 4] = tmpP.y
+      bridgePositions[vi + 5] = tmpP.z
+      colorMix.copy(COLOR.aurora).lerp(COLOR.sky, tt)
+      const gain = (0.4 + 0.45 * Math.sin(Math.PI * tt)) * alpha
+      bridgeColors[vi] = colorMix.r * gain
+      bridgeColors[vi + 1] = colorMix.g * gain
+      bridgeColors[vi + 2] = colorMix.b * gain
+      bridgeColors[vi + 3] = colorMix.r * gain
+      bridgeColors[vi + 4] = colorMix.g * gain
+      bridgeColors[vi + 5] = colorMix.b * gain
+    }
+    const geo = bridgeLines.geometry as BufferGeometry
+    ;(geo.getAttribute('position') as BufferAttribute).needsUpdate = true
+    ;(geo.getAttribute('color') as BufferAttribute).needsUpdate = true
+    mat.opacity = 1
+  }
+
+  // 赤道参考环（诗云：随平面段淡入，极淡，不与连线抢戏）
+  function updateRings() {
+    const t = smoothstep(morph)
+    for (const c of clusters.values()) {
+      const ring = ringLoops.get(c.id)
+      if (!ring) continue
+      const mat = ring.material as LineBasicMaterial
+      const appear = Math.min(1, c.grow / GUIDE_SPLIT)
+      const alpha = c.alpha * awaken * appear * RING_ALPHA * (focusedHotspot === c.id ? 1.5 : 1)
+      if (alpha <= 0.004) {
+        mat.opacity = 0
+        continue
+      }
+      const core = layoutAt(c.id, t)
+      const attr = ring.geometry.getAttribute('position') as BufferAttribute
+      const arr = attr.array as Float32Array
+      for (let i = 0; i < RING_SEGMENTS; i++) {
+        const a = (i / RING_SEGMENTS) * Math.PI * 2
+        arr[i * 3] = core.position.x + Math.cos(a) * c.ringRadius
+        arr[i * 3 + 1] = core.position.y
+        arr[i * 3 + 2] = core.position.z + Math.sin(a) * c.ringRadius
+      }
+      attr.needsUpdate = true
+      mat.opacity = alpha
+    }
   }
 
   function updateNodes(dt: number) {
@@ -678,11 +787,20 @@ export function createIntelligenceScene(
       // Keep RGB high so additive sprites stay luminous, not charcoal
       colorMix.lerp(COLOR.snow, 0.22)
       const depthFade = 0.62 + depthT * 0.38
-      const alpha = hide ? 0 : layout.opacity * awaken * depthFade * (hot ? 1 : 0.9)
+      let alpha = hide ? 0 : layout.opacity * awaken * depthFade * (hot ? 1 : 0.9)
+      let flareGain = 1
+      if (layout.role === 'secondary') {
+        // 未展开的星团：星点完全隐藏；展开时闪光渐入（诗云 FADE_IN + HOLD_FLARE）
+        const cl = nodeClusterById.get(id)
+        const nodeAlpha = cl ? cl.nodesAlpha : 0
+        alpha *= nodeAlpha
+        if (nodeAlpha > 0.004 && cl) flareGain = 1 + cl.flare * 1.2
+      }
       const twinkle = 0.82 + Math.sin(pulseT * (1.9 + (i % 4) * 0.27) + i * 1.7) * 0.18
-      nodeColors[ix] = Math.min(1, colorMix.r * (0.85 + alpha * 0.35) * twinkle)
-      nodeColors[ix + 1] = Math.min(1, colorMix.g * (0.85 + alpha * 0.35) * twinkle)
-      nodeColors[ix + 2] = Math.min(1, colorMix.b * (0.85 + alpha * 0.35) * twinkle)
+      const gain = (0.85 + alpha * 0.35) * twinkle * flareGain
+      nodeColors[ix] = Math.min(1, colorMix.r * gain)
+      nodeColors[ix + 1] = Math.min(1, colorMix.g * gain)
+      nodeColors[ix + 2] = Math.min(1, colorMix.b * gain)
 
       if (layout.role === 'primary') {
         const pi = pIdx * 3
@@ -751,11 +869,8 @@ export function createIntelligenceScene(
 
   function updateCamera() {
     if (!camera || !root) return
-    focusScale = lerp(focusScale, targetFocusScale, reducedMotion ? 1 : 0.075)
-    focusOffset.x = lerp(focusOffset.x, targetFocusOffset.x, reducedMotion ? 1 : 0.075)
-    focusOffset.y = lerp(focusOffset.y, targetFocusOffset.y, reducedMotion ? 1 : 0.075)
-    focusOffset.z = lerp(focusOffset.z, targetFocusOffset.z, reducedMotion ? 1 : 0.075)
-    root.position.set(focusOffset.x, focusOffset.y, focusOffset.z)
+    // 聚焦位移由 gsap 补间驱动（点击星点 → 流畅放大并飞向目标）
+    root.position.set(focus.x, focus.y, 0)
     root.rotation.x = rotationX
     root.rotation.y = rotationY
     if (reducedMotion) {
@@ -773,9 +888,11 @@ export function createIntelligenceScene(
 
   function renderFrame(dt: number) {
     if (!renderer || !scene || !camera) return
+    updateClusters(dt)
     updateNodes(dt)
-    updateEdges()
-    updateVerticalLines()
+    updateGuides()
+    updateBridge()
+    updateRings()
     updateAmbient(dt)
     updateCamera()
     renderer.render(scene, camera)
@@ -808,11 +925,11 @@ export function createIntelligenceScene(
     if (!renderer || !camera) return
     renderer.setPixelRatio(maxDpr())
     renderer.setSize(width, height, false)
-    const animatedViewW = viewH * aspect * focusScale
+    const animatedViewW = viewH * aspect * focus.scale
     camera.left = -animatedViewW
     camera.right = animatedViewW
-    camera.top = viewH * focusScale
-    camera.bottom = -viewH * focusScale
+    camera.top = viewH * focus.scale
+    camera.bottom = -viewH * focus.scale
     camera.updateProjectionMatrix()
   }
 
@@ -885,37 +1002,54 @@ export function createIntelligenceScene(
     }
   }
 
-  function setMode(next: IntelligenceMode) {
-    if (disposed || next === mode) return
+  function setMode(next: IntelligenceMode, expandForMode = true) {
+    if (disposed) return
+    if (next === mode) {
+      // 同一视角重复触发：确保对应星团展开
+      if (expandForMode) {
+        const target = clusters.get(next === 'build' ? 'research' : 'agent')
+        if (target && !target.expanded) {
+          expandCluster(target)
+          frameView()
+        }
+      }
+      return
+    }
     mode = next
-    const target = next === 'understand' ? 1 : 0
+    focusedHotspot = null
+    const targetMorph = next === 'understand' ? 1 : 0
     modeTween?.kill()
 
     if (reducedMotion) {
-      morph = target
+      morph = targetMorph
       modeTween = null
-      renderFrame(0)
-      options.onHotspotChange?.(null)
-      return
+    } else {
+      modeTween = gsap.to(
+        { v: morph },
+        {
+          v: targetMorph,
+          duration: 0.9,
+          ease: 'power2.inOut',
+          overwrite: true,
+          onUpdate() {
+            morph = (this.targets()[0] as { v: number }).v
+            ensureLoop()
+          },
+          onComplete() {
+            morph = targetMorph
+            modeTween = null
+          },
+        },
+      )
     }
 
-    modeTween = gsap.to(
-      { v: morph },
-      {
-        v: target,
-        duration: 0.9,
-        ease: 'power2.inOut',
-        overwrite: true,
-        onUpdate() {
-          morph = (this.targets()[0] as { v: number }).v
-          ensureLoop()
-        },
-        onComplete() {
-          morph = target
-          modeTween = null
-        },
-      },
-    )
+    // 切换视角 = 聚焦对应的核心星团（深度学习·科研 ↔ research；AI Agent·工作 ↔ agent）
+    if (expandForMode) {
+      const cluster = clusters.get(next === 'build' ? 'research' : 'agent')
+      if (cluster) expandCluster(cluster)
+      frameView()
+    }
+
     options.onHotspotChange?.(null)
     ensureLoop()
   }
@@ -924,48 +1058,184 @@ export function createIntelligenceScene(
     pointer.tx = Math.max(-1, Math.min(1, nx))
     pointer.ty = Math.max(-1, Math.min(1, ny))
     if (!reducedMotion) ensureLoop()
-
-    if (!reducedMotion) ensureLoop()
   }
 
-  function selectAt(nx: number, ny: number) {
-    if (!nodePositions || !camera || !root) return
-    let best: HotspotInfo | null = null
-    let bestDist = 0.095
-    for (const candidate of currentHotspots()) {
-      const projected = projectNode(candidate.id)
+  /** 旋转后的坐标（root 仅含 Rx·Ry），用于把节点居中到画面 */
+  function rotatedPoint(x: number, y: number, z: number, out: Vector3) {
+    const cy = Math.cos(rotationY)
+    const sy = Math.sin(rotationY)
+    const cx = Math.cos(rotationX)
+    const sx = Math.sin(rotationX)
+    const x1 = x * cy + z * sy
+    const z1 = -x * sy + z * cy
+    out.set(x1, y * cx - z1 * sx, y * sx + z1 * cx)
+  }
+
+  /** 流畅的相机飞行：gsap 补间聚焦缩放 + 居中偏移（诗云 locate 同款手感） */
+  function flyTo(scale: number, x: number, y: number, duration = 0.95) {
+    if (disposed) return
+    focusTween?.kill()
+    focusTween = null
+    if (reducedMotion) {
+      focus.scale = scale
+      focus.x = x
+      focus.y = y
+      renderFrame(0)
+      return
+    }
+    focusTween = gsap.to(focus, {
+      scale,
+      x,
+      y,
+      duration,
+      ease: 'power2.inOut',
+      overwrite: true,
+      onUpdate() {
+        ensureLoop()
+      },
+    })
+    ensureLoop()
+  }
+
+  function flyToNode(id: string, scale: number, duration = 0.95) {
+    const idx = nodeOrder.indexOf(id)
+    if (!nodePositions || idx < 0) return
+    rotatedPoint(
+      nodePositions[idx * 3]!,
+      nodePositions[idx * 3 + 1]!,
+      nodePositions[idx * 3 + 2]!,
+      tmpA,
+    )
+    flyTo(scale, -tmpA.x, -tmpA.y, duration)
+  }
+
+  function frameView(duration = 0.95) {
+    let anyExpanded = false
+    for (const c of clusters.values()) if (c.expanded) anyExpanded = true
+    if (anyExpanded) flyTo(0.85, 0, 0, duration)
+    else flyTo(1, 0, 0, duration)
+  }
+
+  function expandCluster(cluster: ClusterState) {
+    if (cluster.expanded) return
+    cluster.expanded = true
+    cluster.born = sceneT
+    cluster.collapseAt = null
+    // 赤道参考环半径 = 星团的水平延展（诗云：maxHoriz → ring）
+    const core = layoutAt(cluster.id, smoothstep(morph))
+    let maxH = 0.14
+    for (const idx of cluster.nodeIdxs) {
+      const n = layoutAt(nodeOrder[idx]!, smoothstep(morph))
+      maxH = Math.max(maxH, Math.hypot(n.position.x - core.position.x, n.position.z - core.position.z))
+    }
+    cluster.ringRadius = maxH * 1.08
+    if (reducedMotion) {
+      cluster.grow = 1
+      cluster.alpha = 1
+      cluster.nodesAlpha = 1
+      cluster.flare = NODE_HOLD_FLARE
+      renderFrame(0)
+    }
+    ensureLoop()
+  }
+
+  function collapseCluster(cluster: ClusterState) {
+    if (!cluster.expanded) return
+    cluster.expanded = false
+    if (reducedMotion) {
+      cluster.alpha = 0
+      cluster.nodesAlpha = 0
+      cluster.grow = 0
+      cluster.flare = 1
+      cluster.collapseAt = null
+      renderFrame(0)
+      return
+    }
+    cluster.collapseAt = sceneT
+    ensureLoop()
+  }
+
+  function pick(nx: number, ny: number): { info: HotspotInfo; isPrimary: boolean } | null {
+    if (!nodePositions || !camera) return null
+    let best: { info: HotspotInfo; isPrimary: boolean } | null = null
+    let bestDist = Infinity
+    const source = morph < 0.5 ? activeBuild() : activeUnderstand()
+    const m: IntelligenceMode = morph < 0.5 ? 'build' : 'understand'
+    for (const n of source.nodes) {
+      const isPrimary = n.role === 'primary'
+      if (!isPrimary) {
+        // 只有已展开（闪光渐入过半）的星团里的星点可被点选
+        const cl = nodeClusterById.get(n.id)
+        if (!cl || cl.alpha < 0.55) continue
+      }
+      const projected = projectNode(n.id)
       if (!projected) continue
       const px = (projected.x / width) * 2 - 1
       const py = -((projected.y / height) * 2 - 1)
       const distance = Math.hypot(px - nx, py - ny)
-      if (distance < bestDist) {
+      const threshold = isPrimary ? 0.09 : 0.055
+      if (distance < threshold && distance < bestDist) {
         bestDist = distance
-        best = candidate
+        best = {
+          info: { id: n.id, label: n.label!, microcopy: n.microcopy ?? '', mode: m },
+          isPrimary,
+        }
       }
     }
-    focusedHotspot = best?.id ?? null
-    targetFocusScale = best ? (best.id === 'research' || best.id === 'agent' ? 0.72 : 0.42) : 1
-    if (best) {
-      const idx = nodeOrder.indexOf(best.id)
-      targetFocusOffset.x = -(nodePositions[idx * 3] ?? 0)
-      targetFocusOffset.y = -(nodePositions[idx * 3 + 1] ?? 0)
-      targetFocusOffset.z = 0
-    } else {
-      targetFocusOffset.x = 0
-      targetFocusOffset.y = 0
-      targetFocusOffset.z = 0
+    return best
+  }
+
+  function hoverAt(nx: number, ny: number) {
+    if (disposed) return
+    const hit = pick(nx, ny)
+    const nextId = hit?.info.id ?? null
+    if (nextId === hoveredId) return
+    hoveredId = nextId
+    if (container) container.style.cursor = hoveredId ? 'pointer' : 'grab'
+    options.onHoverChange?.(hit?.info ?? null)
+  }
+
+  function selectAt(nx: number, ny: number) {
+    if (disposed) return
+    const hit = pick(nx, ny)
+    if (!hit) {
+      // 点击空白：取消选中并回到取景（已展开的星团保持展开）
+      focusedHotspot = null
+      options.onHotspotChange?.(null)
+      frameView()
+      ensureLoop()
+      return
     }
-    options.onHotspotChange?.(best)
+
+    if (hit.isPrimary) {
+      const cluster = clusters.get(hit.info.id)
+      if (!cluster) return
+      if (cluster.expanded) {
+        // 再次点击核心 → 收起星团
+        collapseCluster(cluster)
+        focusedHotspot = null
+        options.onHotspotChange?.(null)
+        frameView()
+      } else {
+        // 点击核心 → 诗云式展开（先四周发散，再垂直发散）+ 相机飞向星团
+        expandCluster(cluster)
+        focusedHotspot = cluster.id
+        options.onHotspotChange?.(hit.info)
+        flyToNode(cluster.id, 0.62)
+      }
+    } else {
+      // 点击小节点 → 流畅放大并聚焦过去，名称显示在节点上方
+      focusedHotspot = hit.info.id
+      options.onHotspotChange?.(hit.info)
+      flyToNode(hit.info.id, 0.5)
+    }
     ensureLoop()
   }
 
   function clearSelection() {
     focusedHotspot = null
-    targetFocusScale = 1
-    targetFocusOffset.x = 0
-    targetFocusOffset.y = 0
-    targetFocusOffset.z = 0
     options.onHotspotChange?.(null)
+    frameView()
     ensureLoop()
   }
 
@@ -1056,8 +1326,10 @@ export function createIntelligenceScene(
     stopLoop()
     modeTween?.kill()
     awakenTween?.kill()
+    focusTween?.kill()
     modeTween = null
     awakenTween = null
+    focusTween = null
     document.removeEventListener('visibilitychange', onVisibility)
 
     if (renderer) {
@@ -1067,7 +1339,7 @@ export function createIntelligenceScene(
       renderer.domElement.remove()
     }
 
-    const disposeObj = (obj: Points | LineSegments | null) => {
+    const disposeObj = (obj: Points | LineSegments | LineLoop | null) => {
       if (!obj) return
       obj.geometry.dispose()
       const mat = obj.material
@@ -1077,8 +1349,10 @@ export function createIntelligenceScene(
     disposeObj(primaryPoints)
     disposeObj(secondaryPoints)
     disposeObj(ambientPoints)
-    disposeObj(edgeLines)
-    disposeObj(verticalLines)
+    disposeObj(guideLines)
+    disposeObj(bridgeLines)
+    for (const ring of ringLoops.values()) disposeObj(ring)
+    ringLoops.clear()
     disposeObj(hazePoints)
     pointTexture?.dispose()
     pointTexture = null
@@ -1086,8 +1360,8 @@ export function createIntelligenceScene(
     primaryPoints = null
     secondaryPoints = null
     ambientPoints = null
-    edgeLines = null
-    verticalLines = null
+    guideLines = null
+    bridgeLines = null
     hazePoints = null
     scene = null
     camera = null
@@ -1101,6 +1375,7 @@ export function createIntelligenceScene(
     setMode,
     setPointer,
     selectAt,
+    hoverAt,
     rotateBy,
     clearSelection,
     setVisible,

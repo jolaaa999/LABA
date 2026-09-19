@@ -8,19 +8,13 @@ import IntelligenceCanvas from './intelligence/IntelligenceCanvas.vue'
 import IntelligenceModeSwitch from './intelligence/IntelligenceModeSwitch.vue'
 
 const mode = ref<IntelligenceMode>('build')
-const hotspotLabel = ref<string | null>(null)
-const hotspotCopy = ref<string | null>(null)
 
 const summary = computed(() =>
   '两条相连的学习星路：深度学习面向科研，AI Agent 面向工作实践。',
 )
 
-const micro = computed(() => {
-  if (hotspotLabel.value && hotspotCopy.value) {
-    return { label: hotspotLabel.value, copy: hotspotCopy.value }
-  }
-  return { label: '双星图', copy: '科研与工作，两条路径在这里相连。' }
-})
+// 说明文案固定：选中星点时，名称直接显示在星点上方（不再出现卡片）
+const micro = { label: '双星图', copy: '科研与工作，两条路径在这里相连。' }
 </script>
 
 <template>
@@ -50,12 +44,7 @@ const micro = computed(() => {
       <div class="intelligence__field">
         <div class="intelligence__haze" aria-hidden="true" />
         <div class="intelligence__grid" aria-hidden="true" />
-        <IntelligenceCanvas
-          class="intelligence__canvas"
-          :mode="mode"
-          @update:hotspot-label="hotspotLabel = $event"
-          @update:hotspot-copy="hotspotCopy = $event"
-        />
+        <IntelligenceCanvas class="intelligence__canvas" :mode="mode" />
       </div>
 
       <p class="intelligence__sr-only">
@@ -143,13 +132,6 @@ const micro = computed(() => {
   overflow: hidden;
   border-radius: 0;
   isolation: isolate;
-  mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    #000 3%,
-    #000 97%,
-    transparent 100%
-  );
 }
 
 .intelligence__haze {
@@ -206,7 +188,6 @@ const micro = computed(() => {
 
   .intelligence__field {
     min-height: clamp(16.5rem, 44svh, 22rem);
-    mask-image: none;
   }
 }
 </style>

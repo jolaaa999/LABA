@@ -52,13 +52,15 @@ export interface IntelligenceSceneOptions {
   onReady?: () => void
   onError?: (error: Error) => void
   onHotspotChange?: (hotspot: HotspotInfo | null) => void
+  onHoverChange?: (hotspot: HotspotInfo | null) => void
 }
 
 export interface IntelligenceSceneApi {
   mount: (container: HTMLElement) => void
-  setMode: (mode: IntelligenceMode) => void
+  setMode: (mode: IntelligenceMode, expandForMode?: boolean) => void
   setPointer: (x: number, y: number) => void
   selectAt: (x: number, y: number) => void
+  hoverAt: (x: number, y: number) => void
   rotateBy: (x: number, y: number) => void
   clearSelection: () => void
   setVisible: (visible: boolean) => void
